@@ -1,8 +1,12 @@
+using MakerBook.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=DEVDSKMPSD05;Initial Catalog=master;User ID=makerbook"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
