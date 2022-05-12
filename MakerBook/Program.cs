@@ -6,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=DEVDSKMPSD05;Initial Catalog=master;User ID=makerbook"));
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=DEVDSKMPSD05;Initial Catalog=MakerBook;User ID=makerbook; Persist Security Info=True; Integrated Security=True;"));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
