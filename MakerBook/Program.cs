@@ -1,4 +1,6 @@
 using MakerBook.Data;
+using MakerBook.Repository;
+using MakerBook.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=DEVDSKMPSD05;Initial Catalog=MakerBook;User ID=makerbook; Persist Security Info=True; Integrated Security=True;"));
-
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=LAPTOP-SRQMUDUA;Initial Catalog=MakerBook;User ID=sa; Persist Security Info=True; Integrated Security=True;"));
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
 var app = builder.Build();
 
