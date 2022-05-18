@@ -20,14 +20,21 @@ namespace MakerBook.Controllers
             _contactRepository = contactRepository;
         }
 
-        // GET: Contact
-        public async Task<IActionResult> Index()
+        /// <summary>
+        /// GET: Contact
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Index()
         {
-          List<ContactModel> contactList = _contactRepository.GetAll();
+            List<ContactModel> contactList = _contactRepository.GetAll();
             return View(contactList);
         }
 
-        // GET: Contact/Details/5
+        /// <summary>
+        /// GET: Contact/Details/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Details(int? id)
         {
 
@@ -41,15 +48,20 @@ namespace MakerBook.Controllers
             return View(contactModel);
         }
 
-        // GET: Contact/Create
+        /// <summary>
+        /// GET: Contact/Create
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Contact/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: Contact/Create
+        /// </summary>
+        /// <param name="contactModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Email,PhoneNumber")] ContactModel contactModel)
@@ -63,18 +75,22 @@ namespace MakerBook.Controllers
                     return RedirectToAction(nameof(Index));
                 }
                 return View(contactModel);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // GET: Contact/Edit/5
+        /// <summary>
+        /// GET: Contact/Edit/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Edit(int? id)
         {
-
-            var contactModel = _contactRepository.Get(id??0);
+            var contactModel = _contactRepository.Get(id ?? 0);
             if (contactModel == null)
             {
                 return NotFound();
@@ -82,24 +98,39 @@ namespace MakerBook.Controllers
             return View(contactModel);
         }
 
-        // POST: Contact/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: Contact/Edit/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="contactModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind("Id,Name,Email,PhoneNumber")] ContactModel contactModel)
         {
-
-            if (ModelState.IsValid)
+            try
             {
-                ContactModel contact = _contactRepository.Update(contactModel);
-                return RedirectToAction(nameof(Index));
-            }
+                if (ModelState.IsValid)
+                {
+                    ContactModel contact = _contactRepository.Update(contactModel);
+                    TempData["SuccessMessage"] = "Success!!!";
+                    return RedirectToAction(nameof(Index));
+                }
 
-            return View("Editar", contactModel);
+                return View("Editar", contactModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
+                return RedirectToAction("Index");
+            }
         }
 
-        // GET: Contact/Delete/5
+        /// <summary>
+        /// GET: Contact/Delete/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int? id)
         {
             var contactModel = _contactRepository.Get(id ?? 0);
@@ -111,15 +142,32 @@ namespace MakerBook.Controllers
             return View(contactModel);
         }
 
-        // POST: Contact/Delete/5
+
+        /// <summary>
+        /// POST: Contact/Delete/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            _contactRepository.Delete(id);
+            try
+            {
+                var deleteConfirmed = _contactRepository.Delete(id);
+                if (deleteConfirmed)
+                    TempData["SuccessMessage"] = "Success!!!";
+                else
+                    TempData["ErrorMessage"] = $"Fail!!!";
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
+                return RedirectToAction("Index");
+            }
         }
-
     }
 }

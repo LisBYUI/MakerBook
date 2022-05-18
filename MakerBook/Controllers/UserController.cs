@@ -7,36 +7,40 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MakerBook.Data;
 using MakerBook.Models;
+using MakerBook.Repository.Interface;
 
 namespace MakerBook.Controllers
 {
     public class UserController : Controller
     {
-        private readonly DatabaseContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public UserController(DatabaseContext context)
+        public UserController(IUserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
-        // GET: User
-        public async Task<IActionResult> Index()
+
+        /// <summary>
+        /// GET: User
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Index()
         {
-              return _context.User != null ? 
-                          View(await _context.User.ToListAsync()) :
-                          Problem("Entity set 'DatabaseContext.UserModel'  is null.");
+            List<UserModel> userList = _userRepository.GetAll();
+            return View(userList);
         }
 
-        // GET: User/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.User == null)
-            {
-                return NotFound();
-            }
 
-            var userModel = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
+        /// <summary>
+        /// GET: User/Details/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IActionResult Details(int? id)
+        {
+            var userModel = _userRepository.Get(id ?? 0);
+
             if (userModel == null)
             {
                 return NotFound();
@@ -45,37 +49,51 @@ namespace MakerBook.Controllers
             return View(userModel);
         }
 
-        // GET: User/Create
+
+        /// <summary>
+        /// GET: User/Create
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: User/Create
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,Profile")] UserModel userModel)
+        public IActionResult Create([Bind("Id,Name,Email,Password,Profile")] UserModel userModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(userModel);
-                await _context.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    TempData["SuccessMessage"] = "Success!!!";
+                    _userRepository.Create(userModel);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(userModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
                 return RedirectToAction(nameof(Index));
             }
-            return View(userModel);
         }
 
-        // GET: User/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.User == null)
-            {
-                return NotFound();
-            }
 
-            var userModel = await _context.User.FindAsync(id);
+        /// <summary>
+        /// GET: User/Edit/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IActionResult Edit(int? id)
+        {
+            var userModel = _userRepository.Get(id ?? 0);
             if (userModel == null)
             {
                 return NotFound();
@@ -83,51 +101,42 @@ namespace MakerBook.Controllers
             return View(userModel);
         }
 
-        // POST: User/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: User/Edit/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Password,Profile")] UserModel userModel)
+        public IActionResult Edit(int id, [Bind("Id,Name,Email,Password,Profile")] UserModel userModel)
         {
-            if (id != userModel.Id)
+            try
             {
-                return NotFound();
-            }
+                if (ModelState.IsValid)
+                {
+                    UserModel contact = _userRepository.Update(userModel);
+                    TempData["SuccessMessage"] = "Success!!!";
+                    return RedirectToAction(nameof(Index));
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(userModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserModelExists(userModel.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View("Editar", userModel);
             }
-            return View(userModel);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
+                return RedirectToAction("Index");
+            }
         }
 
-        // GET: User/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        /// <summary>
+        /// GET: User/Delete/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IActionResult Delete(int? id)
         {
-            if (id == null || _context.User == null)
-            {
-                return NotFound();
-            }
-
-            var userModel = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var userModel = _userRepository.Get(id ?? 0);
             if (userModel == null)
             {
                 return NotFound();
@@ -136,28 +145,32 @@ namespace MakerBook.Controllers
             return View(userModel);
         }
 
-        // POST: User/Delete/5
+
+        /// <summary>
+        /// POST: User/Delete/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            if (_context.User == null)
+            try
             {
-                return Problem("Entity set 'DatabaseContext.UserModel'  is null.");
-            }
-            var userModel = await _context.User.FindAsync(id);
-            if (userModel != null)
-            {
-                _context.User.Remove(userModel);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+                var deleteConfirmed = _userRepository.Delete(id);
+                if (deleteConfirmed)
+                    TempData["SuccessMessage"] = "Success!!!";
+                else
+                    TempData["ErrorMessage"] = $"Fail!!!";
 
-        private bool UserModelExists(int id)
-        {
-          return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
+                return RedirectToAction("Index");
+            }
         }
     }
 }

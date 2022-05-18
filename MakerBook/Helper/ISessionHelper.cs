@@ -2,11 +2,11 @@
 
 namespace MakerBook.Helper
 {
-    public interface ISession
+    public interface ISessionHelper
     {
-        void CreateUserSession(UserModel user);
-        void UpdateUserSession(UserModel user);
-        void DeleteUserSession();
         UserModel GetUserSession();
+        void CreateUserSession(UserModel user);
+        void DeleteUserSession();
+
     }
 }

@@ -11,7 +11,7 @@ namespace MakerBook.Data
         }
 
         public DbSet<ContactModel> Contact { get; set; }
-
-        public DbSet<MakerBook.Models.UserModel>? User { get; set; }
+        public DbSet<UserModel> User { get; set; }
+      
     }
 }

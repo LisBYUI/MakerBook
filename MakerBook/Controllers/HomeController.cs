@@ -1,13 +1,16 @@
-﻿using MakerBook.Models;
+﻿using MakerBook.Filters;
+using MakerBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace MakerBook.Controllers
 {
+    [PageForUserLogged]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
+        
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;

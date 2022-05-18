@@ -4,15 +4,15 @@ using MakerBook.Repository.Interface;
 
 namespace MakerBook.Repository
 {
-    public class ContactRepository: IContactRepository
+    public class UserRepository : IUserRepository
     {
         private readonly DatabaseContext _context;
 
         /// <summary>
-        /// Constructor - ContactRepository
+        /// Constructor - UserRepository
         /// </summary>
         /// <param name="context"></param>
-        public ContactRepository(DatabaseContext context)
+        public UserRepository(DatabaseContext context)
         {
             _context = context;
         }
@@ -22,51 +22,56 @@ namespace MakerBook.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ContactModel Get(int id)
+        public UserModel Get(int id)
         {
-            return _context.Contact.FirstOrDefault(i => i.Id == id);
+            return _context.User.FirstOrDefault(i => i.Id == id);
+        }
+
+        public UserModel GetByLogin(string login)
+        {
+            return _context.User.FirstOrDefault(x => x.Email.ToLower() == login.ToLower());
         }
 
         /// <summary>
         /// GetAll
         /// </summary>
         /// <returns></returns>
-        public List<ContactModel> GetAll()
+        public List<UserModel> GetAll()
         {
-            return _context.Contact.ToList();
+            return _context.User.ToList();
         }
 
         /// <summary>
         /// Create
         /// </summary>
-        /// <param name="contactModel"></param>
+        /// <param name="userModel"></param>
         /// <returns></returns>
-        public ContactModel Create(ContactModel contactModel)
+        public UserModel Create(UserModel userModel)
         {
-            _context.Contact.Add(contactModel);
+            _context.User.Add(userModel);
             _context.SaveChanges();
 
-            return contactModel;
+            return userModel;
         }
 
         /// <summary>
         /// Update
         /// </summary>
-        /// <param name="contactModel"></param>
+        /// <param name="userModel"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public ContactModel Update(ContactModel contactModel)
+        public UserModel Update(UserModel userModel)
         {
-            ContactModel contactDb = Get(contactModel.Id);
-            if (contactDb == null)
+            UserModel userDb = Get(userModel.Id);
+            if (userDb == null)
                 throw new Exception("Record not Found");
-            contactDb.Name = contactModel.Name;
-            contactDb.Email = contactModel.Email;
+            userDb.Name = userModel.Name;
+            userDb.Email = userModel.Email;
 
-            _context.Contact.Update(contactDb);
+            _context.User.Update(userDb);
             _context.SaveChanges();
 
-            return contactDb;
+            return userDb;
         }
 
         /// <summary>
@@ -77,14 +82,16 @@ namespace MakerBook.Repository
         /// <exception cref="Exception"></exception>
         public bool Delete(int id)
         {
-            ContactModel contactDb = Get(id);
-            if (contactDb == null)
+            UserModel userDb = Get(id);
+            if (userDb == null)
                 throw new Exception("Record not Found");
 
-            _context.Contact.Remove(contactDb);
+            _context.User.Remove(userDb);
             _context.SaveChanges();
 
             return true;
-        } 
+        }
+
+        
     }
 }

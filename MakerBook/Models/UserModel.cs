@@ -1,4 +1,5 @@
 ﻿using MakerBook.Enum;
+using MakerBook.Helper;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,6 +23,17 @@ namespace MakerBook.Models
         [Column("Profile")]
         [Display(Name = "Profile")]
         public ProfileEnum Profile { get; set; }
+
+
+        public bool ValidPassword(string password)
+        {
+            return Password == password.GenerateHash();
+        }
+
+        public void SetPasswordHash()
+        {
+            Password = Password.GenerateHash();
+        }
 
     }
 }
