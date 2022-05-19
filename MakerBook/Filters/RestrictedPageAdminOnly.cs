@@ -27,7 +27,7 @@ namespace MakerBook.Filters
 
                 if (user.Profile != ProfileEnum.Administrator)
                 {
-                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Restrito" }, { "action", "Index" } });
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "RestrictedAccess" }, { "action", "Index" } });
                 }
             }
 

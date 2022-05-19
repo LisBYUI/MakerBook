@@ -10,7 +10,7 @@
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger" role="alert">
-       TempData["ErrorMessage"].
+       @TempData["ErrorMessage"].
     </div>
 }
 <form asp-controller="Login" asp-action="Login" method="post">

@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using MakerBook.Data;
 using MakerBook.Models;
 using MakerBook.Repository.Interface;
+using MakerBook.Filters;
 
 namespace MakerBook.Controllers
 {
+    [RestrictedPageAdminOnly]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -120,7 +122,7 @@ namespace MakerBook.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
-                return View("Editar", userModel);
+                return View("Edit", userModel);
             }
             catch (Exception ex)
             {
