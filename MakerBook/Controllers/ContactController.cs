@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using MakerBook.Data;
 using MakerBook.Models;
 using MakerBook.Repository.Interface;
+using MakerBook.Filters;
 
 namespace MakerBook.Controllers
 {
+    [PageForUserLogged]
     public class ContactController : Controller
     {
         private readonly IContactRepository _contactRepository;

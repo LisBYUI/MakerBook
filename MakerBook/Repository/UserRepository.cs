@@ -67,6 +67,7 @@ namespace MakerBook.Repository
                 throw new Exception("Record not Found");
             userDb.Name = userModel.Name;
             userDb.Email = userModel.Email;
+            userDb.Profile = userModel.Profile;
 
             _context.User.Update(userDb);
             _context.SaveChanges();

@@ -1,6 +1,6 @@
 ﻿using MakerBook.Models;
 
-namespace MakerBook.Helper
+namespace MakerBook.Helper.Interface
 {
     public interface ISessionHelper
     {

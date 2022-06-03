@@ -1,4 +1,5 @@
-﻿using MakerBook.Models;
+﻿using MakerBook.Helper.Interface;
+using MakerBook.Models;
 using Newtonsoft.Json;
 
 namespace MakerBook.Helper
@@ -24,7 +25,8 @@ namespace MakerBook.Helper
         {
             string userSession = _httpContext.HttpContext.Session.GetString("sessionUserLogged");
 
-            if (string.IsNullOrEmpty(userSession)) return null;
+            if (string.IsNullOrEmpty(userSession))
+                return null;
 
             return JsonConvert.DeserializeObject<UserModel>(userSession);
         }
@@ -47,9 +49,5 @@ namespace MakerBook.Helper
         {
             _httpContext.HttpContext.Session.Remove("sessionUserLogged");
         }
-
-      
-
-       
     }
 }
