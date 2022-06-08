@@ -14,6 +14,9 @@ namespace MakerBook.Models
         [Column("Name")]
         [Display(Name = "Name")]
         public string Name { get; set; }
+        [Column("Login")]
+        [Display(Name = "Login")]
+        public string Login { get; set; }
         [Column("Email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -23,6 +26,11 @@ namespace MakerBook.Models
         [Column("Profile")]
         [Display(Name = "Profile")]
         public ProfileEnum Profile { get; set; }
+
+        [Column("PersonId")]
+        [Display(Name = "Person Identifier")]
+        public int PersonId { get; set; }
+
 
 
         public bool ValidPassword(string password)

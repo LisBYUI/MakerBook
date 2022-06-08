@@ -1,18 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MakerBook.Enum;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace MakerBook.Models
 {
-    [Table("Position")]
-    public class PositionModel
+    [Table("Payment")]
+    public class PaymentModel
     {
-        [Column("PositionId")]
+        [Column("PaymentId")]
         [Key]
-        public int PositionId { get; set; }
-        [Column("Latitude")]
-        public int Latitude { get; set; }
-        [Column("Longitude")]
-        public int Longitude { get; set; }
-
+        public int PaymentId { get; set; }
+        [Column("PaymentType")]
+        public PaymentTypeEnum PaymentType { get; set; }
+        
         [Column("UserAt")]
         public string UserAt { get; set; }
         [Column("CreatedAt")]

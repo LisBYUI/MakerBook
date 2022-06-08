@@ -1,16 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MakerBook.Models
 {
     [Table("Location")]
     public class LocationModel
     {
-        public int Id { get; set; }
+        [Column("LocationId")]
+        [Key]
+        public int LocationId { get; set; }
+        [Column("Name")]
         public string Name { get; set; }
-        public int CustomerId { get; set; }
-
+    
+        [Column("PositionId")]
+        [ForeignKey("Position")]
         public int PositionId { get; set; }
-        public CustomerModel Customer { get; set; }
+        [Column("UserAt")]
+        public string UserAt { get; set; }
+        [Column("CreatedAt")]
+        public DateTime CreatedAt { get; set; }
+        [Column("UpdatedAt")]
+        public DateTime UpdatedAt { get; set; }
+
+
+ 
         public PositionModel Position { get; set; }
     }
 }

@@ -3,19 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MakerBook.Models
 {
-    [Table("ServiceImage")]
-    public class ServiceImageModel
+    [Table("Category")]
+    public class CategoryModel
     {
-        [Column("ServiceImage")]
+        [Column("CategoryId")]
         [Key]
-        public int ServiceImage { get; set; }
+        public int CategoryId { get; set; }
         [Column("Name")]
-        public int Name { get; set; }
+        public string Name { get; set; }
+        [Column("Description")]
+        public string Description { get; set; }
         [Column("Image")]
         public byte Image { get; set; }
-        [Column("ServiceId")]
-        [ForeignKey("Service")]
-        public int ServiceId { get; set; }
 
         [Column("UserAt")]
         public string UserAt { get; set; }
@@ -23,8 +22,6 @@ namespace MakerBook.Models
         public DateTime CreatedAt { get; set; }
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
-      
-        public ServiceModel Service { get; set; }
 
     }
 }

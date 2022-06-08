@@ -5,7 +5,7 @@ namespace MakerBook.Models
 {
     [Table("Contact")]
     public class ContactModel
-    {
+    {   
         [Column("Id")]
         [Display(Name = "Identifier")]
         public int Id { get; set; }
