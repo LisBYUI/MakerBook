@@ -39,5 +39,13 @@ namespace MakerBook.Repository.Interface
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        UserModel GetByEmailLogin(string email, string login);
     }
 }

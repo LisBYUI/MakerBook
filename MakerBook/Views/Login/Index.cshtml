@@ -13,6 +13,15 @@
        @TempData["ErrorMessage"].
     </div>
 }
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
 <form asp-controller="Login" asp-action="Login" method="post">
     <div class="mb-3">
         <label for="Login" class="form-label">Login</label>
@@ -22,6 +31,9 @@
         <label for="Password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" asp-for="Password">
     </div>
-
+     <p class="mb-4 text-sm mx-auto">
+        Esqueceu sua senha?
+        <a asp-action="RecoverPassword" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Recover my password</a>
+    </p>
     <button type="submit" class="btn btn-primary">Sign in</button>
 </form>

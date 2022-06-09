@@ -65,5 +65,40 @@ namespace ControleDeContatos.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public IActionResult RecoverPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SendLinkToResetPassword(RecoverPasswordModel recoverPasswordModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    UserModel user = _userRepository.GetByEmailLogin(recoverPasswordModel.Email, recoverPasswordModel.Login);
+
+                    if (user != null)
+                    {
+                        string novaSenha = user.GenerateNewPassword();
+                        _userRepository.Update(user);
+
+                        TempData["SuccessMessage"] = $"A new password has been sent to the registered email.";
+                        return RedirectToAction("Index", "Login");
+                    }
+
+                    TempData["ErrorMessage"] = $"Your password could not be reset. Please check the information provided..";
+                }
+
+                return View("Index");
+            }
+            catch (Exception erro)
+            {
+                TempData["ErrorMessage"] = $"Could not reset your password, please try again, error detail: {erro.Message}";
+                return RedirectToAction("Index");
+            }
+        }
     }
 }
