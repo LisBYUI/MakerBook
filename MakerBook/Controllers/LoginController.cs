@@ -100,5 +100,10 @@ namespace ControleDeContatos.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
     }
 }
