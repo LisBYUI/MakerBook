@@ -93,6 +93,10 @@ namespace MakerBook.Repository
             return true;
         }
 
-        
+        public UserModel GetByEmailLogin(string email, string login)
+        {
+            return _context.User.FirstOrDefault(x => x.Email.ToUpper() == email.ToUpper() && x.Login.ToUpper() == login.ToUpper());
+        }
+
     }
 }
