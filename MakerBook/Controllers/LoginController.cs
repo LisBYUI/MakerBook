@@ -11,12 +11,15 @@ namespace ControleDeContatos.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly ISessionHelper _session;
+        private readonly IEmail _email;
 
         public LoginController(IUserRepository userRepository,
-                               ISessionHelper session)
+                               ISessionHelper session,
+                               IEmail email)
         {
             _userRepository = userRepository;
             _session = session;
+            _email = email;
         }
 
         public IActionResult Index()
@@ -65,5 +68,7 @@ namespace ControleDeContatos.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+
     }
 }
