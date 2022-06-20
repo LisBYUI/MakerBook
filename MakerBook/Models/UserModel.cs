@@ -27,12 +27,6 @@ namespace MakerBook.Models
         [Display(Name = "Profile")]
         public ProfileEnum Profile { get; set; }
 
-        [Column("PersonId")]
-        [Display(Name = "Person Identifier")]
-        public int PersonId { get; set; }
-
-
-
         public bool ValidPassword(string password)
         {
             return Password == password.GenerateHash();

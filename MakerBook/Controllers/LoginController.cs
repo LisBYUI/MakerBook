@@ -85,14 +85,27 @@ namespace ControleDeContatos.Controllers
 
                     if (user != null)
                     {
-                        string novaSenha = user.GenerateNewPassword();
-                        _userRepository.Update(user);
+                        string newPassword = user.GenerateNewPassword();
 
-                        TempData["SuccessMessage"] = $"A new password has been sent to the registered email.";
+                        string message = $"New passoword is: {newPassword}";
+
+                        bool emailSent = _email.Send(user.Email, "MakerBook - New Password", message);
+
+                        if (emailSent)
+                        {
+                            _userRepository.Update(user);
+                            TempData["SuccessMessage"] = $"A new password has been sent to the registered email.";
+
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = $"Your password could not be reset. Please check the information provided..";
+
+                        }
                         return RedirectToAction("Index", "Login");
                     }
-
-                    TempData["ErrorMessage"] = $"Your password could not be reset. Please check the information provided..";
+                       
+                        TempData["ErrorMessage"] = $"Your password could not be reset. Please check the information provided..";
                 }
 
                 return View("Index");

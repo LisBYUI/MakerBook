@@ -25,9 +25,6 @@ namespace MakerBook.Models
         [ForeignKey("Location")]
         public int LocationId { get; set; }
 
-        [Column("PersonId")]
-        [ForeignKey("Person")]
-        public int PersonId { get; set; }
         [Column("WebPage")]
         public string  WebPage { get; set; }
        

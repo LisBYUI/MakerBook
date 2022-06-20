@@ -1,17 +1,18 @@
 ﻿@model MakerBook.Models.CategoryModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>CategoryModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CategoryId" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -23,27 +24,27 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label asp-for="ImageCategory" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="ImageCategory" class="custom-file-input" />
+                    <label class="custom-file-label" for="customFile">Escolha A Foto</label>
+                </div>
+                <span asp-validation-for="ImageCategory" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UserAt" class="control-label"></label>
-                <input asp-for="UserAt" class="form-control" />
-                <span asp-validation-for="UserAt" class="text-danger"></span>
+                @Html.DisplayFor(model => model.UserAt)
             </div>
             <div class="form-group">
                 <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                @Html.DisplayFor(model => model.CreatedAt)
             </div>
             <div class="form-group">
                 <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                @Html.DisplayFor(model => model.UpdatedAt)
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -54,5 +55,14 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

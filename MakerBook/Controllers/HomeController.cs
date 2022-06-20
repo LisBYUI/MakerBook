@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace MakerBook.Controllers
 {
-    [PageForUserLogged]
+    //[PageForUserLogged]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

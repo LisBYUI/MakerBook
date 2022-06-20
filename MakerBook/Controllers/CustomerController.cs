@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MakerBook.Data;
 using MakerBook.Models;
+using MakerBook.Filters;
 
 namespace MakerBook.Controllers
 {
+    [PageForUserLogged]
     public class CustomerController : Controller
     {
         private readonly DatabaseContext _context;

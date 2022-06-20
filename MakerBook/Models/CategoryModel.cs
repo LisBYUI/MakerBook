@@ -14,7 +14,7 @@ namespace MakerBook.Models
         [Column("Description")]
         public string Description { get; set; }
         [Column("Image")]
-        public byte Image { get; set; }
+        public byte[] Image { get; set; }
 
         [Column("UserAt")]
         public string UserAt { get; set; }
@@ -22,6 +22,7 @@ namespace MakerBook.Models
         public DateTime CreatedAt { get; set; }
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
-
+        [NotMapped]
+        public IFormFile ImageCategory { get; set; }
     }
 }
