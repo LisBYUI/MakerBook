@@ -12044,7 +12044,7 @@ header.masthead {
 
 @media (min-width: 992px) {
     header.masthead {
-        height: 100vh;
+       /* height: 100vh;*/
         min-height: 40rem;
         padding-top: 4.5rem;
         padding-bottom: 0;
@@ -12106,10 +12106,9 @@ header.masthead {
             opacity: 1;
         }
 
-.shadow-textarea textarea.form-control::placeholder {
+        .shadow-textarea textarea.form-control::placeholder {
     font-weight: 300;
 }
-
 .shadow-textarea textarea.form-control {
     padding-left: 0.8rem;
 }

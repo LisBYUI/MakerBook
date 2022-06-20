@@ -25,7 +25,8 @@ namespace ControleDeContatos.Controllers
         public IActionResult Index()
         {
             
-            if (_session.GetUserSession() != null) return RedirectToAction("Index", "Home");
+            if (_session.GetUserSession() != null) 
+                return RedirectToAction("Index", "Home");
 
             return View();
         }
@@ -35,6 +36,15 @@ namespace ControleDeContatos.Controllers
             _session.DeleteUserSession();
 
             return RedirectToAction("Index", "Login");
+        }
+
+        public IActionResult Login()
+        {
+
+            //if (_session.GetUserSession() != null)
+            //    return RedirectToAction("Index", "Home");
+
+            return View();
         }
 
         [HttpPost]
