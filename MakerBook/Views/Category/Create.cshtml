@@ -4,60 +4,58 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>CategoryModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            @* <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea  asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-                </div>*@
-            <div class="form-group shadow-textarea">
-                <label asp-for="Description">Shadow and placeholder</label>
-                <textarea class="form-control z-depth-1" asp-for="Description" rows="3" placeholder="Write something here..."></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-              @*  <label asp-for="Image" class="control-label"></label>
-                <input type="file" asp-for="Image" class="form-control" accept="image/*/>
-                <span asp-validation-for="Image" class="text-danger"></span>*@
-                 <label asp-for="ImageCategory" class="control-label"></label>
-                        <div class="custom-file">
-                            <input asp-for="ImageCategory" class="custom-file-input" />
-                            <label class="custom-file-label" for="customFile">Escolha A Foto</label>
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Login</span>
+                    <span class="section-heading-lower">Access your account</span>
+                </h2>
+                <p>
+                    <form asp-action="Create" enctype="multipart/form-data" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
-                        <span asp-validation-for="ImageCategory" class="text-danger"></span>
-            </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                        <div class="form-group shadow-textarea">
+                            <label asp-for="Description">Description</label>
+                            <textarea class="form-control z-depth-1" asp-for="Description" rows="3" placeholder="Write something here..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ImageCategory" class="control-label"></label>
+                            <div class="custom-file">
+                                <input asp-for="ImageCategory" class="custom-file-input" />
+                                <label class="custom-file-label" for="customFile">Escolha A Foto</label>
+                            </div>
+                            <span asp-validation-for="ImageCategory" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary btn-block" />|
+                            <a class="btn btn-secondary btn-block" asp-action="Index" asp-controller="Category" role="button">Back to List</a>
+                        </div>
+                    </form>
+
+                </p>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-     <script>
-        // Add the following code if you want the name of the file appear on select
-        $(".custom-file-input").on("change", function () {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-    </script>
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }

@@ -41,8 +41,8 @@ namespace ControleDeContatos.Controllers
         public IActionResult Login()
         {
 
-            //if (_session.GetUserSession() != null)
-            //    return RedirectToAction("Index", "Home");
+            if (_session.GetUserSession() != null)
+                return RedirectToAction("Index", "Home");
 
             return View();
         }

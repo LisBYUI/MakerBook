@@ -3,14 +3,11 @@
     Layout = "_LayoutDefault";
     ViewData["Title"] = "Login";
 }
-<p>Login</p>
-
-<h1>Index</h1>
 
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger" role="alert">
-       @TempData["ErrorMessage"].
+        @TempData["ErrorMessage"].
     </div>
 }
 
@@ -21,19 +18,35 @@
         @TempData["SuccessMessage"]
     </div>
 }
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Login</span>
+                    <span class="section-heading-lower">Access your account</span>
+                </h2>
+                <p>
 
-<form asp-controller="Login" asp-action="Login" method="post">
-    <div class="mb-3">
-        <label for="Login" class="form-label">Login</label>
-        <input type="email" class="form-control" id="login" asp-for="Login">
+                    <form asp-controller="Login" asp-action="Login" method="post">
+                        <div class="mb-3">
+                            <label for="Login" class="form-label">Login</label>
+                            <input type="email" class="form-control" id="login" asp-for="Login">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" asp-for="Password">
+                        </div>
+                        <p class="mb-4 text-sm mx-auto">
+                            Forgot your password?
+                            <a asp-action="RecoverPassword" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Recover my password</a>
+                        </p>
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                    </form>
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="Password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" asp-for="Password">
-    </div>
-     <p class="mb-4 text-sm mx-auto">
-        Forgot your password?
-        <a asp-action="RecoverPassword" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Recover my password</a>
-    </p>
-    <button type="submit" class="btn btn-primary">Sign in</button>
-</form>
+</div>
+
+
