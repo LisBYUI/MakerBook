@@ -8,37 +8,38 @@ using Microsoft.EntityFrameworkCore;
 using MakerBook.Data;
 using MakerBook.Models;
 using MakerBook.Filters;
+using MakerBook.Helper.Interface;
+using MakerBook.Repository.Interface;
 
 namespace MakerBook.Controllers
 {
     [PageForUserLogged]
     public class CustomerController : Controller
     {
-        private readonly DatabaseContext _context;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly ISessionHelper _session;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CustomerController(DatabaseContext context)
+        public CustomerController(ICustomerRepository customerRepository, ISessionHelper session)
         {
-            _context = context;
+            _customerRepository = customerRepository;
+            _session = session;
+           
         }
 
         // GET: Customer
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Customer.Include(c => c.Location);
-            return View(await databaseContext.ToListAsync());
+            List<CustomerModel> customerList = _customerRepository.GetAll();
+
+            return View(customerList);
         }
 
         // GET: Customer/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Customer == null)
-            {
-                return NotFound();
-            }
+            var customerModel = _customerRepository.Get(id ?? 0);
 
-            var customerModel = await _context.Customer
-                .Include(c => c.Location)
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customerModel == null)
             {
                 return NotFound();
@@ -50,7 +51,7 @@ namespace MakerBook.Controllers
         // GET: Customer/Create
         public IActionResult Create()
         {
-            ViewData["LocationId"] = new SelectList(_context.Location, "LocationId", "LocationId");
+            //ViewData["LocationId"] = new SelectList(_context.Location, "LocationId", "LocationId");
             return View();
         }
 
@@ -59,32 +60,33 @@ namespace MakerBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerId,Name,Email,PhoneNumber,LocationId,UserAt,CreatedAt,UpdatedAt")] CustomerModel customerModel)
+        public IActionResult Create(CustomerModel customerModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(customerModel);
-                await _context.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    TempData["SuccessMessage"] = "Success!!!";
+                    _customerRepository.Create(customerModel);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(customerModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LocationId"] = new SelectList(_context.Location, "LocationId", "LocationId", customerModel.LocationId);
-            return View(customerModel);
         }
 
         // GET: Customer/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
-            if (id == null || _context.Customer == null)
-            {
-                return NotFound();
-            }
-
-            var customerModel = await _context.Customer.FindAsync(id);
+            var customerModel = _customerRepository.Get(id ?? 0);
             if (customerModel == null)
             {
                 return NotFound();
             }
-            ViewData["LocationId"] = new SelectList(_context.Location, "LocationId", "LocationId", customerModel.LocationId);
             return View(customerModel);
         }
 
@@ -93,48 +95,30 @@ namespace MakerBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Name,Email,PhoneNumber,LocationId,UserAt,CreatedAt,UpdatedAt")] CustomerModel customerModel)
+        public IActionResult Edit(int id, CustomerModel customerModel)
         {
-            if (id != customerModel.CustomerId)
+            try
             {
-                return NotFound();
-            }
+                if (ModelState.IsValid)
+                {
+                    CustomerModel customer = _customerRepository.Update(customerModel);
+                    TempData["SuccessMessage"] = "Success!!!";
+                    return RedirectToAction(nameof(Index));
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(customerModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CustomerModelExists(customerModel.CustomerId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View("Editar", customerModel);
             }
-            ViewData["LocationId"] = new SelectList(_context.Location, "LocationId", "LocationId", customerModel.LocationId);
-            return View(customerModel);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Customer/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
-            if (id == null || _context.Customer == null)
-            {
-                return NotFound();
-            }
-
-            var customerModel = await _context.Customer
-                .Include(c => c.Location)
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            var customerModel = _customerRepository.Get(id ?? 0);
             if (customerModel == null)
             {
                 return NotFound();
@@ -146,25 +130,26 @@ namespace MakerBook.Controllers
         // POST: Customer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            if (_context.Customer == null)
+            try
             {
-                return Problem("Entity set 'DatabaseContext.Customer'  is null.");
+                var deleteConfirmed = _customerRepository.Delete(id);
+                if (deleteConfirmed)
+                    TempData["SuccessMessage"] = "Success!!!";
+                else
+                    TempData["ErrorMessage"] = $"Fail!!!";
+
+                return RedirectToAction(nameof(Index));
+
             }
-            var customerModel = await _context.Customer.FindAsync(id);
-            if (customerModel != null)
+            catch (Exception ex)
             {
-                _context.Customer.Remove(customerModel);
+                TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
+                return RedirectToAction("Index");
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerModelExists(int id)
-        {
-          return (_context.Customer?.Any(e => e.CustomerId == id)).GetValueOrDefault();
-        }
+       
     }
 }

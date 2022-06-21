@@ -14,6 +14,9 @@ namespace MakerBook.Models
         [Column("Name")]
         [Display(Name = "Name")]
         public string Name { get; set; }
+        [Column("LastName")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
         [Column("Login")]
         [Display(Name = "Login")]
         public string Login { get; set; }
