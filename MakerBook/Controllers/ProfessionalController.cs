@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using MakerBook.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using MakerBook.Models;
 using MakerBook.Filters;
 using MakerBook.Helper.Interface;
@@ -14,63 +7,63 @@ using MakerBook.Repository.Interface;
 namespace MakerBook.Controllers
 {
     [RestrictedPageAdminOnly]
-    public class CustomerController : Controller
+    public class ProfessionalController : Controller
     {
-        private readonly ICustomerRepository _customerRepository;
+        private readonly IProfessionalRepository _professionalRepository;
         private readonly ISessionHelper _session;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CustomerController(ICustomerRepository customerRepository, ISessionHelper session)
+        public ProfessionalController(IProfessionalRepository professionalRepository, ISessionHelper session)
         {
-            _customerRepository = customerRepository;
+            _professionalRepository = professionalRepository;
             _session = session;
            
         }
 
-        // GET: Customer
+        // GET: Professional
         public async Task<IActionResult> Index()
         {
-            List<CustomerModel> customerList = _customerRepository.GetAll();
+            List<ProfessionalModel> ProfessionalList = _professionalRepository.GetAll();
 
-            return View(customerList);
+            return View(ProfessionalList);
         }
 
-        // GET: Customer/Details/5
+        // GET: Professional/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var customerModel = _customerRepository.Get(id ?? 0);
+            var ProfessionalModel = _professionalRepository.Get(id ?? 0);
 
-            if (customerModel == null)
+            if (ProfessionalModel == null)
             {
                 return NotFound();
             }
 
-            return View(customerModel);
+            return View(ProfessionalModel);
         }
 
-        // GET: Customer/Create
+        // GET: Professional/Create
         public IActionResult Create()
         {
             //ViewData["LocationId"] = new SelectList(_context.Location, "LocationId", "LocationId");
             return View();
         }
 
-        // POST: Customer/Create
+        // POST: Professional/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CustomerModel customerModel)
+        public IActionResult Create(ProfessionalModel ProfessionalModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     TempData["SuccessMessage"] = "Success!!!";
-                    _customerRepository.Create(customerModel);
+                    _professionalRepository.Create(ProfessionalModel);
                     return RedirectToAction(nameof(Index));
                 }
-                return View(customerModel);
+                return View(ProfessionalModel);
             }
             catch (Exception ex)
             {
@@ -79,34 +72,34 @@ namespace MakerBook.Controllers
             }
         }
 
-        // GET: Customer/Edit/5
+        // GET: Professional/Edit/5
         public IActionResult Edit(int? id)
         {
-            var customerModel = _customerRepository.Get(id ?? 0);
-            if (customerModel == null)
+            var ProfessionalModel = _professionalRepository.Get(id ?? 0);
+            if (ProfessionalModel == null)
             {
                 return NotFound();
             }
-            return View(customerModel);
+            return View(ProfessionalModel);
         }
 
-        // POST: Customer/Edit/5
+        // POST: Professional/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, CustomerModel customerModel)
+        public IActionResult Edit(int id, ProfessionalModel ProfessionalModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerModel customer = _customerRepository.Update(customerModel);
+                    ProfessionalModel Professional = _professionalRepository.Update(ProfessionalModel);
                     TempData["SuccessMessage"] = "Success!!!";
                     return RedirectToAction(nameof(Index));
                 }
 
-                return View("Editar", customerModel);
+                return View("Editar", ProfessionalModel);
             }
             catch (Exception ex)
             {
@@ -115,26 +108,26 @@ namespace MakerBook.Controllers
             }
         }
 
-        // GET: Customer/Delete/5
+        // GET: Professional/Delete/5
         public IActionResult Delete(int? id)
         {
-            var customerModel = _customerRepository.Get(id ?? 0);
-            if (customerModel == null)
+            var ProfessionalModel = _professionalRepository.Get(id ?? 0);
+            if (ProfessionalModel == null)
             {
                 return NotFound();
             }
 
-            return View(customerModel);
+            return View(ProfessionalModel);
         }
 
-        // POST: Customer/Delete/5
+        // POST: Professional/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             try
             {
-                var deleteConfirmed = _customerRepository.Delete(id);
+                var deleteConfirmed = _professionalRepository.Delete(id);
                 if (deleteConfirmed)
                     TempData["SuccessMessage"] = "Success!!!";
                 else

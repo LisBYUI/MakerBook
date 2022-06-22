@@ -1,26 +1,57 @@
 ﻿@model UserModel
 
-<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hello, @Model.Name</a>
+<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hello, @Model.FirstName</a>
 @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-</button>
-<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">*@
-    <ul class="navbar-nav mx-auto">
-        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </li>
-        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
-        </li>
-         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-        </li>
+    </button>
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">*@
+<ul class="navbar-nav mx-auto">
+    <li class="nav-item px-lg-4">
+        <a class="nav-link text-uppercase" asp-area="" asp-controller="Home" asp-action="Index">About us</a>
+    </li>
+    <li class="nav-item px-lg-4">
+        <a class="nav-link text-uppercase" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
+    </li>
 
-        @if (Model.Profile == MakerBook.Enum.ProfileEnum.Administrator)
-        {
-            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" asp-area="" asp-controller="User" asp-action="Index">User</a>
-            </li>
-        }
-
-        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+    @if (Model.Profile == MakerBook.Enum.ProfileEnum.Professional)
+    {
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
         </li>
-    </ul>
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="User" asp-action="Index">User</a>
+        </li>
+    }
+
+    @if (Model.Profile == MakerBook.Enum.ProfileEnum.Customer)
+    {
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+        </li>
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="User" asp-action="Index">User</a>
+        </li>
+    }
+
+    @if (Model.Profile == MakerBook.Enum.ProfileEnum.Administrator)
+    {
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+        </li>
+         <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Customer" asp-action="Index">Customer</a>
+        </li>
+         <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Professional" asp-action="Index">Professional</a>
+        </li>
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="User" asp-action="Index">User</a>
+        </li>
+    }
+
+    <li class="nav-item px-lg-4">
+        <a class="nav-link text-uppercase" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+    </li>
+</ul>
 @*</div>*@

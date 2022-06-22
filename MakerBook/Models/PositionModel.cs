@@ -8,6 +8,7 @@ namespace MakerBook.Models
         [Column("PositionId")]
         [Key]
         public int PositionId { get; set; }
+
         [Column("Latitude")]
         public int Latitude { get; set; }
         [Column("Longitude")]

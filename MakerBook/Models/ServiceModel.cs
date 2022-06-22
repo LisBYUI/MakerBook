@@ -8,20 +8,27 @@ namespace MakerBook.Models
         [Column("ServiceId")]
         [Key]
         public int ServiceId { get; set; }
+
         [Column("Description")]
         public string Description { get; set; }
+
         [Column("Price")]
         public double Price { get; set; }
+
         [Column("ProfessionalId")]
         [ForeignKey("Professional")]
         public int ProfessionalId { get; set; }
+
         [Column("CategoryId")]
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
+
         [Column("UserAt")]
         public string UserAt { get; set; }
+
         [Column("CreatedAt")]
         public DateTime CreatedAt { get; set; }
+
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
 

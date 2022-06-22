@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MakerBook.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220604231339_Inicial")]
-    partial class Inicial
+    [Migration("20220621215110_MigracaoInicial")]
+    partial class MigracaoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,64 @@ namespace MakerBook.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("MakerBook.Models.AddressModel", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("AddressId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"), 1L, 1);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("City");
+
+                    b.Property<string>("ComplementAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ComplementAddress");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int")
+                        .HasColumnName("CustomerId");
+
+                    b.Property<string>("LineAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LineAddress");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("State");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UserAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UserAt");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ZipCode");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Address");
+                });
 
             modelBuilder.Entity("MakerBook.Models.CategoryModel", b =>
                 {
@@ -42,8 +100,9 @@ namespace MakerBook.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
-                    b.Property<byte>("Image")
-                        .HasColumnType("tinyint")
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)")
                         .HasColumnName("Image");
 
                     b.Property<string>("Name")
@@ -112,10 +171,6 @@ namespace MakerBook.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Email");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int")
-                        .HasColumnName("LocationId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -137,47 +192,7 @@ namespace MakerBook.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.HasIndex("LocationId");
-
                     b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("MakerBook.Models.LocationModel", b =>
-                {
-                    b.Property<int>("LocationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("LocationId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationId"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.Property<int>("PositionId")
-                        .HasColumnType("int")
-                        .HasColumnName("PositionId");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedAt");
-
-                    b.Property<string>("UserAt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UserAt");
-
-                    b.HasKey("LocationId");
-
-                    b.HasIndex("PositionId");
-
-                    b.ToTable("Location");
                 });
 
             modelBuilder.Entity("MakerBook.Models.OrderDetailModel", b =>
@@ -298,41 +313,6 @@ namespace MakerBook.Migrations
                     b.ToTable("Payment");
                 });
 
-            modelBuilder.Entity("MakerBook.Models.PositionModel", b =>
-                {
-                    b.Property<int>("PositionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("PositionId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PositionId"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<int>("Latitude")
-                        .HasColumnType("int")
-                        .HasColumnName("Latitude");
-
-                    b.Property<int>("Longitude")
-                        .HasColumnType("int")
-                        .HasColumnName("Longitude");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedAt");
-
-                    b.Property<string>("UserAt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UserAt");
-
-                    b.HasKey("PositionId");
-
-                    b.ToTable("Position");
-                });
-
             modelBuilder.Entity("MakerBook.Models.ProfessionalModel", b =>
                 {
                     b.Property<int>("ProfessionalId")
@@ -351,18 +331,10 @@ namespace MakerBook.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Email");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int")
-                        .HasColumnName("LocationId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
-
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int")
-                        .HasColumnName("PersonId");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -390,19 +362,20 @@ namespace MakerBook.Migrations
 
             modelBuilder.Entity("MakerBook.Models.ServiceImageModel", b =>
                 {
-                    b.Property<int>("ServiceImage")
+                    b.Property<int>("ServiceImageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("ServiceImage");
+                        .HasColumnName("ServiceImageId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceImage"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceImageId"), 1L, 1);
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreatedAt");
 
-                    b.Property<byte>("Image")
-                        .HasColumnType("tinyint")
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)")
                         .HasColumnName("Image");
 
                     b.Property<int>("Name")
@@ -422,7 +395,7 @@ namespace MakerBook.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UserAt");
 
-                    b.HasKey("ServiceImage");
+                    b.HasKey("ServiceImageId");
 
                     b.HasIndex("ServiceId");
 
@@ -479,66 +452,67 @@ namespace MakerBook.Migrations
 
             modelBuilder.Entity("MakerBook.Models.UserModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnName("UserId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedAt");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Email");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FirstName");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LastName");
+
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Login");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Password");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int")
-                        .HasColumnName("PersonId");
-
                     b.Property<int>("Profile")
                         .HasColumnType("int")
                         .HasColumnName("Profile");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UserAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UserAt");
+
+                    b.HasKey("UserId");
 
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("MakerBook.Models.CustomerModel", b =>
+            modelBuilder.Entity("MakerBook.Models.AddressModel", b =>
                 {
-                    b.HasOne("MakerBook.Models.LocationModel", "Location")
+                    b.HasOne("MakerBook.Models.CustomerModel", "Customer")
                         .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
-                    b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("MakerBook.Models.LocationModel", b =>
-                {
-                    b.HasOne("MakerBook.Models.PositionModel", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Position");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("MakerBook.Models.OrderDetailModel", b =>

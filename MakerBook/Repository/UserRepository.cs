@@ -24,7 +24,7 @@ namespace MakerBook.Repository
         /// <returns></returns>
         public UserModel Get(int id)
         {
-            return _context.User.FirstOrDefault(i => i.Id == id);
+            return _context.User.FirstOrDefault(i => i.UserId == id);
         }
 
         public UserModel GetByLogin(string login)
@@ -48,6 +48,8 @@ namespace MakerBook.Repository
         /// <returns></returns>
         public UserModel Create(UserModel userModel)
         {
+            userModel.SetPasswordHash();
+
             _context.User.Add(userModel);
             _context.SaveChanges();
 
@@ -62,10 +64,12 @@ namespace MakerBook.Repository
         /// <exception cref="Exception"></exception>
         public UserModel Update(UserModel userModel)
         {
-            UserModel userDb = Get(userModel.Id);
+            UserModel userDb = Get(userModel.UserId);
             if (userDb == null)
                 throw new Exception("Record not Found");
-            userDb.Name = userModel.Name;
+            userDb.FirstName = userModel.FirstName;
+            userDb.LastName = userModel.LastName;
+            userDb.Login = userModel.Login;
             userDb.Email = userModel.Email;
             userDb.Profile = userModel.Profile;
 
@@ -95,8 +99,11 @@ namespace MakerBook.Repository
 
         public UserModel GetByEmailLogin(string email, string login)
         {
-            return _context.User.FirstOrDefault(x => x.Email.ToUpper() == email.ToUpper() && x.Login.ToUpper() == login.ToUpper());
+            return _context.User.FirstOrDefault(x => x.Email.ToLower() == email.ToLower() && x.Login.ToLower() == login.ToLower());
         }
-
+        public UserModel GetByEmail(string email)
+        {
+            return _context.User.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+        }
     }
 }

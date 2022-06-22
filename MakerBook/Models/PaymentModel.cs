@@ -10,13 +10,16 @@ namespace MakerBook.Models
         [Column("PaymentId")]
         [Key]
         public int PaymentId { get; set; }
+
         [Column("PaymentType")]
         public PaymentTypeEnum PaymentType { get; set; }
         
         [Column("UserAt")]
         public string UserAt { get; set; }
+
         [Column("CreatedAt")]
         public DateTime CreatedAt { get; set; }
+
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
 

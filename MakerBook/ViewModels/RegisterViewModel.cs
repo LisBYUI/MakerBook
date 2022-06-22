@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MakerBook.Models
 {
-    public class RegisterModel
+    public class RegisterViewModel
     {
 
         [Display(Name = "Name")]

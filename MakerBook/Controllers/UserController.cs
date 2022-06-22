@@ -73,10 +73,11 @@ namespace MakerBook.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {
-                    TempData["SuccessMessage"] = "Success!!!";
+                { 
                     _userRepository.Create(userModel);
                     return RedirectToAction(nameof(Index));
+
+                    TempData["SuccessMessage"] = "Success!!!";
                 }
                 return View(userModel);
             }

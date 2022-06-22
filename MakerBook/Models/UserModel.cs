@@ -8,27 +8,44 @@ namespace MakerBook.Models
     [Table("User")]
     public class UserModel
     {
-        [Column("Id")]
-        [Display(Name = "Identifier")]
-        public int Id { get; set; }
-        [Column("Name")]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
-        //[Column("LastName")]
-        //[Display(Name = "Last Name")]
-        //public string LastName { get; set; }
+        [Column("UserId")]
+        [Display(Name = "UserId")]
+        [Key]
+        public int UserId { get; set; }
+
+        [Column("FirstName")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Column("LastName")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
         [Column("Login")]
         [Display(Name = "Login")]
         public string Login { get; set; }
+
         [Column("Email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
         [Column("Password")]
         [Display(Name = "Password")]
         public string Password { get; set; }
+
         [Column("Profile")]
         [Display(Name = "Profile")]
         public ProfileEnum Profile { get; set; }
+
+
+        [Column("UserAt")]
+        public string UserAt { get; set; }
+
+        [Column("CreatedAt")]
+        public DateTime CreatedAt { get; set; }
+
+        [Column("UpdatedAt")]
+        public DateTime UpdatedAt { get; set; }
 
         public bool ValidPassword(string password)
         {

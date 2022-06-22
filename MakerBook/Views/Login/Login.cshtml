@@ -1,4 +1,4 @@
-﻿@model LoginModel
+﻿@model LoginViewModel
 @{
     Layout = "_LayoutDefault";
     ViewData["Title"] = "Login";
@@ -37,6 +37,13 @@
                             <label for="Password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" asp-for="Password">
                         </div>
+                        <p>
+                            New to MakerBook? <br />
+                            <a asp-action="RegisterCustomer" asp-controller="Login">Click here</a> to register as a Customer.
+                            <br />
+                            OR
+                            <br /><a asp-action="RegisterProfessional" asp-controller="Login">Click here</a> to register as a Maker.
+                        </p>
                         <p class="mb-4 text-sm mx-auto">
                             Forgot your password?
                             <a asp-action="RecoverPassword" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Recover my password</a>

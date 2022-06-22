@@ -2,7 +2,7 @@
 
 namespace MakerBook.Models
 {
-    public class RecoverPasswordModel
+    public class RecoverPasswordViewModel
     {
         [Required(ErrorMessage = "Login required")]
         public string Login { get; set; }

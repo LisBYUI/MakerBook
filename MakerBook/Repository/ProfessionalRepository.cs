@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MakerBook.Repository
 {
-    public class CustomerRepository: ICustomerRepository
+    public class ProfessionalRepository: IProfessionalRepository
     {
         private readonly DatabaseContext _context;
 
         /// <summary>
-        /// Constructor - CustomerRepository
+        /// Constructor - ProfessionalRepository
         /// </summary>
         /// <param name="context"></param>
-        public CustomerRepository(DatabaseContext context)
+        public ProfessionalRepository(DatabaseContext context)
         {
             _context = context;
         }
@@ -23,51 +23,51 @@ namespace MakerBook.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public CustomerModel Get(int id)
+        public ProfessionalModel Get(int id)
         {
-            return _context.Customer.FirstOrDefault(i => i.CustomerId == id);
+            return _context.Professional.FirstOrDefault(i => i.ProfessionalId == id);
         }
 
         /// <summary>
         /// GetAll
         /// </summary>
         /// <returns></returns>
-        public List<CustomerModel> GetAll()
+        public List<ProfessionalModel> GetAll()
         {
-            return _context.Customer.ToList();
+            return _context.Professional.ToList();
         }
 
         /// <summary>
         /// Create
         /// </summary>
-        /// <param name="CustomerModel"></param>
+        /// <param name="ProfessionalModel"></param>
         /// <returns></returns>
-        public CustomerModel Create(CustomerModel customerModel)
+        public ProfessionalModel Create(ProfessionalModel professionalModel)
         {
-            _context.Customer.Add(customerModel);
+            _context.Professional.Add(professionalModel);
             _context.SaveChanges();
 
-            return customerModel;
+            return professionalModel;
         }
 
         /// <summary>
         /// Update
         /// </summary>
-        /// <param name="CustomerModel"></param>
+        /// <param name="ProfessionalModel"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public CustomerModel Update(CustomerModel customerModel)
+        public ProfessionalModel Update(ProfessionalModel professionalModel)
         {
-            CustomerModel customerDb = Get(customerModel.CustomerId);
-            if (customerDb == null)
+            ProfessionalModel professionalDb = Get(professionalModel.ProfessionalId);
+            if (professionalDb == null)
                 throw new Exception("Record not Found");
-            customerDb.Name = customerModel.Name;
-            customerDb.Email = customerModel.Email;
+            professionalDb.Name = professionalModel.Name;
+            professionalDb.PhoneNumber = professionalModel.PhoneNumber;
 
-            _context.Customer.Update(customerDb);
+            _context.Professional.Update(professionalDb);
             _context.SaveChanges();
 
-            return customerDb;
+            return professionalDb;
         }
 
         /// <summary>
@@ -78,11 +78,11 @@ namespace MakerBook.Repository
         /// <exception cref="Exception"></exception>
         public bool Delete(int id)
         {
-            CustomerModel customerDb = Get(id);
+            ProfessionalModel customerDb = Get(id);
             if (customerDb == null)
                 throw new Exception("Record not Found");
 
-            _context.Customer.Remove(customerDb);
+            _context.Professional.Remove(customerDb);
             _context.SaveChanges();
 
             return true;

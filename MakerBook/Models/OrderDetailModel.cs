@@ -9,6 +9,7 @@ namespace MakerBook.Models
         [Column("OrderDetailId")]
         [Key]
         public int OrderDetailId { get; set; }
+
         [Column("OrderId")]
         [ForeignKey("Order")]
         public int OrderId { get; set; }
@@ -19,8 +20,10 @@ namespace MakerBook.Models
 
         [Column("UserAt")]
         public string UserAt { get; set; }
+
         [Column("CreatedAt")]
         public DateTime CreatedAt { get; set; }
+
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
 

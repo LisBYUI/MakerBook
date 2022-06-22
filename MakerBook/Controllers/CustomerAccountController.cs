@@ -13,14 +13,14 @@ using MakerBook.Repository.Interface;
 
 namespace MakerBook.Controllers
 {
-    [RestrictedPageAdminOnly]
-    public class CustomerController : Controller
+    [PageForUserLogged]
+    public class CustomerAccountController : Controller
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly ISessionHelper _session;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CustomerController(ICustomerRepository customerRepository, ISessionHelper session)
+        public CustomerAccountController(ICustomerRepository customerRepository, ISessionHelper session)
         {
             _customerRepository = customerRepository;
             _session = session;

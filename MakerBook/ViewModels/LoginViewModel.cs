@@ -2,7 +2,7 @@
 
 namespace MakerBook.Models
 {
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required(ErrorMessage = "Login required") ]
         public string Login { get; set; }

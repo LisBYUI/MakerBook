@@ -2,36 +2,34 @@
 
 namespace MakerBook.Repository.Interface
 {
-    public interface IUserRepository
+    public interface IProfessionalRepository
     {
         /// <summary>
         /// Get
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        UserModel Get(int id);
-
-        UserModel GetByLogin(string login);
+        ProfessionalModel Get(int id);
 
         /// <summary>
         /// GetAll
         /// </summary>
         /// <returns></returns>
-        List<UserModel> GetAll();
+        List<ProfessionalModel> GetAll();
 
         /// <summary>
         /// Create
         /// </summary>
-        /// <param name="userModel"></param>
+        /// <param name="ProfessionalModel"></param>
         /// <returns></returns>
-        UserModel Create(UserModel userModel);
+        ProfessionalModel Create(ProfessionalModel professionalModel);
 
         /// <summary>
         /// Update
         /// </summary>
-        /// <param name="userModel"></param>
+        /// <param name="ProfessionalModel"></param>
         /// <returns></returns>
-        UserModel Update(UserModel userModel);
+        ProfessionalModel Update(ProfessionalModel professionalModel);
 
         /// <summary>
         /// Delete
@@ -39,14 +37,5 @@ namespace MakerBook.Repository.Interface
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        UserModel GetByEmailLogin(string email, string login);
-        UserModel GetByEmail(string email);
     }
 }
