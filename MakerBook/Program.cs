@@ -20,6 +20,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
+builder.Services.AddScoped<IProfessionalProfileRepository, ProfessionalProfileRepository>();
+builder.Services.AddScoped<IProfessionalSocialMediaRepository, ProfessionalSocialMediaRepository>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IServiceImageRepository, ServiceImageRepository>();
 
 builder.Services.AddScoped<ISessionHelper, SessionHelper>();
 builder.Services.AddScoped<IEmail, Email>();

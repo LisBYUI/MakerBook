@@ -11,7 +11,7 @@ namespace MakerBook.Models
         public int ServiceImageId { get; set; }
 
         [Column("Name")]
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         [Column("Image")]
         public byte[] Image { get; set; }

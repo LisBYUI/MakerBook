@@ -41,12 +41,12 @@ namespace MakerBook.Repository
         /// </summary>
         /// <param name="CategoryModel"></param>
         /// <returns></returns>
-        public CategoryModel Create(CategoryModel CategoryModel)
+        public CategoryModel Create(CategoryModel categoryModel)
         {
-            _context.Category.Add(CategoryModel);
+            _context.Category.Add(categoryModel);
             _context.SaveChanges();
 
-            return CategoryModel;
+            return categoryModel;
         }
 
         /// <summary>
@@ -55,21 +55,21 @@ namespace MakerBook.Repository
         /// <param name="CategoryModel"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public CategoryModel Update(CategoryModel CategoryModel)
+        public CategoryModel Update(CategoryModel categoryModel)
         {
-            CategoryModel CategoryDb = Get(CategoryModel.CategoryId);
-            if (CategoryDb == null)
+            CategoryModel categoryDb = Get(categoryModel.CategoryId);
+            if (categoryDb == null)
                 throw new Exception("Record not Found");
-            CategoryDb.Name = CategoryModel.Name;
-            CategoryDb.Description = CategoryModel.Description;
-            CategoryDb.Image = CategoryModel.Image;
-            CategoryDb.UpdatedAt = CategoryModel.UpdatedAt;
-            CategoryDb.UserAt = CategoryModel.UserAt;
+            categoryDb.Name = categoryModel.Name;
+            categoryDb.Description = categoryModel.Description;
+            categoryDb.Image = categoryModel.Image;
+            categoryDb.UpdatedAt = categoryModel.UpdatedAt;
+            categoryDb.UserAt = categoryModel.UserAt;
 
-            _context.Category.Update(CategoryDb);
+            _context.Category.Update(categoryDb);
             _context.SaveChanges();
 
-            return CategoryDb;
+            return categoryDb;
         }
 
         /// <summary>
@@ -80,11 +80,11 @@ namespace MakerBook.Repository
         /// <exception cref="Exception"></exception>
         public bool Delete(int id)
         {
-            CategoryModel CategoryDb = Get(id);
-            if (CategoryDb == null)
+            CategoryModel categoryDb = Get(id);
+            if (categoryDb == null)
                 throw new Exception("Record not Found");
 
-            _context.Category.Remove(CategoryDb);
+            _context.Category.Remove(categoryDb);
             _context.SaveChanges();
 
             return true;

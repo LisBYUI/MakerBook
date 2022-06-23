@@ -1,0 +1,58 @@
+﻿@using MakerBook.ViewModels
+@model ServiceViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Service</span>
+                    <span class="section-heading-lower">Services offered</span>
+                </h2>
+                <p>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ServiceId" />
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Price" class="control-label"></label>
+                                    <input asp-for="Price" class="form-control" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ProfessionalId" class="control-label"></label>
+                                    @Html.DropDownListFor(model=>model.ProfessionalId, Model.ProfessionalList, "--Select", new{@class="form-control"})
+                                    <span asp-validation-for="ProfessionalId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CategoryId" class="control-label"></label>
+                                    @Html.DropDownListFor(model=>model.CategoryId, Model.CategoryList, "--Select", new{@class="form-control"})
+                                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary btn-block"/> |
+                                    <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

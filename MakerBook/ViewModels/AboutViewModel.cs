@@ -1,6 +1,6 @@
 ﻿using MakerBook.Enum;
 
-namespace MakerBook.Models
+namespace MakerBook.ViewModels
 {
     public class AboutViewModel
     {

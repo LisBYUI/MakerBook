@@ -31,13 +31,13 @@
                             <label asp-for="ImageCategory" class="control-label"></label>
                             <div class="custom-file">
                                 <input asp-for="ImageCategory" class="custom-file-input" />
-                                <label class="custom-file-label" for="customFile">Escolha A Foto</label>
+                                
                             </div>
                             <span asp-validation-for="ImageCategory" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary btn-block" />|
+                            <input type="submit" value="Create" class="btn btn-primary btn-block" /> | 
                             <a class="btn btn-secondary btn-block" asp-action="Index" asp-controller="Category" role="button">Back to List</a>
                         </div>
                     </form>

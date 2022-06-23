@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MakerBook.Models
+namespace MakerBook.ViewModels
 {
     public class LoginViewModel
     {

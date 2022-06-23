@@ -63,6 +63,8 @@ namespace MakerBook.Repository
                 throw new Exception("Record not Found");
             professionalDb.Name = professionalModel.Name;
             professionalDb.PhoneNumber = professionalModel.PhoneNumber;
+            professionalDb.UpdatedAt = professionalModel.UpdatedAt;
+            professionalDb.UserAt = professionalModel.UserAt;
 
             _context.Professional.Update(professionalDb);
             _context.SaveChanges();
@@ -78,14 +80,20 @@ namespace MakerBook.Repository
         /// <exception cref="Exception"></exception>
         public bool Delete(int id)
         {
-            ProfessionalModel customerDb = Get(id);
-            if (customerDb == null)
+            ProfessionalModel professionalDb = Get(id);
+            if (professionalDb == null)
                 throw new Exception("Record not Found");
 
-            _context.Professional.Remove(customerDb);
+            _context.Professional.Remove(professionalDb);
             _context.SaveChanges();
 
             return true;
-        } 
+        }
+
+        public ProfessionalModel GetByEmail(string email)
+        {
+            return _context.Professional.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+
+        }
     }
 }

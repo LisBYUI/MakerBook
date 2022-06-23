@@ -37,5 +37,7 @@ namespace MakerBook.Repository.Interface
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
+
+        ProfessionalModel GetByEmail(string email);
     }
 }

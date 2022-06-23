@@ -1,4 +1,5 @@
-﻿@model LoginViewModel
+﻿@using MakerBook.ViewModels
+@model LoginViewModel
 @{
     Layout = "_LayoutDefault";
     ViewData["Title"] = "Home";
@@ -15,7 +16,7 @@
         </div>
         <div class="col-lg-8 align-self-baseline">
             <p class="text-white-75 mb-5">
-                MakerBook is a web platform that publishes advertisements or
+                Do It Local is a web platform that publishes advertisements or
                 requests for especific services that seek a professional to meet a need
                 or service.
             </p>
@@ -26,7 +27,8 @@
             <p class="text-white-75 mb-5">
                 When a private user asks for a estimate, the professionals who perform this type of work see the ad.
             </p>
-            <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+            <a class="btn btn-primary btn-xl" asp-area="" asp-controller="Login" asp-action="Login">Find Out More</a>
+
         </div>
     </div>
 </div>

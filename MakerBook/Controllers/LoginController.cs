@@ -107,7 +107,7 @@ namespace MakerBook.Controllers
 
                         string message = $"New passoword is: {newPassword}";
 
-                        bool emailSent = _email.Send(user.Email, "MakerBook - New Password", message);
+                        bool emailSent = _email.Send(user.Email, "Do It Local - New Password", message);
 
                         if (emailSent)
                         {

@@ -1,4 +1,5 @@
-﻿@model LoginViewModel
+﻿@using MakerBook.ViewModels
+@model LoginViewModel
 @{
     Layout = "_LayoutDefault";
     ViewData["Title"] = "Login";
@@ -38,7 +39,7 @@
                             <input type="password" class="form-control" id="password" asp-for="Password">
                         </div>
                         <p>
-                            New to MakerBook? <br />
+                            New to Do It Local? <br />
                             <a asp-action="RegisterCustomer" asp-controller="Login">Click here</a> to register as a Customer.
                             <br />
                             OR

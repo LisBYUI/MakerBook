@@ -63,6 +63,8 @@ namespace MakerBook.Repository
                 throw new Exception("Record not Found");
             customerDb.Name = customerModel.Name;
             customerDb.Email = customerModel.Email;
+            customerDb.UpdatedAt = customerModel.UpdatedAt;
+            customerDb.UserAt = customerModel.UserAt;
 
             _context.Customer.Update(customerDb);
             _context.SaveChanges();

@@ -1,0 +1,69 @@
+﻿@using MakerBook.ViewModels
+@model IEnumerable<ServiceViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Service</span>
+                    <span class="section-heading-lower">Services offered</span>
+                </h2>
+                <p>
+
+                <p>
+                    <a asp-action="Create">Create New</a>
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                    @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            <th>
+                                    @Html.DisplayNameFor(model => model.ProfessionalId)
+                            </th>
+                            <th>
+                                    @Html.DisplayNameFor(model => model.CategoryId)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+
+                                <td>
+                                        @Html.DisplayFor(modelItem => item.Professional.Name)
+                                </td>
+                                <td>
+                                        @Html.DisplayFor(modelItem => item.Category.Name)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.ServiceId">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.ServiceId">Delete</a>
+                                </td>
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

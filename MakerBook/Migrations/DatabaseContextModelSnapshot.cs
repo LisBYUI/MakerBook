@@ -358,6 +358,86 @@ namespace MakerBook.Migrations
                     b.ToTable("Professional");
                 });
 
+            modelBuilder.Entity("MakerBook.Models.ProfessionalProfileModel", b =>
+                {
+                    b.Property<int>("ProfessionalProfileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ProfessionalProfileId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfessionalProfileId"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<byte[]>("ImageProfile")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("ImageProfile");
+
+                    b.Property<int>("ProfessionalId")
+                        .HasColumnType("int")
+                        .HasColumnName("ProfessionalId");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UserAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UserAt");
+
+                    b.HasKey("ProfessionalProfileId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.ToTable("ProfessionalProfile");
+                });
+
+            modelBuilder.Entity("MakerBook.Models.ProfessionalSocialMediaModel", b =>
+                {
+                    b.Property<int>("ProfessionalSocialMediaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ProfessionalSocialMediaId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfessionalSocialMediaId"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<int>("ProfessionalProfileId")
+                        .HasColumnType("int")
+                        .HasColumnName("ProfessionalProfileId");
+
+                    b.Property<int>("ProfessionalProfileType")
+                        .HasColumnType("int")
+                        .HasColumnName("ProfessionalProfileType");
+
+                    b.Property<string>("SocialMedia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SocialMedia");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UserAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UserAt");
+
+                    b.HasKey("ProfessionalSocialMediaId");
+
+                    b.HasIndex("ProfessionalProfileId");
+
+                    b.ToTable("ProfessionalSocialMedia");
+                });
+
             modelBuilder.Entity("MakerBook.Models.ServiceImageModel", b =>
                 {
                     b.Property<int>("ServiceImageId")
@@ -376,8 +456,9 @@ namespace MakerBook.Migrations
                         .HasColumnType("varbinary(max)")
                         .HasColumnName("Image");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
                     b.Property<int>("ServiceId")
@@ -547,6 +628,28 @@ namespace MakerBook.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("MakerBook.Models.ProfessionalProfileModel", b =>
+                {
+                    b.HasOne("MakerBook.Models.ProfessionalModel", "Professional")
+                        .WithMany()
+                        .HasForeignKey("ProfessionalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Professional");
+                });
+
+            modelBuilder.Entity("MakerBook.Models.ProfessionalSocialMediaModel", b =>
+                {
+                    b.HasOne("MakerBook.Models.ProfessionalProfileModel", "ProfessionalProfile")
+                        .WithMany()
+                        .HasForeignKey("ProfessionalProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProfessionalProfile");
                 });
 
             modelBuilder.Entity("MakerBook.Models.ServiceImageModel", b =>

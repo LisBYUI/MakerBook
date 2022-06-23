@@ -72,6 +72,8 @@ namespace MakerBook.Repository
             userDb.Login = userModel.Login;
             userDb.Email = userModel.Email;
             userDb.Profile = userModel.Profile;
+            userDb.UpdatedAt = userModel.UpdatedAt;
+            userDb.UserAt = userModel.UserAt;
 
             _context.User.Update(userDb);
             _context.SaveChanges();

@@ -17,6 +17,8 @@ namespace MakerBook.Data
         public DbSet<OrderModel> Order { get; set; }
         public DbSet<PaymentModel> Payment { get; set; }
         public DbSet<ProfessionalModel> Professional { get; set; }
+        public DbSet<ProfessionalSocialMediaModel> ProfessionalSocialMedia { get; set; }
+        public DbSet<ProfessionalProfileModel> ProfessionalProfile { get; set; }
         public DbSet<ServiceImageModel> ServiceImage { get; set; }
         public DbSet<ServiceModel> Service { get; set; }
 
