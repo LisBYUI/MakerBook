@@ -11,6 +11,7 @@ using MakerBook.Repository.Interface;
 using MakerBook.Helper.Interface;
 using System.Drawing;
 using MakerBook.Filters;
+using MakerBook.ViewModels;
 
 namespace MakerBook.Controllers
 {
@@ -19,21 +20,26 @@ namespace MakerBook.Controllers
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly ISessionHelper _session;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CategoryController(ICategoryRepository categoryRepository, ISessionHelper session, IWebHostEnvironment webHostEnvironment)
+
+        public CategoryController(ICategoryRepository categoryRepository, ISessionHelper session)
         {
             _categoryRepository = categoryRepository;
             _session = session;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: CategoryModel
         public IActionResult Index()
         {
             List<CategoryModel> categoryList = _categoryRepository.GetAll();
-     
-            return View(categoryList);
+            List<CategoryViewModel> categoryViewList = new List<CategoryViewModel>();
+
+            foreach (var item in categoryList)
+            {
+                categoryViewList.Add(MapRegisterCategoryView(item));
+            }
+
+            return View(categoryViewList);
         }
 
         // GET: CategoryModel/Details/5
@@ -46,13 +52,16 @@ namespace MakerBook.Controllers
                 return NotFound();
             }
 
-            return View(categoryModel);
+            var categoryViewModel = MapRegisterCategoryView(categoryModel);
+
+            return View(categoryViewModel);
         }
 
         // GET: CategoryModel/Create
         public IActionResult Create()
         {
-            return View();
+            var categoryViewModel = new CategoryViewModel();
+            return View(categoryViewModel);
         }
 
         // POST: CategoryModel/Create
@@ -60,29 +69,22 @@ namespace MakerBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CategoryModel categoryModel)
+        public IActionResult Create(CategoryViewModel categoryViewModel)
         {
             try
             {
-                //string nomeArquivoImagem = ProcessaUploadedFile(categoryModel);
-                //if (ModelState.IsValid)
-                //{
-                    MemoryStream ms  = new MemoryStream();
-                    categoryModel.ImageCategory.OpenReadStream().CopyTo(ms);
+                var userSession = _session.GetUserSession();
 
-                    var userSession = _session.GetUserSession();
-                    categoryModel.CreatedAt = DateTime.Now;
-                categoryModel.UpdatedAt = DateTime.Now;
-                    if (userSession != null)
-                        categoryModel.UserAt = userSession.Login;
+                MemoryStream ms = new MemoryStream();
+                categoryViewModel.ImageCategory.OpenReadStream().CopyTo(ms);
 
-                    categoryModel.Image = ms.ToArray();
-                    _categoryRepository.Create(categoryModel);
+                var categoryModel = MapRegisterCategory(categoryViewModel, userSession.Login, ms.ToArray(), categoryViewModel.ImageCategory.FileName, categoryViewModel.ImageCategory.ContentType);
 
-                    TempData["SuccessMessage"] = "Success!!!";
-                    return RedirectToAction(nameof(Index));
-                //}
-                return View(categoryModel);
+                _categoryRepository.Create(categoryModel);
+
+                TempData["SuccessMessage"] = "Success!!!";
+                return RedirectToAction(nameof(Index));
+
             }
             catch (Exception ex)
             {
@@ -99,7 +101,10 @@ namespace MakerBook.Controllers
             {
                 return NotFound();
             }
-            return View(categoryModel);
+
+            var categoryViewModel = MapRegisterCategoryView(categoryModel);
+
+            return View(categoryViewModel);
         }
 
         // POST: CategoryModel/Edit/5
@@ -107,28 +112,42 @@ namespace MakerBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, CategoryModel categoryModel)
+        public IActionResult Edit(int id, CategoryViewModel categoryViewModel)
         {
             try
             {
-                //if (ModelState.IsValid)
-                //{
+                if (ModelState.IsValid)
+                {
                     var userSession = _session.GetUserSession();
-                    MemoryStream ms = new MemoryStream();
-                    categoryModel.ImageCategory.OpenReadStream().CopyTo(ms);
 
-                    categoryModel.UpdatedAt = DateTime.Now;
-                    if (userSession != null)
-                        categoryModel.UserAt = userSession.Login;
+                    byte[] file;
+                    var filename = string.Empty;
+                    var extension = string.Empty;
 
-                    categoryModel.Image = ms.ToArray();
+                    if (categoryViewModel.ImageCategory != null)
+                    {
+                        MemoryStream ms = new MemoryStream();
+                        categoryViewModel.ImageCategory.OpenReadStream().CopyTo(ms);
+                        file = ms.ToArray();
+                        filename = categoryViewModel.ImageCategory.FileName;
+                        extension = categoryViewModel.ImageCategory.ContentType;
+                    }
+                    else
+                    {
+                        var categoryAux = _categoryRepository.Get(id);
+                        file = categoryAux.Image;
+                        filename = categoryAux.ImageName;
+                        extension = categoryAux.ImageExtension;
+                    }
+                    var categoryModel = MapRegisterCategory(categoryViewModel, userSession.Login, file, filename, extension);
 
                     CategoryModel category = _categoryRepository.Update(categoryModel);
                     TempData["SuccessMessage"] = "Success!!!";
-                    return RedirectToAction(nameof(Index));
-                //}
 
-                return View("Edit", categoryModel);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View("Edit", categoryViewModel);
             }
             catch (Exception ex)
             {
@@ -146,7 +165,9 @@ namespace MakerBook.Controllers
                 return NotFound();
             }
 
-            return View(categoryModel);
+            var categoryViewModel = MapRegisterCategoryView(categoryModel);
+
+            return View(categoryViewModel);
         }
 
         // POST: CategoryModel/Delete/5
@@ -172,21 +193,67 @@ namespace MakerBook.Controllers
             }
         }
 
-        private string ProcessaUploadedFile(CategoryModel model)
+        /// <summary>
+        /// MapRegisterServiceView
+        /// </summary>
+        /// <param name="sourceModel"></param>
+        /// <returns></returns>
+        private CategoryViewModel MapRegisterCategoryView(CategoryModel sourceModel)
         {
-            string nomeArquivoImagem = null;
+            var stream = new MemoryStream(sourceModel.Image);
+            IFormFile file = new FormFile(stream, 0, stream.Length, sourceModel.ImageName, sourceModel.ImageExtension);
 
-            if (model.ImageCategory != null)
+            CategoryViewModel targetModel = new CategoryViewModel
             {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads");
-                nomeArquivoImagem = Guid.NewGuid().ToString() + "_" + model.ImageCategory.FileName;
-                string filePath = Path.Combine(uploadsFolder, nomeArquivoImagem);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.ImageCategory.CopyTo(fileStream);
-                }
-            }
-            return nomeArquivoImagem;
+                CategoryId = sourceModel.CategoryId
+            ,
+                Name = sourceModel.Name
+            ,
+                Description = sourceModel.Description
+            ,
+                Image = sourceModel.Image
+                ,
+                ImageName = sourceModel.ImageName
+                ,
+                ImageExtension = sourceModel.ImageExtension
+
+        ,
+                ImageCategory = file
+            };
+
+            return targetModel;
+        }
+
+        /// <summary>
+        /// MapRegisterCategory
+        /// </summary>
+        /// <param name="sourceModel"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        private CategoryModel MapRegisterCategory(CategoryViewModel sourceModel, string login, byte[] Image, string filename, string extension)
+        {
+            CategoryModel targetModel = new CategoryModel
+            {
+                CategoryId = sourceModel.CategoryId
+            ,
+                Name = sourceModel.Name
+            ,
+                Description = sourceModel.Description
+            ,
+                Image = Image
+                 ,
+                ImageName = filename
+                 ,
+                ImageExtension = extension
+            ,
+                CreatedAt = DateTime.Now
+            ,
+                UpdatedAt = DateTime.Now
+            ,
+                UserAt = login
+            };
+
+            return targetModel;
         }
     }
 }

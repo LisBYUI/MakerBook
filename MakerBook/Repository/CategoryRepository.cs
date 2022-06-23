@@ -63,6 +63,8 @@ namespace MakerBook.Repository
             categoryDb.Name = categoryModel.Name;
             categoryDb.Description = categoryModel.Description;
             categoryDb.Image = categoryModel.Image;
+            categoryDb.ImageName = categoryModel.ImageName;
+            categoryDb.ImageExtension = categoryModel.ImageExtension;
             categoryDb.UpdatedAt = categoryModel.UpdatedAt;
             categoryDb.UserAt = categoryModel.UserAt;
 

@@ -1,7 +1,8 @@
-﻿@model MakerBook.Models.CategoryModel
+﻿@using MakerBook.ViewModels
+@model CategoryViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Category";
 }
 
 <div class="about-heading-content">
@@ -9,9 +10,10 @@
         <div class="col-xl-9 col-lg-10 mx-auto">
             <div class="bg-faded rounded p-5">
                 <h2 class="section-heading mb-4">
-                    <span class="section-heading-upper">Login</span>
-                    <span class="section-heading-lower">Access your account</span>
+                    <span class="section-heading-upper">New</span>
+                    <span class="section-heading-lower">Category</span>
                 </h2>
+                 <hr />
                 <p>
                     <form asp-action="Create" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -30,12 +32,12 @@
                         <div class="form-group">
                             <label asp-for="ImageCategory" class="control-label"></label>
                             <div class="custom-file">
-                                <input asp-for="ImageCategory" class="custom-file-input" />
-                                
+                                <input asp-for="ImageCategory" class="custom-file-input" required/>
+                        
                             </div>
                             <span asp-validation-for="ImageCategory" class="text-danger"></span>
                         </div>
-
+                         <hr />
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary btn-block" /> | 
                             <a class="btn btn-secondary btn-block" asp-action="Index" asp-controller="Category" role="button">Back to List</a>

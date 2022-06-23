@@ -9,20 +9,30 @@ namespace MakerBook.Models
         [Column("CategoryId")]
         [Key]
         public int CategoryId { get; set; }
+
         [Column("Name")]
         public string Name { get; set; }
+
         [Column("Description")]
         public string Description { get; set; }
+
         [Column("Image")]
         public byte[] Image { get; set; }
 
+        [Column("ImageName")]
+        public string ImageName { get; set; }
+
+        [Column("ImageExtension")]
+        public string ImageExtension { get; set; }
+
         [Column("UserAt")]
         public string UserAt { get; set; }
+
         [Column("CreatedAt")]
         public DateTime CreatedAt { get; set; }
+
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
-        [NotMapped]
-        public IFormFile ImageCategory { get; set; }
+        
     }
 }
