@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using MakerBook.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using MakerBook.Models;
 using MakerBook.Repository.Interface;
 using MakerBook.Filters;
@@ -31,7 +24,6 @@ namespace MakerBook.Controllers
             _session = session;
         }
 
-
         /// <summary>
         /// GET: User
         /// </summary>
@@ -48,7 +40,6 @@ namespace MakerBook.Controllers
 
             return View(userViewList);
         }
-
 
         /// <summary>
         /// GET: User/Details/5
@@ -67,7 +58,6 @@ namespace MakerBook.Controllers
            var userViewModel  = MapRegisterUserView(userModel);
             return View(userViewModel);
         }
-
 
         /// <summary>
         /// GET: User/Create
@@ -108,7 +98,6 @@ namespace MakerBook.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-
 
         /// <summary>
         /// GET: User/Edit/5
@@ -175,7 +164,6 @@ namespace MakerBook.Controllers
             UserViewModel userViewModel = MapRegisterUserView(userModel);
             return View(userViewModel);
         }
-
 
         /// <summary>
         /// POST: User/Delete/5

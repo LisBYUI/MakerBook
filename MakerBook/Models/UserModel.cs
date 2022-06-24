@@ -37,7 +37,6 @@ namespace MakerBook.Models
         [Display(Name = "Profile")]
         public ProfileEnum Profile { get; set; }
 
-
         [Column("UserAt")]
         public string UserAt { get; set; }
 
@@ -47,16 +46,27 @@ namespace MakerBook.Models
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
 
+        /// <summary>
+        /// ValidPassword
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool ValidPassword(string password)
         {
             return Password == password.GenerateHash();
         }
 
+        /// <summary>
+        /// SetPasswordHash
+        /// </summary>
         public void SetPasswordHash()
         {
             Password = Password.GenerateHash();
         }
-
+        /// <summary>
+        /// GenerateNewPassword
+        /// </summary>
+        /// <returns></returns>
         public string GenerateNewPassword()
         {
             string newPassword = Guid.NewGuid().ToString().Substring(0, 8);
