@@ -1,0 +1,133 @@
+﻿@using MakerBook.ViewModels
+@model ProfessionalProfileViewModel
+
+@{
+    ViewData["Title"] = "Professional Profile";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"].
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Profile</span>
+                    <span class="section-heading-lower">Professional</span>
+                </h2>
+                <hr />
+                <form asp-action="ProfessionalProfile" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProfessionalId" />
+                    <div class="form-group">
+                        <label asp-for="ImageProfileForm" class="control-label"></label>
+                        <div class="custom-file">
+                            <input asp-for="ImageProfileForm" class="custom-file-input" required />
+
+                        </div>
+                        <span asp-validation-for="ImageProfileForm" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <!-- Facebook -->
+                        <i class="fab fa-facebook-f"></i>
+                        <input asp-for="Facebook" class="form-control" placeholder="https://www.facebook.com/example" />
+                    </div>
+
+                    <div class="form-group">
+                        <!-- Twitter -->
+                        <i class="fab fa-twitter"></i>
+                        <input asp-for="Twitter" class="form-control" placeholder="https://twitter.com/example" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Google -->
+                        <i class="fab fa-google"></i>
+                        <input asp-for="Google" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Instagram -->
+                        <i class="fab fa-instagram"></i>
+                        <input asp-for="Instagram" class="form-control" placeholder="https://www.instagram.com/example" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Linkedin -->
+                        <i class="fab fa-linkedin-in"></i>
+                        <input asp-for="Linkedin" class="form-control" placeholder="https://www.linkedin.com/in/example" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Pinterest -->
+                        <i class="fab fa-pinterest"></i>
+                        <input asp-for="Pinterest" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Youtube -->
+                        <i class="fab fa-youtube"></i>
+                        <input asp-for="Youtube" class="form-control" placeholder="https://www.youtube.com/example" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Slack -->
+                        <i class="fab fa-slack-hash"></i>
+                        <input asp-for="Slack" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Github -->
+                        <i class="fab fa-github"></i>
+                        <input asp-for="Github" class="form-control" placeholder="https://github.com/example" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Reddit -->
+                        <i class="fab fa-reddit-alien"></i>
+                        <input asp-for="Reddit" class="form-control" placeholder="https://www.reddit.com/r/example/" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Whatsapp -->
+                        <i class="fab fa-whatsapp"></i>
+                        <input asp-for="Whatsapp" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <!-- Skype -->
+                        <i class="fab fa-skype"></i>
+                        <input asp-for="Skype" class="form-control" />
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary btn-block" /> |
+                        <a class="btn btn-secondary btn-block" asp-action="Profile" asp-controller="Professional" role="button">Back to List</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

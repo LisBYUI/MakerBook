@@ -90,6 +90,10 @@ namespace MakerBook.Repository
             return true;
         }
 
-       
+        public ProfessionalProfileModel GetByProfessional(int professionalId)
+        {
+            return _context.ProfessionalProfile.FirstOrDefault(i => i.ProfessionalId == professionalId);
+        }
+
     }
 }

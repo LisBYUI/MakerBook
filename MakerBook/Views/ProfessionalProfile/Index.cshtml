@@ -1,0 +1,230 @@
+﻿@using MakerBook.ViewModels
+@model ProfessionalProfileViewModel
+
+@{
+    ViewData["Title"] = "Professional Profile";
+}
+
+
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Profile</span>
+                    <span class="section-heading-lower">Professional</span>
+                </h2>
+                <hr />
+
+
+                <form asp-action="ProfessionalProfile" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProfessionalId" />
+
+
+       
+            
+                               
+                                    <div class="card">
+                                        <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+                                            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                                                <img src="data:image;base64,@System.Convert.ToBase64String(Model.ImageProfile)"
+                                                     alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                                                     style="width: 150px; z-index: 1">
+                                                <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                                                        style="z-index: 1;">
+                                                    Edit profile
+                                                </button>
+                                            </div>
+                                            <div class="ms-3" style="margin-top: 130px;">
+                                                <p> @Html.DisplayFor(model => model.Professional.Name)</p>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="p-4 text-black" style="background-color: #f8f9fa;">
+                                            <div class="d-flex justify-content-end text-center py-1">
+                                                <div>
+                                                    @foreach (var item in Model.professionalSocialMediaList)
+                                                    {
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Facebook)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                  
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-facebook-f"></i>
+                                                            </a>
+                                                        }
+
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Twitter)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                   
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-twitter"></i>
+                                                            </a>
+                                                        }
+
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Google)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                   
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-google"></i>
+                                                            </a>
+                                                        }
+
+                                                        
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Instagram)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                    
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-instagram"></i>
+                                                            </a>
+                                                        }
+
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Linkedin)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                      
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-linkedin-in"></i>
+                                                            </a>
+                                                        }
+
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Pinterest)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                     
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-pinterest"></i>
+                                                            </a>
+                                                        }
+
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Youtube)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                       
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-youtube"></i>
+                                                            </a>
+                                                        }
+
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Slack)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                     
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-slack-hash"></i>
+                                                            </a>
+                                                        }
+
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Github)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                     
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-github"></i>
+                                                            </a>
+                                                        }
+                                                        
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Reddit)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                  
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-reddit-alien"></i>
+                                                            </a>
+                                                        }
+                                                        
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Whatsapp)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                      
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-whatsapp"></i>
+                                                            </a>
+                                                        }
+                                                        
+                                                        if (item.ProfessionalProfileType == MakerBook.Enum.ProfessionalProfileTypeEnum.Skype)
+                                                        {
+                                                     <a class="btn btn-primary btn-lg btn-floating"
+                                                     
+                                                       href="@item.SocialMedia"
+                                                       role="button">
+                                                                <i class="fab fa-skype"></i>
+                                                            </a>
+                                                        }
+
+                                                    }
+                                             
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-4 text-black">
+                                            <div class="mb-5">
+                                                <p class="lead fw-normal mb-1">About</p>
+                                                <div class="p-4" style="background-color: #f8f9fa;">
+                                                    <p class="font-italic mb-1"> @Html.DisplayFor(model => model.Description)</p>
+
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                                <p class="lead fw-normal mb-0">Recent photos</p>
+                                                <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
+                                            </div>
+                                            <div class="row g-2">
+                                                <div class="col mb-2">
+                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
+                                                         alt="image 1" class="w-100 rounded-3">
+                                                </div>
+                                                <div class="col mb-2">
+                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
+                                                         alt="image 1" class="w-100 rounded-3">
+                                                </div>
+                                            </div>
+                                            <div class="row g-2">
+                                                <div class="col">
+                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
+                                                         alt="image 1" class="w-100 rounded-3">
+                                                </div>
+                                                <div class="col">
+                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
+                                                         alt="image 1" class="w-100 rounded-3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                    
+                 
+                    
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

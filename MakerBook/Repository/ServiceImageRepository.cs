@@ -88,6 +88,11 @@ namespace MakerBook.Repository
             _context.SaveChanges();
 
             return true;
-        } 
+        }
+
+        public List<ServiceImageModel> GetByService(int idService)
+        {
+            return _context.ServiceImage.Where(i => i.ServiceId == idService).ToList(); 
+        }
     }
 }

@@ -15,6 +15,9 @@ namespace MakerBook.Models
         [ForeignKey("Professional")]
         public int ProfessionalId { get; set; }
 
+        [Column("Description")]
+        public string Description { get; set; }
+
         [Column("ImageProfile")]
         public byte[] ImageProfile { get; set; }
 

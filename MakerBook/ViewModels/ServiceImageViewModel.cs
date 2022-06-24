@@ -10,7 +10,7 @@ namespace MakerBook.ViewModels
         public int ServiceImageId { get; set; }
 
        
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         
         public byte[] Image { get; set; }

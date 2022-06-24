@@ -90,6 +90,9 @@ namespace MakerBook.Repository
             return true;
         }
 
-        
+        public List<ProfessionalSocialMediaModel> GetAllByProfessionalProfile(int ProfessionalProfileId)
+        {
+            return _context.ProfessionalSocialMedia.Where(w => w.ProfessionalProfileId == ProfessionalProfileId).ToList();
+        }
     }
 }

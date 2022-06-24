@@ -53,6 +53,8 @@ namespace MakerBook.Controllers
                 return NotFound();
             }
             var serviceViewModel = MapRegisterServiceView(serviceModel);
+
+
             return View(serviceViewModel);
         }
 
@@ -91,15 +93,16 @@ namespace MakerBook.Controllers
                     var userSession = _session.GetUserSession();
                     var serviceModel = MapRegisterService(serviceViewModel, userSession.Login);
 
-                   var service = _serviceRepository.Create(serviceModel);
+                    var service = _serviceRepository.Create(serviceModel);
 
-                    MemoryStream ms = new MemoryStream();
+                   
                     foreach (var item in serviceViewModel.ImageServiceList)
                     {
+                        MemoryStream ms = new MemoryStream();
                         item.OpenReadStream().CopyTo(ms);
-                      
+
                         ServiceImageModel serviceImageModel = MapRegisterServiceImage(service.ServiceId, item.FileName, ms.ToArray(), userSession.Login);
-                    _serviceImageRepository.Create(serviceImageModel);
+                        _serviceImageRepository.Create(serviceImageModel);
                     }
 
 
@@ -239,11 +242,46 @@ namespace MakerBook.Controllers
                 CategoryList = SelectListCategory()
                 ,
                 ProfessionalList = SelectListProfessional()
+                ,
+                ServiceImageList = SelectServiceImageViewModelList(sourceModel.ServiceId)
             };
 
 
             return targetModel;
         }
+
+        private List<ServiceImageViewModel> SelectServiceImageViewModelList(int serviceId)
+        {
+            List<ServiceImageViewModel> serviceImageViewModelList = new List<ServiceImageViewModel>();
+
+            foreach (var item in _serviceImageRepository.GetByService(serviceId))
+            {
+                serviceImageViewModelList.Add(MapRegisterServiceView(item));
+            }
+
+            return serviceImageViewModelList;
+        }
+
+
+        private ServiceImageViewModel MapRegisterServiceView(ServiceImageModel sourceModel)
+        {
+            ServiceImageViewModel targetModel = new ServiceImageViewModel
+            {
+                ServiceImageId = sourceModel.ServiceImageId
+            ,
+                ServiceId = sourceModel.ServiceId
+            ,
+                Name = sourceModel.Name
+            ,
+                Image = sourceModel.Image
+
+            };
+
+
+            return targetModel;
+        }
+
+
 
         private List<SelectListItem> SelectListCategory()
         {
@@ -271,12 +309,13 @@ namespace MakerBook.Controllers
             return professionals;
         }
 
-        private ServiceImageModel MapRegisterServiceImage(int serviceId, string filename, byte[] image,string login)
+        private ServiceImageModel MapRegisterServiceImage(int serviceId, string filename, byte[] image, string login)
         {
             ServiceImageModel targetModel = new ServiceImageModel
             {
-            ServiceImageId=0
-            ,ServiceId = serviceId
+                ServiceImageId = 0
+            ,
+                ServiceId = serviceId
             ,
                 Name = filename
             ,

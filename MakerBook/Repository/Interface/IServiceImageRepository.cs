@@ -37,5 +37,12 @@ namespace MakerBook.Repository.Interface
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
+
+        /// <summary>
+        /// GetByService
+        /// </summary>
+        /// <param name="idService"></param>
+        /// <returns></returns>
+        List<ServiceImageModel> GetByService(int idService);
     }
 }

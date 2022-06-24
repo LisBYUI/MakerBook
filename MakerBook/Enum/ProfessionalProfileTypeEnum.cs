@@ -25,7 +25,9 @@ namespace MakerBook.Enum
         [Description("Reddit")]
         Reddit = 10,
         [Description("Whatsapp")]
-        Whatsapp = 11
+        Whatsapp = 11,
+        [Description("Skype")]
+        Skype = 12
 
     }
 }
