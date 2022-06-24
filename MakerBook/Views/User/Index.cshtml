@@ -1,70 +1,90 @@
-﻿@model IEnumerable<MakerBook.Models.UserModel>
+﻿@model IEnumerable<MakerBook.ViewModels.UserViewModel>
 
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">User</span>
+                    <span class="section-heading-lower">Registered Users</span>
+                </h2>
+                <hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-             <th>
-                @Html.DisplayNameFor(model => model.Login)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profile)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Login)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Profile)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
-                    </td>
-                </tr>
-            }
+                <p>
+                    <a asp-action="Create">Create New</a>
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Login)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Profile)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Login)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Profile)
+                                    </td>
+                                    <td>
+                                        @if (item.Profile == MakerBook.Enum.ProfileEnum.Administrator)
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a>
+                                        }
+                                        <a asp-action="Details" asp-route-id="@item.UserId">Details</a>
+                                        @if (item.Profile == MakerBook.Enum.ProfileEnum.Administrator)
+                                        {
+                                            <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
 
-        }else
-        {
-            <tr class="">
-                <td valign="top" colspan="4" > No existing records!</td>
+                        }
+                        else
+                        {
+                            <tr class="">
+                                <td valign="top" colspan="4"> No existing records!</td>
 
-            </tr>
-        }
-    </tbody>
-</table>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

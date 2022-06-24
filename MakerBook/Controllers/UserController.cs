@@ -9,6 +9,8 @@ using MakerBook.Data;
 using MakerBook.Models;
 using MakerBook.Repository.Interface;
 using MakerBook.Filters;
+using MakerBook.ViewModels;
+using MakerBook.Helper.Interface;
 
 namespace MakerBook.Controllers
 {
@@ -16,10 +18,17 @@ namespace MakerBook.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly ISessionHelper _session;
 
-        public UserController(IUserRepository userRepository)
+        /// <summary>
+        /// UserController
+        /// </summary>
+        /// <param name="userRepository"></param>
+        /// <param name="session"></param>
+        public UserController(IUserRepository userRepository, ISessionHelper session)
         {
             _userRepository = userRepository;
+            _session = session;
         }
 
 
@@ -30,7 +39,14 @@ namespace MakerBook.Controllers
         public IActionResult Index()
         {
             List<UserModel> userList = _userRepository.GetAll();
-            return View(userList);
+            List<UserViewModel> userViewList = new List<UserViewModel>();
+
+            foreach(var user in userList)
+            {
+                userViewList.Add(MapRegisterUserView(user));
+            }
+
+            return View(userViewList);
         }
 
 
@@ -48,7 +64,8 @@ namespace MakerBook.Controllers
                 return NotFound();
             }
 
-            return View(userModel);
+           var userViewModel  = MapRegisterUserView(userModel);
+            return View(userViewModel);
         }
 
 
@@ -68,18 +85,22 @@ namespace MakerBook.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Name,Email,Password,Profile")] UserModel userModel)
+        public IActionResult Create(UserViewModel userViewModel)
         {
             try
             {
                 if (ModelState.IsValid)
-                { 
+                {
+                    var userSession = _session.GetUserSession();
+
+                    UserModel userModel = MapRegisterUser(userViewModel,userSession.Login);
+
                     _userRepository.Create(userModel);
                     return RedirectToAction(nameof(Index));
 
                     TempData["SuccessMessage"] = "Success!!!";
                 }
-                return View(userModel);
+                return View(userViewModel);
             }
             catch (Exception ex)
             {
@@ -101,7 +122,9 @@ namespace MakerBook.Controllers
             {
                 return NotFound();
             }
-            return View(userModel);
+            UserViewModel userViewModel = MapRegisterUserView(userModel);
+
+            return View(userViewModel);
         }
 
         /// <summary>
@@ -112,18 +135,22 @@ namespace MakerBook.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Name,Email,Password,Profile")] UserModel userModel)
+        public IActionResult Edit(int id, UserViewModel userViewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var userSession = _session.GetUserSession();
+
+                    UserModel userModel = MapRegisterUser(userViewModel, userSession.Login);
+
                     UserModel contact = _userRepository.Update(userModel);
                     TempData["SuccessMessage"] = "Success!!!";
                     return RedirectToAction(nameof(Index));
                 }
 
-                return View("Edit", userModel);
+                return View("Edit", userViewModel);
             }
             catch (Exception ex)
             {
@@ -145,7 +172,8 @@ namespace MakerBook.Controllers
                 return NotFound();
             }
 
-            return View(userModel);
+            UserViewModel userViewModel = MapRegisterUserView(userModel);
+            return View(userViewModel);
         }
 
 
@@ -174,6 +202,70 @@ namespace MakerBook.Controllers
                 TempData["ErrorMessage"] = $"Fail {ex.Message}!!!";
                 return RedirectToAction("Index");
             }
+        }
+
+        /// <summary>
+        /// MapRegisterUserView
+        /// </summary>
+        /// <param name="sourceModel"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        private static UserViewModel MapRegisterUserView(UserModel sourceModel)
+        {
+            UserViewModel targetModel = new UserViewModel
+            {
+                UserId = sourceModel.UserId
+            ,
+                FirstName = sourceModel.FirstName
+            ,
+                LastName = sourceModel.LastName
+            ,
+                Login = sourceModel.Login
+            ,
+                Email = sourceModel.Email
+            ,
+                Password = sourceModel.Password
+            ,
+                Profile = sourceModel.Profile
+            };
+
+
+            return targetModel;
+        }
+
+        /// <summary>
+        /// MapRegisterUser
+        /// </summary>
+        /// <param name="sourceModel"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        private static UserModel MapRegisterUser(UserViewModel sourceModel, string login)
+        {
+            UserModel targetModel = new UserModel
+            {
+                UserId = sourceModel.UserId
+            ,
+                FirstName = sourceModel.FirstName
+            ,
+                LastName = sourceModel.LastName
+            ,
+                Login = sourceModel.Login
+            ,
+                Email = sourceModel.Email
+            ,
+                Password = sourceModel.Password
+            ,
+                Profile = sourceModel.Profile
+            ,
+                CreatedAt = DateTime.Now
+            ,
+                UpdatedAt = DateTime.Now
+            ,
+                UserAt = login
+            };
+
+
+            return targetModel;
         }
     }
 }

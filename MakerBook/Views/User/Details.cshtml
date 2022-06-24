@@ -1,54 +1,58 @@
-﻿@model MakerBook.Models.UserModel
+﻿@model MakerBook.ViewModels.UserViewModel
 
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Register User</span>
+                    <span class="section-heading-lower">Detail</span>
+                </h2>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FirstName)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.LastName)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Login)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Login)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Profile)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Profile)
+                    </dd>
+                </dl>
 
-<div>
-    <h4>UserModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Login)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Login)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Profile)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Profile)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a class="btn btn-primary btn-block" asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
-    <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
+                <hr />
+                <div>
+                    <a class="btn btn-primary btn-block" asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
+                    <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

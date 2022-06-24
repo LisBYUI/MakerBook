@@ -1,61 +1,64 @@
 ﻿@using MakerBook.Enum
-@model MakerBook.Models.UserModel
+@model MakerBook.ViewModels.UserViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+    ViewData["Title"] = "Register User";
 }
 
-<h1>Create</h1>
-
-<h4>UserModel</h4>
-<hr />
-<div class="row">
-   
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Register User</span>
+                    <span class="section-heading-lower">New to Do It Local?</span>
+                </h2>
+                <hr />
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Login" class="control-label"></label>
+                        <input asp-for="Login" class="form-control" />
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" type="email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Profile" class="control-label"></label>
+                        <select asp-for="Profile" class="form-control">
+                            <option value="@ProfileEnum.Administrator">Administrator</option>
+                        </select>
+                        <span asp-validation-for="Profile" class="text-danger"></span>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary btn-block" /> |
+                        <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Login" class="control-label"></label>
-                <input asp-for="Login" class="form-control" />
-                <span asp-validation-for="Login" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" type="email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Profile" class="control-label"></label>
-                <select asp-for="Profile" class="form-control">
-                    <option value="0">Select</option>
-                    <option value="@ProfileEnum.Administrator">Administrator</option>
-                    <option value="@ProfileEnum.Professional">Professional</option>
-                    <option value="@ProfileEnum.Customer">Customer</option>
-                </select>
-                <span asp-validation-for="Profile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary btn-block" /> |
-                <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
-            </div>
-        </form>
+        </div>
     </div>
-
-
+</div>
 
 
 @section Scripts {

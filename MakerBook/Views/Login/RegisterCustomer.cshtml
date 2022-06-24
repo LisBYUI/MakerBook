@@ -1,9 +1,9 @@
-﻿@using MakerBook.Enum
+﻿
 @using MakerBook.ViewModels
 @model UserCustomerViewModel
 @{
     Layout = "_LayoutDefault";
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Register Customer";
 }
 
 @if (TempData["ErrorMessage"] != null)
@@ -19,54 +19,54 @@
         <div class="col-xl-9 col-lg-10 mx-auto">
             <div class="bg-faded rounded p-5">
                 <h2 class="section-heading mb-4">
-                    <span class="section-heading-upper">Register</span>
+                    <span class="section-heading-upper">Register Customer</span>
                     <span class="section-heading-lower">New to Do It Local?</span>
                 </h2>
-                <p>
-                    <form asp-controller="Login" asp-action="RegisterCustomer" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="FirstName" class="control-label"></label>
-                            <input asp-for="FirstName" class="form-control" />
-                            <span asp-validation-for="FirstName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="LastName" class="control-label"></label>
-                            <input asp-for="LastName" class="form-control" />
-                            <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Login" class="control-label"></label>
-                            <input asp-for="Login" class="form-control" />
-                            <span asp-validation-for="Login" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control"  placeholder="name@example.com"/>
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="PhoneNumber" class="control-label"></label>
-                            <input asp-for="PhoneNumber" class="form-control" />
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password"></label><br>
-                            <input asp-for="Password" autocomplete="off" class="form-control">
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="PasswordConfirmation" class="control-label"></label>
-                            <input asp-for="PasswordConfirmation" class="form-control" />
-                            <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
-                        </div>
+                <hr />
+                <form asp-controller="Login" asp-action="RegisterCustomer" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Login" class="control-label"></label>
+                        <input asp-for="Login" class="form-control" />
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" placeholder="name@example.com" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label"></label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label><br>
+                        <input asp-for="Password" autocomplete="off" class="form-control">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PasswordConfirmation" class="control-label"></label>
+                        <input asp-for="PasswordConfirmation" class="form-control" />
+                        <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary btn-block" /> |
+                        <a class="btn btn-secondary btn-block" asp-action="Login" asp-controller="Login" role="button">Back to Login</a>
+                    </div>
+                </form>
 
-                        <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary btn-block" /> |
-                            <a class="btn btn-secondary btn-block" asp-action="Login" asp-controller="Login" role="button">Back to Login</a>
-                        </div>
-                    </form>
-                </p>
             </div>
         </div>
     </div>
