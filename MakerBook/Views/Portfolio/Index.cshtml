@@ -1,0 +1,112 @@
+﻿@using MakerBook.ViewModels
+@model List<PortfolioViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Available professionals</span>
+                    <span class="section-heading-lower">Connecting those who need it with those who know how to do it</span>
+                </h2>
+                <p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var itemCategory in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="data:image;base64,@System.Convert.ToBase64String(itemCategory.CategoryImage)" width="80" height="80" />
+                                        @Html.DisplayFor(modelItem => itemCategory.CategoryName)
+
+                                        <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                @{
+                                                    int i = 0;
+                                                }
+                                                @foreach (var item in itemCategory.ServiceCardViewList)
+                                                {
+                                                    i++;
+                                                    var active = i == 1 ? "active" : "";
+                                                    <div class="carousel-item @active">
+                                                        <div class="card">
+                                                            <div class="img-wrapper">
+                                                                <img src="data:image;base64,@System.Convert.ToBase64String(item.ProfessionalImage)" class="d-block w-100" alt="">
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">@item.ProfessionalName</h5>
+                                                                <p class="card-text">@item.ServiceTitle</p>
+                                                                <a class="btn btn-primary" asp-action="Professional" asp-controller="ProfessionalProfile" asp-route-id="@item.ProfessionalId">Details</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+      var multipleCardCarousel = document.querySelector(
+      "#carouselExampleControls"
+    );
+    if (window.matchMedia("(min-width: 768px)").matches) {
+      var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+        interval: false,
+      });
+      var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+      var cardWidth = $(".carousel-item").width();
+      var scrollPosition = 0;
+      $("#carouselExampleControls .carousel-control-next").on("click", function () {
+        if (scrollPosition < carouselWidth - cardWidth * 4) {
+          scrollPosition += cardWidth;
+          $("#carouselExampleControls .carousel-inner").animate(
+            { scrollLeft: scrollPosition },
+            600
+          );
+        }
+      });
+      $("#carouselExampleControls .carousel-control-prev").on("click", function () {
+        if (scrollPosition > 0) {
+          scrollPosition -= cardWidth;
+          $("#carouselExampleControls .carousel-inner").animate(
+            { scrollLeft: scrollPosition },
+            600
+          );
+        }
+      });
+    } else {
+      $(multipleCardCarousel).addClass("slide");
+    }
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

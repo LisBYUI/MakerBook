@@ -17,70 +17,36 @@ using MakerBook.Enum;
 namespace MakerBook.Controllers
 {
     [PageForUserLogged]
-    public class ProfessionalProfileController : Controller
+    public class PortfolioController : Controller
     {
         private readonly IProfessionalRepository _professionalRepository;
         private readonly IProfessionalProfileRepository _professionalProfileRepository;
         private readonly IProfessionalSocialMediaRepository _professionalSocialMediaRepository;
         private readonly IServiceRepository _serviceRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IServiceImageRepository _serviceImageRepository;
         private readonly ISessionHelper _session;
 
 
-        public ProfessionalProfileController(IProfessionalRepository professionalRepository, IProfessionalProfileRepository professionalProfileRepository, IProfessionalSocialMediaRepository professionalSocialMediaRepository, IServiceRepository serviceRepository,
-       IServiceImageRepository serviceImageRepository, ISessionHelper session)
+        public PortfolioController(IProfessionalRepository professionalRepository, IProfessionalProfileRepository professionalProfileRepository, IProfessionalSocialMediaRepository professionalSocialMediaRepository, IServiceRepository serviceRepository,
+       IServiceImageRepository serviceImageRepository, ICategoryRepository categoryRepository, ISessionHelper session)
         {
             _professionalRepository = professionalRepository;
             _professionalProfileRepository = professionalProfileRepository;
             _professionalSocialMediaRepository = professionalSocialMediaRepository;
             _serviceRepository = serviceRepository;
             _serviceImageRepository = serviceImageRepository;
+            _categoryRepository = categoryRepository;
             _session = session;
 
         }
 
         public IActionResult Index()
         {
-            var userSession = _session.GetUserSession();
 
+            List<PortfolioViewModel> portfolioViewModel = MapRegisterPortfolioView();
 
-
-            var professional = _professionalRepository.GetByEmail(userSession.Email);
-
-
-            var professionalProfileModel = _professionalProfileRepository.GetByProfessional(professional.ProfessionalId);
-
-            ProfessionalProfileViewModel professionalProfileView = MapRegisterProfessionalProfileView(professionalProfileModel);
-
-
-            return View(professionalProfileView);
-        }
-
-        public IActionResult Professional(int id = 0)
-        {
-            ProfessionalProfileViewModel professionalProfileView;
-
-            var userSession = _session.GetUserSession();
-
-            int professionalId = 0;
-            if (userSession.Profile == ProfileEnum.Professional)
-            {
-                var professional = _professionalRepository.GetByEmail(userSession.Email);
-                professionalId = professional.ProfessionalId;
-            }
-
-            if (userSession.Profile == ProfileEnum.Customer)
-            {
-                var professional = _professionalRepository.Get(id);
-                professionalId = professional.ProfessionalId;
-            }
-
-            var professionalProfileModel = _professionalProfileRepository.GetByProfessional(professionalId);
-
-            professionalProfileView = MapRegisterProfessionalProfileView(professionalProfileModel);
-
-
-            return View(professionalProfileView);
+            return View(portfolioViewModel);
         }
 
 
@@ -237,9 +203,6 @@ namespace MakerBook.Controllers
                 ProfessionalProfileId = sourceModel.ProfessionalProfileId
             ,
                 ProfessionalId = sourceModel.ProfessionalId
-                ,
-                Description = sourceModel.Description
-
             ,
                 ImageProfile = file
             ,
@@ -442,5 +405,81 @@ namespace MakerBook.Controllers
 
             return professionalServiceCardList;
         }
+
+        private List<ServiceCardViewModel> MapRegisterServiceCardView(int categoryId)
+        {
+            var serviceList = _serviceRepository.GetByCategory(categoryId);
+
+            List<ServiceCardViewModel> serviceCardViewList = new List<ServiceCardViewModel>();
+
+
+            foreach (var item in serviceList)
+            {
+                var professionalProfile = _professionalProfileRepository.GetByProfessional(item.ProfessionalId);
+                var professional = _professionalRepository.Get(item.ProfessionalId);
+
+                ServiceCardViewModel serviceCardView = new ServiceCardViewModel()
+                {
+                    CategoryId = item.CategoryId
+            ,
+                    ProfessionalId = item.ProfessionalId
+            ,
+                    ProfessionalImage = professionalProfile.ImageProfile
+            ,
+                    ProfessionalName = professional.Name
+            ,
+                    ServiceId = item.ServiceId
+            ,
+                    ServiceTitle = item.Title
+                };
+                serviceCardViewList.Add(serviceCardView);
+            }
+            return serviceCardViewList;
+        }
+
+        //private PortfolioCategoryViewModel MapRegisterPortfolioCategoryViewModel(int categoryId)
+        //{
+
+        //    PortfolioCategoryViewModel portfolioCategoryViewList = new PortfolioCategoryViewModel();
+
+
+
+            //            PortfolioCategoryViewModel portfolioCategoryViewModel = new PortfolioCategoryViewModel()
+            //            {
+            //                CategoryId = item.CategoryId
+
+            //;
+            //                    , CategoryName =item.Category.Name
+
+            //                    , CategoryImage =item.Category.Image
+
+            //                    , ServiceCardViewList
+            //                }
+            //            }
+            //            return portfolioCategoryViewModel;
+            //        }
+            private List<PortfolioViewModel> MapRegisterPortfolioView()
+            {
+                List<PortfolioViewModel> portfolioViewList = new List<PortfolioViewModel>();
+                var categoryList = _categoryRepository.GetAll();
+
+                foreach (var item in categoryList)
+                {
+                    PortfolioViewModel portfolioViewModel = new PortfolioViewModel()
+                    {
+                        CategoryId = item.CategoryId
+                     ,
+                        CategoryName = item.Name
+                     ,
+                        CategoryImage = item.Image
+                     ,
+                        ServiceCardViewList = MapRegisterServiceCardView(item.CategoryId)
+
+                    };
+                portfolioViewList.Add(portfolioViewModel);
+                }
+
+                return portfolioViewList;
+            }
+        }
     }
-}

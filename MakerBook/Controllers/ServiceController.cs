@@ -201,6 +201,10 @@ namespace MakerBook.Controllers
             ServiceModel targetModel = new ServiceModel
             {
                 ServiceId = sourceModel.ServiceId
+                ,
+                Title = sourceModel.Title
+                ,
+                ServiceType = sourceModel.ServiceType
             ,
                 Description = sourceModel.Description
             ,

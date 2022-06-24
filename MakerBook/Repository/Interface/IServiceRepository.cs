@@ -44,5 +44,12 @@ namespace MakerBook.Repository.Interface
         /// <param name="professionalId"></param>
         /// <returns></returns>
         List<ServiceModel> GetByProfessional(int professionalId);
+
+        /// <summary>
+        /// GetByCategory
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
+        List<ServiceModel> GetByCategory(int categoryId);
     }
 }

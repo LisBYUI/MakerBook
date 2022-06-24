@@ -23,7 +23,9 @@
 
     @if (Model.Profile == MakerBook.Enum.ProfileEnum.Customer)
     {
-        
+       <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Portfolio" asp-action="Index">Portfolio</a>
+        </li>  
     }
 
     @if (Model.Profile == MakerBook.Enum.ProfileEnum.Administrator)

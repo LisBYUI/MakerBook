@@ -98,5 +98,10 @@ namespace MakerBook.Repository
         {
             return _context.Service.Where(w => w.ProfessionalId==professionalId).ToList();
         }
+
+        public List<ServiceModel> GetByCategory(int categoryId)
+        {
+            return _context.Service.Where(w => w.CategoryId == categoryId).ToList();
+        }
     }
 }

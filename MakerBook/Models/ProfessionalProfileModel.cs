@@ -31,6 +31,6 @@ namespace MakerBook.Models
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
 
-        public ProfessionalModel Professional { get; set; }
+        public ProfessionalModel? Professional { get; set; }
     }
 }
