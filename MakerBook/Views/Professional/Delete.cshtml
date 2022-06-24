@@ -1,63 +1,54 @@
-﻿@model MakerBook.Models.ProfessionalModel
+﻿@model MakerBook.ViewModels.ProfessionalViewModel
+
 
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Are you sure you want to delete this?</span>
+                    <span class="section-heading-lower">Delete</span>
+                </h2>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.WebPage)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.WebPage)
+                    </dd>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>ProfessionalModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WebPage)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WebPage)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ProfessionalId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
-    </form>
+                </dl>
+                <hr />
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="ProfessionalId" />
+                    <input type="submit" value="Delete" class="btn btn-danger" /> |
+                    <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

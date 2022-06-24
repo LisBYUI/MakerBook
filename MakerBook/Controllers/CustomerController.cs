@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using MakerBook.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using MakerBook.Models;
 using MakerBook.Filters;
 using MakerBook.Helper.Interface;
 using MakerBook.Repository.Interface;
+using MakerBook.ViewModels;
 
 namespace MakerBook.Controllers
 {
@@ -18,25 +12,36 @@ namespace MakerBook.Controllers
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly ISessionHelper _session;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
+        /// <summary>
+        /// CustomerController
+        /// </summary>
+        /// <param name="customerRepository"></param>
+        /// <param name="session"></param>
         public CustomerController(ICustomerRepository customerRepository, ISessionHelper session)
         {
             _customerRepository = customerRepository;
             _session = session;
-           
         }
 
         // GET: Customer
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             List<CustomerModel> customerList = _customerRepository.GetAll();
 
-            return View(customerList);
+            List<CustomerViewModel> customerViewList = new List<CustomerViewModel>();
+
+            foreach (var customer in customerList)
+            {
+                customerViewList.Add(MapRegisterCustomerView(customer));
+            }
+
+
+            return View(customerViewList);
         }
 
         // GET: Customer/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             var customerModel = _customerRepository.Get(id ?? 0);
 
@@ -44,14 +49,15 @@ namespace MakerBook.Controllers
             {
                 return NotFound();
             }
+            var customerViewModel = MapRegisterCustomerView(customerModel);
 
-            return View(customerModel);
+            return View(customerViewModel);
         }
 
         // GET: Customer/Create
         public IActionResult Create()
         {
-            //ViewData["LocationId"] = new SelectList(_context.Location, "LocationId", "LocationId");
+
             return View();
         }
 
@@ -60,17 +66,22 @@ namespace MakerBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CustomerModel customerModel)
+        public IActionResult Create(CustomerViewModel customerViewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    TempData["SuccessMessage"] = "Success!!!";
+                    var userSession = _session.GetUserSession();
+
+                    CustomerModel customerModel = MapRegisterCustomer(customerViewModel, userSession.Login);
+
                     _customerRepository.Create(customerModel);
+
+                    TempData["SuccessMessage"] = "Success!!!";
                     return RedirectToAction(nameof(Index));
                 }
-                return View(customerModel);
+                return View(customerViewModel);
             }
             catch (Exception ex)
             {
@@ -87,7 +98,10 @@ namespace MakerBook.Controllers
             {
                 return NotFound();
             }
-            return View(customerModel);
+
+            CustomerViewModel customerViewModel = MapRegisterCustomerView(customerModel);
+
+            return View(customerViewModel);
         }
 
         // POST: Customer/Edit/5
@@ -95,18 +109,23 @@ namespace MakerBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, CustomerModel customerModel)
+        public IActionResult Edit(int id, CustomerViewModel customerViewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CustomerModel customer = _customerRepository.Update(customerModel);
+                    var userSession = _session.GetUserSession();
+
+                    CustomerModel customerModel = MapRegisterCustomer(customerViewModel, userSession.Login);
+
+                    _customerRepository.Update(customerModel);
+
                     TempData["SuccessMessage"] = "Success!!!";
                     return RedirectToAction(nameof(Index));
                 }
 
-                return View("Editar", customerModel);
+                return View("Editar", customerViewModel);
             }
             catch (Exception ex)
             {
@@ -123,8 +142,9 @@ namespace MakerBook.Controllers
             {
                 return NotFound();
             }
+            CustomerViewModel customerViewModel = MapRegisterCustomerView(customerModel);
 
-            return View(customerModel);
+            return View(customerViewModel);
         }
 
         // POST: Customer/Delete/5
@@ -150,6 +170,56 @@ namespace MakerBook.Controllers
             }
         }
 
-       
+        /// <summary>
+        /// MapRegisterCustomerView
+        /// </summary>
+        /// <param name="sourceModel"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        private static CustomerViewModel MapRegisterCustomerView(CustomerModel sourceModel)
+        {
+            CustomerViewModel targetModel = new CustomerViewModel
+            {
+                CustomerId = sourceModel.CustomerId
+            ,
+                Name = sourceModel.Name
+            ,
+                PhoneNumber = sourceModel.PhoneNumber
+            ,
+                Email = sourceModel.Email
+
+            };
+
+
+            return targetModel;
+        }
+
+        /// <summary>
+        /// MapRegisterUser
+        /// </summary>
+        /// <param name="sourceModel"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        private static CustomerModel MapRegisterCustomer(CustomerViewModel sourceModel, string login)
+        {
+            CustomerModel targetModel = new CustomerModel
+            {
+                CustomerId = sourceModel.CustomerId
+            ,
+                Name = sourceModel.Name
+            ,
+                PhoneNumber = sourceModel.PhoneNumber
+            ,
+                Email = sourceModel.Email
+            ,
+                CreatedAt = DateTime.Now
+            ,
+                UpdatedAt = DateTime.Now
+            ,
+                UserAt = login
+            };
+
+            return targetModel;
+        }
     }
 }

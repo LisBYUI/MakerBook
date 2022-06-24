@@ -1,71 +1,69 @@
-﻿@model IEnumerable<MakerBook.Models.ProfessionalModel>
+﻿@model IEnumerable<MakerBook.ViewModels.ProfessionalViewModel>
+
 
 @{
-    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+    ViewData["Title"] = "Registered Professionals";
 }
 
-<h1>Index</h1>
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Professional</span>
+                    <span class="section-heading-lower">Registered Professionals</span>
+                </h2>
+                <hr />
+                <p>
+                    <a asp-action="Create">Create New</a>
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PhoneNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.WebPage)
+                            </th>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WebPage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WebPage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProfessionalId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProfessionalId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProfessionalId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WebPage)
+                                </td>
+
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.ProfessionalId">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.ProfessionalId">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.ProfessionalId">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
