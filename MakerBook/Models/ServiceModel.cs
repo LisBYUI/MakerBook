@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MakerBook.Enum;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace MakerBook.Models
 {
@@ -9,8 +10,14 @@ namespace MakerBook.Models
         [Key]
         public int ServiceId { get; set; }
 
+        [Column("Title")]
+        public string Title { get; set; }
+
         [Column("Description")]
         public string Description { get; set; }
+
+        [Column("ServiceType")]
+        public ServiceTypeEnum ServiceType { get; set; }
 
         [Column("Price")]
         public double Price { get; set; }

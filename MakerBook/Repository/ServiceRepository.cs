@@ -62,9 +62,13 @@ namespace MakerBook.Repository
             if (serviceDb == null)
                 throw new Exception("Record not Found");
             serviceDb.Price = serviceModel.Price;
+            serviceDb.Title = serviceModel.Title;
+            serviceDb.ServiceType = serviceModel.ServiceType;
             serviceDb.Description = serviceModel.Description;
             serviceDb.UpdatedAt = serviceModel.UpdatedAt;
             serviceDb.UserAt = serviceModel.UserAt;
+
+           
 
             _context.Service.Update(serviceDb);
             _context.SaveChanges();
@@ -90,6 +94,9 @@ namespace MakerBook.Repository
             return true;
         }
 
-        
+        public List<ServiceModel> GetByProfessional(int professionalId)
+        {
+            return _context.Service.Where(w => w.ProfessionalId==professionalId).ToList();
+        }
     }
 }

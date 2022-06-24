@@ -19,7 +19,7 @@ namespace MakerBook.ViewModels
         [EmailAddress(ErrorMessage = "The email provided is not valid!")]
         public string Email { get; set; }
 
-
+        [Display(Name = "Web Page")]
         public string? WebPage { get; set; }
 
         [Display(Name = "Phone")]

@@ -22,16 +22,21 @@ namespace MakerBook.Controllers
         private readonly IProfessionalRepository _professionalRepository;
         private readonly IProfessionalProfileRepository _professionalProfileRepository;
         private readonly IProfessionalSocialMediaRepository _professionalSocialMediaRepository;
+        private readonly IServiceRepository _serviceRepository;
+        private readonly IServiceImageRepository _serviceImageRepository;
         private readonly ISessionHelper _session;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProfessionalProfileController(IProfessionalRepository professionalRepository, IProfessionalProfileRepository professionalProfileRepository, IProfessionalSocialMediaRepository professionalSocialMediaRepository, ISessionHelper session, IWebHostEnvironment webHostEnvironment)
+
+        public ProfessionalProfileController(IProfessionalRepository professionalRepository, IProfessionalProfileRepository professionalProfileRepository, IProfessionalSocialMediaRepository professionalSocialMediaRepository, IServiceRepository serviceRepository,
+       IServiceImageRepository serviceImageRepository, ISessionHelper session)
         {
             _professionalRepository = professionalRepository;
             _professionalProfileRepository = professionalProfileRepository;
             _professionalSocialMediaRepository = professionalSocialMediaRepository;
+            _serviceRepository = serviceRepository;
+            _serviceImageRepository = serviceImageRepository;
             _session = session;
-            _webHostEnvironment = webHostEnvironment;
+
         }
 
         public IActionResult Index()
@@ -235,6 +240,9 @@ namespace MakerBook.Controllers
                 Professional = sourceModel.Professional
                 ,
                 professionalSocialMediaList = MapRegisterProfessionalSocialMedia(sourceModel.ProfessionalProfileId)
+                ,
+                professionalServiceCardViewList = MapRegisterProfessionalServiceCardView(sourceModel.ProfessionalId, sourceModel.ProfessionalProfileId)
+
             };
 
             return targetModel;
@@ -376,6 +384,35 @@ namespace MakerBook.Controllers
             List<ProfessionalSocialMediaModel> professionalSocialMediaList = _professionalSocialMediaRepository.GetAllByProfessionalProfile(professionalProfile);
 
             return professionalSocialMediaList;
+        }
+
+        private List<ProfessionalServiceCardViewModel> MapRegisterProfessionalServiceCardView(int professionalId, int professionalProfileId)
+        {
+            List<ProfessionalServiceCardViewModel> professionalServiceCardList = new List<ProfessionalServiceCardViewModel>();
+            var serviceList = _serviceRepository.GetByProfessional(professionalId);
+
+            foreach (var service in _serviceRepository.GetByProfessional(professionalId))
+            {
+                foreach (var serviceImage in _serviceImageRepository.GetByService(service.ServiceId))
+                {
+                    ProfessionalServiceCardViewModel professionalServiceCardView = new ProfessionalServiceCardViewModel
+                    {
+                        ProfessionalProfileId = professionalProfileId
+                        ,
+                        ServiceId = service.ServiceId
+                        ,
+                        ServiceTitle = service.Title
+                        ,
+                        ServiceDescription = service.Description
+                        ,
+                        ImageProfile = serviceImage.Image
+                    };
+                    professionalServiceCardList.Add(professionalServiceCardView);
+                }
+            }
+
+
+            return professionalServiceCardList;
         }
     }
 }

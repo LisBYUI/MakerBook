@@ -18,6 +18,18 @@
                         <hr />
                         <dl class="row">
                             <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Title)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Title)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ServiceType)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ServiceType)
+                            </dd>
+                            <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.Description)
                             </dt>
                             <dd class="col-sm-10">
@@ -35,7 +47,7 @@
 
                     </div>
 
-                    <div id="carouselService" class="carousel slide w-25" data-bs-ride="carousel">
+                    <div id="carouselService" class="carousel slide " data-bs-ride="carousel">
                         <div class="carousel-indicators">
                             <button type="button" data-bs-target="#carouselService" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                             <button type="button" data-bs-target="#carouselService" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -77,3 +89,42 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+<script>
+    var multipleCardCarousel = document.querySelector(
+  "#carouselService"
+);
+if (window.matchMedia("(min-width: 768px)").matches) {
+  var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+    interval: false,
+  });
+  var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+  var cardWidth = $(".carousel-item").width();
+  var scrollPosition = 0;
+  $("#carouselService .carousel-control-next").on("click", function () {
+    if (scrollPosition < carouselWidth - cardWidth * 4) {
+      scrollPosition += cardWidth;
+      $("#carouselService .carousel-inner").animate(
+        { scrollLeft: scrollPosition },
+        600
+      );
+    }
+  });
+  $("#carouselService .carousel-control-prev").on("click", function () {
+    if (scrollPosition > 0) {
+      scrollPosition -= cardWidth;
+      $("#carouselService .carousel-inner").animate(
+        { scrollLeft: scrollPosition },
+        600
+      );
+    }
+  });
+} else {
+  $(multipleCardCarousel).addClass("slide");
+}
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

@@ -71,7 +71,7 @@ namespace MakerBook.Controllers
                 model.ProfessionalId = professional.ProfessionalId;
 
             }
-            model.ProfessionalList = SelectListProfessional();
+            model.ProfessionalList = SelectListProfessional(model.ProfessionalId);
             model.CategoryList = SelectListCategory();
             //ViewData["LocationId"] = new SelectList(_context.Location, "LocationId", "LocationId");
             return View(model);
@@ -85,7 +85,7 @@ namespace MakerBook.Controllers
         public IActionResult Create(ServiceViewModel serviceViewModel)
         {
             serviceViewModel.CategoryList = SelectListCategory();
-            serviceViewModel.ProfessionalList = SelectListProfessional();
+            serviceViewModel.ProfessionalList = SelectListProfessional(0);
             try
             {
                 if (ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace MakerBook.Controllers
 
                     var service = _serviceRepository.Create(serviceModel);
 
-                   
+
                     foreach (var item in serviceViewModel.ImageServiceList)
                     {
                         MemoryStream ms = new MemoryStream();
@@ -226,8 +226,12 @@ namespace MakerBook.Controllers
             ServiceViewModel targetModel = new ServiceViewModel
             {
                 ServiceId = sourceModel.ServiceId
+                ,
+                Title = sourceModel.Title
             ,
                 Description = sourceModel.Description
+                ,
+                ServiceType = sourceModel.ServiceType
             ,
                 Price = sourceModel.Price
             ,
@@ -241,7 +245,7 @@ namespace MakerBook.Controllers
             ,
                 CategoryList = SelectListCategory()
                 ,
-                ProfessionalList = SelectListProfessional()
+                ProfessionalList = SelectListProfessional(0)
                 ,
                 ServiceImageList = SelectServiceImageViewModelList(sourceModel.ServiceId)
             };
@@ -296,9 +300,11 @@ namespace MakerBook.Controllers
             return categories;
         }
 
-        private List<SelectListItem> SelectListProfessional()
+        private List<SelectListItem> SelectListProfessional(int professionalId)
         {
             var professionals = new List<SelectListItem>();
+            var professionalModel = professionalId == 0 ? _professionalRepository.GetAll() : _professionalRepository.GetAll();
+
 
             foreach (var item in _professionalRepository.GetAll())
             {

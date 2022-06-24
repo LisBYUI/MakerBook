@@ -6,7 +6,7 @@ namespace MakerBook.ViewModels
 
     public class CategoryViewModel
     {
-        [Display(Name = "CategoryId")]
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
         [Display(Name = "Name")]
@@ -20,8 +20,10 @@ namespace MakerBook.ViewModels
         [Display(Name = "Image")]
         public byte[]? Image { get; set; }
 
+        [Display(Name = "Filename")]
         public string? ImageName { get; set; }
 
+        [Display(Name = "Extension")]
         public string? ImageExtension { get; set; }
 
         [Display(Name = "Image")]

@@ -14,11 +14,12 @@ namespace MakerBook.ViewModels
         public string LastName { get; set; }
 
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email")]
-        [Required(ErrorMessage = "Email required")]
+        [Display(Name = "E-mail")]
+        [Required(ErrorMessage = "E-mail required")]
         [EmailAddress(ErrorMessage = "The email provided is not valid!")]
         public string Email { get; set; }
 
+        [Display(Name = "Web Page")]
         public string WebPage { get; set; }
 
         [Display(Name = "Phone")]
@@ -26,7 +27,7 @@ namespace MakerBook.ViewModels
         [Phone(ErrorMessage = "The phonenumber provided is not valid!")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Login")]
+        [Display(Name = "Log in")]
         [Required(ErrorMessage = "Login required")]
         public string Login { get; set; }
 
