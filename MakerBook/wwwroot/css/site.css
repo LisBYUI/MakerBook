@@ -11929,7 +11929,7 @@ p {
 }
 
 .site-heading {
-    margin-top: 5rem;
+    margin-top: 2rem;
     margin-bottom: 5rem;
     text-transform: uppercase;
     line-height: 1;
@@ -11943,14 +11943,14 @@ p {
     }
 
     .site-heading .site-heading-lower {
-        font-size: 1rem;
+        font-size: 2rem;
         font-weight: 100;
         line-height: 2rem;
     }
 
 .page-section {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 .section-heading {
@@ -12186,4 +12186,18 @@ p {
     .card .img-wrapper {
         height: 17em;
     }
+}
+
+#map {
+    height: 100%;
+}
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }

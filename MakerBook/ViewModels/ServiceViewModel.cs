@@ -28,6 +28,21 @@ namespace MakerBook.ViewModels
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
+        public string LineAddress { get; set; }
+
+        [Display(Name = "Apartment, unit, suite, or floor")] 
+        public string ComplementAddress { get; set; }
+
+        [Display(Name = "Apartment, unit, suite, or floor")]
+        public string City { get; set; }
+
+        [Display(Name = "State/Province")]
+        public string State { get; set; }
+        [Display(Name = "Country/Region")]
+        public string Country { get; set; }
+        [Display(Name = "Postal Code")]
+        public string ZipCode { get; set; }
+
         public ProfessionalModel? Professional { get; set; }
         public CategoryModel? Category { get; set; }
 
@@ -36,6 +51,6 @@ namespace MakerBook.ViewModels
 
         public List<IFormFile> ImageServiceList { get; set; }
 
-        public List<ServiceImageViewModel> ServiceImageList { get; set; }
+        public List<ServiceImageViewModel>? ServiceImageList { get; set; }
     }
 }

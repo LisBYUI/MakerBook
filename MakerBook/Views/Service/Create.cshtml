@@ -30,7 +30,7 @@
                             </select>
                             <span asp-validation-for="ServiceType" class="text-danger"></span>
                         </div>
-                          <div class="form-group">
+                        <div class="form-group">
                             <label asp-for="Title" class="control-label"></label>
                             <input asp-for="Title" class="form-control" />
                             <span asp-validation-for="Title" class="text-danger"></span>
@@ -58,6 +58,42 @@
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
 
+                        <div class="form-group">
+                            <label asp-for="LineAddress" class="control-label"></label>
+                            <input asp-for="LineAddress" class="form-control" id="address"/>
+                            <span asp-validation-for="LineAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ComplementAddress" class="control-label"></label>
+                            <input asp-for="ComplementAddress" class="form-control" id="complementaddress"/>
+                            <span asp-validation-for="ComplementAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="City" class="control-label"></label>
+                            <input asp-for="City" class="form-control" id = "locality"/>
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="State" class="control-label"></label>
+                            <input asp-for="State" class="form-control" id="state"/>
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Country" class="control-label"></label>
+                            <input asp-for="Country" class="form-control" id="country"/>
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ZipCode" class="control-label"></label>
+                            <input asp-for="ZipCode" class="form-control" id="postalcode"/>
+                            <span asp-validation-for="ZipCode" class="text-danger"></span>
+                        </div>
+
+                        <input type="text" id="textplace" />
+                        <div id="macDiv" style="width:100%;height:500px;"></div>
+
+
+
                         <label asp-for="ImageServiceList" class="form-label">Multiple files</label>
                         <input asp-for="ImageServiceList" class="custom-file-input" type="file" multiple />
 
@@ -72,12 +108,126 @@
     </div>
 </div>
 @section Scripts {
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-gQhKTgF350KG7HuhIIAJ1Js99-3ic2M&libraries=places"></script>
+
+<script>
+
+            google.maps.event.addDomListener(window, 'load', function(){
+
+                var places = new google.maps.places.Autocomplete(document.getElementById('textplace'),  {
+                componentRestrictions: { country: ["us", "ca"] },
+                fields: ["address_components", "geometry"],
+                types: ["address"],  });
+
+                google.maps.event.addListener(places, 'place_changed', function(){
+    //it will loads places to textbox
+                var place = places.getPlace();
+
+
+                if(place.geometry && place.geometry.location)
+                {
+                     console.log(place.address_components);
+
+                   for (const component of place.address_components)
+                   {
+                          //const componentType = component.type[0];
+                          
+               console.log(component.types[0]);
+                        switch (component.types[0])
+                        {
+                          case "street_number":
+                          {
+                          document.querySelector("#complementaddress").value = component.long_name;
+                           alert(component.long_name);
+                            break;
+                          }
+
+                          case "route":
+                          {
+                           //address1 += component.short_name;
+                            document.querySelector("#address").value = component.short_name;
+                           alert(component.short_name);
+                            break;
+                          }
+
+                          case "postal_code":
+                          {
+                            document.querySelector("#postalcode").value = component.long_name;
+                            alert(component.long_name);
+                            break;
+                          }
+
+                          case "postal_code_suffix":
+                          {
+                   //        // postcode = `${postcode}-${component.long_name}`;
+                            alert(component.long_name);
+                            break;
+                          }
+
+                          case "locality":
+                        {
+                            document.querySelector("#locality").value = component.long_name;
+                            
+                              alert(component.long_name);
+                            break;
+                          }
+                          case "administrative_area_level_1":
+                          {
+                           document.querySelector("#state").value = component.short_name;
+                             alert(component.short_name);
+                            break;
+                          }
+
+                         case "country":
+                          {
+                            document.querySelector("#country").value = component.short_name;
+                              alert(component.long_name);
+                            break;
+                          }
+                        }
+                   }
+                   ExibirGoogleMaps(place.geometry.location);
+                }
+             })
+
+            });
+
+</script>
+<script type="text/javascript">
+
+    function ExibirGoogleMaps(location) {
+        alert(location);
+        //Define a latitude e Longitude do Mapa
+        var meuEndereco = new google.maps.LatLng(location);
+
+        //Cria opções ou um conjunto de recursos no Google Map
+        var mapOptions = {
+            center: meuEndereco,
+            zoom: 15,
+            minZoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        //Exibe o Google map em uma div com as opções definidas
+        var map = new google.maps.Map(document.getElementById("macDiv"), mapOptions);
+
+        //Define o marcador no mapa
+        var marcador = new google.maps.Marker({
+            position: meuEndereco,
+            animation: google.maps.Animation.BOUNCE,
+        });
+
+        marcador.setMap(map);
+       }
+</script>
 <script>
     // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+
 </script>
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

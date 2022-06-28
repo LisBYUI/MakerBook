@@ -1,0 +1,86 @@
+﻿@{
+    Layout = "_LayoutDefault";
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+@*<div class="row">*@
+
+    <input type="text" id="textplace" />
+@*    <label id="lat" class="control-label"></label>
+    <label id="lng" class="control-label"></label>
+    <label id="name" class="control-label"></label>
+    <label id="formatted_address" class="control-label"></label>
+    <input type="button" value="Clique para Exibir o Mapa" onclick="ExibirGoogleMaps()" />*@
+    <div id="macDiv" style="width:100%;height:500px;"></div>
+
+@*</div>*@
+@section Scripts {
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-gQhKTgF350KG7HuhIIAJ1Js99-3ic2M&libraries=places"></script>
+
+<script>
+
+            google.maps.event.addDomListener(window, 'load', function(){
+
+                var places = new google.maps.places.Autocomplete(document.getElementById('textplace'));
+
+                google.maps.event.addListener(places, 'place_changed', function(){
+    //it will loads places to textbox
+                var place = places.getPlace();
+
+
+                if(place.geometry && place.geometry.location){
+                   ExibirGoogleMaps(place.geometry.location)
+
+               console.log(place);
+
+               alert(place.GeocodingResults);
+             //  alert(place.AddressComponent.locality);
+               //  alert(place.establishment);
+                 //  alert(place.geocode);
+                   //  alert(place.cities);
+                     //  alert(place.region);
+                   $('#lat').val(place.geometry.location.lat());
+                     $('#lng').val(place.geometry.location.lng());
+                     $('#name').val(place.name);
+                     $('#formatted_address').val(place.formatted_address);
+                }
+                })
+
+            });
+
+</script>
+<script type="text/javascript">
+
+    function ExibirGoogleMaps(location) {
+       
+        //Define a latitude e Longitude do Mapa
+        var meuEndereco = new google.maps.LatLng(location);
+
+        //Cria opções ou um conjunto de recursos no Google Map
+        var mapOptions = {
+            center: meuEndereco,
+            zoom: 15,
+            minZoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        //Exibe o Google map em uma div com as opções definidas
+        var map = new google.maps.Map(document.getElementById("macDiv"), mapOptions);
+
+        //Define o marcador no mapa
+        var marcador = new google.maps.Marker({
+            position: meuEndereco,
+            animation: google.maps.Animation.BOUNCE,
+        });
+
+        marcador.setMap(map);
+       }
+</script>
+
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

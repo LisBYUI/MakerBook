@@ -1,6 +1,40 @@
 ﻿@{
+      Layout = "_LayoutDefault";
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Profile</span>
+                    <span class="section-heading-lower">Professional</span>
+                </h2>
+                <hr />
+                <div id="map"></div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script>
+        let map;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+      });
+    }
+</script>
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDoper-vMjQIBgFROCVxt7v16KqRQnLZM&callback=initMap">
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
