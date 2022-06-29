@@ -12,16 +12,18 @@ namespace MakerBook.Controllers
     public class ServiceController : Controller
     {
         private readonly IServiceRepository _serviceRepository;
+        private readonly IServiceAddressRepository _serviceAddressRepository;
         private readonly IServiceImageRepository _serviceImageRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProfessionalRepository _professionalRepository;
         private readonly ISessionHelper _session;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ServiceController(IServiceRepository serviceRepository, IServiceImageRepository serviceImageRepository, ICategoryRepository categoryRepository, IProfessionalRepository
+        public ServiceController(IServiceRepository serviceRepository, IServiceAddressRepository serviceAddressRepository, IServiceImageRepository serviceImageRepository, ICategoryRepository categoryRepository, IProfessionalRepository
             professionalRepository, ISessionHelper session)
         {
             _serviceRepository = serviceRepository;
+            _serviceAddressRepository = serviceAddressRepository;
             _serviceImageRepository = serviceImageRepository;
             _categoryRepository = categoryRepository;
             _professionalRepository = professionalRepository;
@@ -104,6 +106,10 @@ namespace MakerBook.Controllers
                         ServiceImageModel serviceImageModel = MapRegisterServiceImage(service.ServiceId, item.FileName, ms.ToArray(), userSession.Login);
                         _serviceImageRepository.Create(serviceImageModel);
                     }
+
+                    var serviceAddressModel = MapRegisterServiceAddress(serviceViewModel, service.ServiceId, userSession.Login);
+
+                    _serviceAddressRepository.Create(serviceAddressModel);
 
 
                     TempData["SuccessMessage"] = "Success!!!";
@@ -342,5 +348,46 @@ namespace MakerBook.Controllers
             return targetModel;
         }
 
+
+        /// <summary>
+        /// MapRegisterServiceAddress
+        /// </summary>
+        /// <param name="sourceModel"></param>
+        /// <param name="serviceId"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        private ServiceAddressModel MapRegisterServiceAddress(ServiceViewModel sourceModel, int serviceId, string login)
+        {
+            ServiceAddressModel serviceAddressModel = new ServiceAddressModel
+            {
+                ServiceAddressId = 0
+                ,
+                ServiceId = serviceId
+                ,
+                LineAddress = sourceModel.LineAddress
+                ,
+                ComplementAddress = sourceModel.ComplementAddress
+                ,
+                City = sourceModel.City
+                ,
+                State = sourceModel.State
+                ,
+                Country = sourceModel.Country
+                ,
+                ZipCode = sourceModel.ZipCode
+                ,
+                Latitude = sourceModel.Latitude
+                ,
+                Longitude = sourceModel.Longitude
+                ,
+                CreatedAt = DateTime.Now
+                ,
+                UpdatedAt = DateTime.Now
+                ,
+                UserAt = login
+            };
+
+            return serviceAddressModel;
+        }
     }
 }

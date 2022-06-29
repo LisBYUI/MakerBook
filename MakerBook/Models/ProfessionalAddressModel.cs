@@ -1,15 +1,14 @@
-﻿using MakerBook.Enum;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MakerBook.Models
 {
-    [Table("Address")]
-    public class AddressModel
+    [Table("ProfessionalAddressService")]
+    public class ProfessionalAddressModel
     {
-        [Column("AddressId")]
+        [Column("ProfessionalAddressId")]
         [Key]
-        public int AddressId { get; set; }
+        public int ProfessionalAddressId { get; set; }
 
         [Column("LineAddress")]
         public string LineAddress { get; set; }
@@ -23,12 +22,21 @@ namespace MakerBook.Models
         [Column("State")]
         public string State { get; set; }
 
+        [Column("Country")]
+        public string Country { get; set; }
+
         [Column("ZipCode")]
         public string ZipCode { get; set; }
 
-        [Column("CustomerId")]
-        [ForeignKey("CustomerId")]
-        public int? CustomerId { get; set; }
+        [Column("Latitude")]
+        public double Latitude { get; set; }
+
+        [Column("Longitude")]
+        public double Longitude { get; set; }
+
+        [Column("ProfessionalId")]
+        [ForeignKey("ProfessionalId")]
+        public int? ProfessionalId { get; set; }
 
         [Column("UserAt")]
         public string UserAt { get; set; }
@@ -39,7 +47,5 @@ namespace MakerBook.Models
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
 
-
-        public CustomerModel Customer { get; set; }
     }
 }

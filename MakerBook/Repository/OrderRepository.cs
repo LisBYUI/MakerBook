@@ -4,15 +4,15 @@ using MakerBook.Repository.Interface;
 
 namespace MakerBook.Repository
 {
-    public class ContactRepository: IContactRepository
+    public class OrderRepository: IOrderRepository
     {
         private readonly DatabaseContext _context;
 
         /// <summary>
-        /// Constructor - ContactRepository
+        /// Constructor - OrderRepository
         /// </summary>
         /// <param name="context"></param>
-        public ContactRepository(DatabaseContext context)
+        public OrderRepository(DatabaseContext context)
         {
             _context = context;
         }
@@ -22,51 +22,51 @@ namespace MakerBook.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ContactModel Get(int id)
+        public OrderModel Get(int id)
         {
-            return _context.Contact.FirstOrDefault(i => i.Id == id);
+            return _context.Order.FirstOrDefault(i => i.OrderId == id);
         }
 
         /// <summary>
         /// GetAll
         /// </summary>
         /// <returns></returns>
-        public List<ContactModel> GetAll()
+        public List<OrderModel> GetAll()
         {
-            return _context.Contact.ToList();
+            return _context.Order.ToList();
         }
 
         /// <summary>
         /// Create
         /// </summary>
-        /// <param name="contactModel"></param>
+        /// <param name="OrderModel"></param>
         /// <returns></returns>
-        public ContactModel Create(ContactModel contactModel)
+        public OrderModel Create(OrderModel OrderModel)
         {
-            _context.Contact.Add(contactModel);
+            _context.Order.Add(OrderModel);
             _context.SaveChanges();
 
-            return contactModel;
+            return OrderModel;
         }
 
         /// <summary>
         /// Update
         /// </summary>
-        /// <param name="contactModel"></param>
+        /// <param name="OrderModel"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public ContactModel Update(ContactModel contactModel)
+        public OrderModel Update(OrderModel orderModel)
         {
-            ContactModel contactDb = Get(contactModel.Id);
-            if (contactDb == null)
+            OrderModel OrderDb = Get(orderModel.OrderId);
+            if (OrderDb == null)
                 throw new Exception("Record not Found");
-            contactDb.Name = contactModel.Name;
-            contactDb.Email = contactModel.Email;
+            OrderDb.Date = orderModel.Date;
+            OrderDb.PaymentType = orderModel.PaymentType;
 
-            _context.Contact.Update(contactDb);
+            _context.Order.Update(OrderDb);
             _context.SaveChanges();
 
-            return contactDb;
+            return OrderDb;
         }
 
         /// <summary>
@@ -77,11 +77,11 @@ namespace MakerBook.Repository
         /// <exception cref="Exception"></exception>
         public bool Delete(int id)
         {
-            ContactModel contactDb = Get(id);
-            if (contactDb == null)
+            OrderModel OrderDb = Get(id);
+            if (OrderDb == null)
                 throw new Exception("Record not Found");
 
-            _context.Contact.Remove(contactDb);
+            _context.Order.Remove(OrderDb);
             _context.SaveChanges();
 
             return true;

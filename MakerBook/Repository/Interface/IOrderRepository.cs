@@ -2,34 +2,34 @@
 
 namespace MakerBook.Repository.Interface
 {
-    public interface IContactRepository
+    public interface IOrderRepository
     {
         /// <summary>
         /// Get
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        ContactModel Get(int id);
+        OrderModel Get(int id);
 
         /// <summary>
         /// GetAll
         /// </summary>
         /// <returns></returns>
-        List<ContactModel> GetAll();
+        List<OrderModel> GetAll();
 
         /// <summary>
         /// Create
         /// </summary>
-        /// <param name="contactModel"></param>
+        /// <param name="OrderModel"></param>
         /// <returns></returns>
-        ContactModel Create(ContactModel contactModel);
+        OrderModel Create(OrderModel orderModel);
 
         /// <summary>
         /// Update
         /// </summary>
-        /// <param name="contactModel"></param>
+        /// <param name="OrderModel"></param>
         /// <returns></returns>
-        ContactModel Update(ContactModel contactModel);
+        OrderModel Update(OrderModel orderModel);
 
         /// <summary>
         /// Delete

@@ -20,7 +20,8 @@
 
                     <form asp-action="Create" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                          <input type="hidden" asp-for="Latitude" />
+                            <input type="hidden" asp-for="Longitude" />
                         <div class="form-group">
                             <label asp-for="ServiceType" class="control-label"></label>
                             <select asp-for="ServiceType" class="form-control">
@@ -57,41 +58,44 @@
                             @Html.DropDownListFor(model=>model.CategoryId, Model.CategoryList, "--Select", new{@class="form-control"})
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
-
+                        <div class="form-group">
+                            <label class="control-label">Search location</label>
+                            <input type="text" id="textplace" class="form-control" />
+                        </div>
                         <div class="form-group">
                             <label asp-for="LineAddress" class="control-label"></label>
-                            <input asp-for="LineAddress" class="form-control" id="address"/>
+                            <input asp-for="LineAddress" class="form-control" id="address" />
                             <span asp-validation-for="LineAddress" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="ComplementAddress" class="control-label"></label>
-                            <input asp-for="ComplementAddress" class="form-control" id="complementaddress"/>
+                            <input asp-for="ComplementAddress" class="form-control" id="complementaddress" />
                             <span asp-validation-for="ComplementAddress" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="City" class="control-label"></label>
-                            <input asp-for="City" class="form-control" id = "locality"/>
+                            <input asp-for="City" class="form-control" id="locality" />
                             <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="State" class="control-label"></label>
-                            <input asp-for="State" class="form-control" id="state"/>
+                            <input asp-for="State" class="form-control" id="state" />
                             <span asp-validation-for="State" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Country" class="control-label"></label>
-                            <input asp-for="Country" class="form-control" id="country"/>
+                            <input asp-for="Country" class="form-control" id="country" />
                             <span asp-validation-for="Country" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="ZipCode" class="control-label"></label>
-                            <input asp-for="ZipCode" class="form-control" id="postalcode"/>
+                            <input asp-for="ZipCode" class="form-control" id="postalcode" />
                             <span asp-validation-for="ZipCode" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
 
-                        <input type="text" id="textplace" />
-                        <div id="macDiv" style="width:100%;height:500px;"></div>
-
+                            <div id="macDiv" style="height: 200px;" class="form-control d-inline-block w-100"></div>
+                        </div>
 
 
                         <label asp-for="ImageServiceList" class="form-label">Multiple files</label>
@@ -127,67 +131,65 @@
 
                 if(place.geometry && place.geometry.location)
                 {
+                    console.log(place.geometry.location.lat());
+                    document.querySelector("#Latitude").value = place.geometry.location.lat();
+                    document.querySelector("#Longitude").value = place.geometry.location.lng();
+
                      console.log(place.address_components);
+                     document.querySelector("#complementaddress").value = '';
 
                    for (const component of place.address_components)
                    {
-                          //const componentType = component.type[0];
-                          
-               console.log(component.types[0]);
+
                         switch (component.types[0])
                         {
                           case "street_number":
                           {
-                          document.querySelector("#complementaddress").value = component.long_name;
-                           alert(component.long_name);
+                          document.querySelector("#complementaddress").value += component.long_name;
                             break;
                           }
 
                           case "route":
                           {
-                           //address1 += component.short_name;
-                            document.querySelector("#address").value = component.short_name;
-                           alert(component.short_name);
+                            document.querySelector("#address").value = component.long_name;
                             break;
                           }
-
+                           case "neighborhood":
+                          {
+                            document.querySelector("#complementaddress").value += component.long_name;
+                            break;
+                          }
                           case "postal_code":
                           {
                             document.querySelector("#postalcode").value = component.long_name;
-                            alert(component.long_name);
                             break;
                           }
 
                           case "postal_code_suffix":
                           {
-                   //        // postcode = `${postcode}-${component.long_name}`;
-                            alert(component.long_name);
+                            document.querySelector("#postalcode").value += component.long_name;
                             break;
                           }
 
                           case "locality":
                         {
                             document.querySelector("#locality").value = component.long_name;
-                            
-                              alert(component.long_name);
                             break;
                           }
                           case "administrative_area_level_1":
                           {
                            document.querySelector("#state").value = component.short_name;
-                             alert(component.short_name);
                             break;
                           }
 
                          case "country":
                           {
                             document.querySelector("#country").value = component.short_name;
-                              alert(component.long_name);
                             break;
                           }
                         }
                    }
-                   ExibirGoogleMaps(place.geometry.location);
+                   ShowGoogleMaps(place.geometry.location);
                 }
              })
 
@@ -196,14 +198,14 @@
 </script>
 <script type="text/javascript">
 
-    function ExibirGoogleMaps(location) {
-        alert(location);
+    function ShowGoogleMaps(location) {
+        
         //Define a latitude e Longitude do Mapa
-        var meuEndereco = new google.maps.LatLng(location);
+        var myAddress = new google.maps.LatLng(location);
 
         //Cria opções ou um conjunto de recursos no Google Map
         var mapOptions = {
-            center: meuEndereco,
+            center: myAddress,
             zoom: 15,
             minZoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -214,7 +216,7 @@
 
         //Define o marcador no mapa
         var marcador = new google.maps.Marker({
-            position: meuEndereco,
+            position: myAddress,
             animation: google.maps.Animation.BOUNCE,
         });
 

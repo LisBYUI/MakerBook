@@ -15,15 +15,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=LAPTOP-SRQMUDUA;Initial Catalog=MakerBook;User ID=sa; Persist Security Info=True; Integrated Security=True;"));
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-builder.Services.AddScoped<IContactRepository, ContactRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IProfessionalAddressRepository, ProfessionalAddressRepository>();
 builder.Services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
 builder.Services.AddScoped<IProfessionalProfileRepository, ProfessionalProfileRepository>();
 builder.Services.AddScoped<IProfessionalSocialMediaRepository, ProfessionalSocialMediaRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IServiceAddressRepository, ServiceAddressRepository>();
 builder.Services.AddScoped<IServiceImageRepository, ServiceImageRepository>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 builder.Services.AddScoped<ISessionHelper, SessionHelper>();
 builder.Services.AddScoped<IEmail, Email>();
@@ -55,7 +59,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    //pattern: "{controller=Login}/{action=Index}/{id?}");
+//pattern: "{controller=Login}/{action=Index}/{id?}");
 pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();

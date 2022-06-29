@@ -33,7 +33,7 @@ namespace MakerBook.ViewModels
         [Display(Name = "Apartment, unit, suite, or floor")] 
         public string ComplementAddress { get; set; }
 
-        [Display(Name = "Apartment, unit, suite, or floor")]
+        [Display(Name = "City")]
         public string City { get; set; }
 
         [Display(Name = "State/Province")]
@@ -42,7 +42,10 @@ namespace MakerBook.ViewModels
         public string Country { get; set; }
         [Display(Name = "Postal Code")]
         public string ZipCode { get; set; }
-
+        [Display(Name = "Latitude")]
+        public double Latitude { get; set; }
+        [Display(Name = "Longitude")]
+        public double Longitude { get; set; }
         public ProfessionalModel? Professional { get; set; }
         public CategoryModel? Category { get; set; }
 
