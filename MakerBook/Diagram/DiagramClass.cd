@@ -1,68 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="MakerBook.Models.PaymentModel">
-    <Position X="5.25" Y="8.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACAAAACAQAAAAAAAACBAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\PaymentModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="MakerBook.Models.ProfessionalModel">
-    <Position X="14.25" Y="5" Width="1.5" />
+    <Position X="11" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAACAAACCAAQAQAAAAACBAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\ProfessionalModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MakerBook.Models.OrderModel">
-    <Position X="8.25" Y="9" Width="1.5" />
+    <Position X="17" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAEAAAAAAAAACAAAAKAAAAAAAAAACBABABAAAAAAAAA=</HashCode>
+      <HashCode>EAEAACAAAAAACAAAACAQAAAAAAAASBABAAAAAAAAAAA=</HashCode>
       <FileName>Models\OrderModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Customer" />
-      <Property Name="Payment" />
+      <Property Name="Service" />
     </ShowAsAssociation>
-  </Class>
-  <Class Name="MakerBook.Models.OrderDetailModel">
-    <Position X="11.25" Y="9" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>EAEAACAAAAAACAAAACAAAAAAAAAASAAAAAAAAQAAAAA=</HashCode>
-      <FileName>Models\OrderDetailModel.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Order" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="MakerBook.Models.LocationModel">
-    <Position X="18.25" Y="9.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAACAAgACAAAAQAAACACAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\LocationModel.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Position" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="MakerBook.Models.PositionModel">
-    <Position X="15.25" Y="10.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAACAAAACAIAAAAAACACAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\PositionModel.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="MakerBook.Models.ServiceImageModel">
-    <Position X="11" Y="2" Width="1.75" />
+    <Position X="13.75" Y="2" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAACAAAACAAAAQAAAAASBAAEAAAAAAAAAA=</HashCode>
       <FileName>Models\ServiceImageModel.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Service" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="MakerBook.Models.ServiceModel">
-    <Position X="11.25" Y="5.5" Width="1.5" />
+    <Position X="14" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAQAgCgAACCAAAAAAAAAACAEAAAAAAAAACAA=</HashCode>
+      <HashCode>AAAIACAAAQAgCkAACCAAAAAAAAAACAEAAAAAAAAACAA=</HashCode>
       <FileName>Models\ServiceModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -71,27 +40,57 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="MakerBook.Models.CustomerModel">
-    <Position X="8.25" Y="12.5" Width="1.5" />
+    <Position X="20" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAACAAAACAAQAQAAAAACBAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\CustomerModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MakerBook.Models.CategoryModel">
-    <Position X="8.25" Y="5" Width="1.5" />
+    <Position X="14" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAgCgAAACAAAAQAAAAACBAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgCgAAQCAAAAQAAAAADBAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\CategoryModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MakerBook.Models.AddressModel">
-    <Position X="5" Y="11.75" Width="1.75" />
+  <Class Name="MakerBook.Models.CustomerAddressModel">
+    <Position X="22.75" Y="4" Width="2" />
     <TypeIdentifier>
-      <HashCode>QAEAAAAAAAAACAAIACAAAgACAAAACBABAAAABAAAAAA=</HashCode>
-      <FileName>Models\AddressModel.cs</FileName>
+      <HashCode>AAEAAAAAAEAACAAIACAIAgACIAIACBABAAAABAAAAAA=</HashCode>
+      <FileName>Models\CustomerAddressModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Customer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MakerBook.Models.ProfessionalProfileModel">
+    <Position X="7.75" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgCAAACCAAACAAAAAACAEAAABAAAAAAAA=</HashCode>
+      <FileName>Models\ProfessionalProfileModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Professional" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MakerBook.Models.ProfessionalSocialMediaModel">
+    <Position X="4" Y="8.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAUAAAAAAACAAAACAAACAAACAACAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ProfessionalSocialMediaModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ProfessionalProfile" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MakerBook.Models.ServiceAddressModel">
+    <Position X="10.75" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAEAACAAIACAIAgACAAIASAABAAAABAgAAAA=</HashCode>
+      <FileName>Models\ServiceAddressModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Service" />
     </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />

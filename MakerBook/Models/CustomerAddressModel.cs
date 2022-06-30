@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MakerBook.Models
 {
-    [Table("ProfessionalAddressService")]
-    public class ProfessionalAddressModel
+    [Table("CustomerAddress")]
+    public class CustomerAddressModel
     {
-        [Column("ProfessionalAddressId")]
+        [Column("CustomerAddressId")]
         [Key]
-        public int ProfessionalAddressId { get; set; }
+        public int CustomerAddressId { get; set; }
 
         [Column("LineAddress")]
         public string LineAddress { get; set; }
@@ -34,9 +34,9 @@ namespace MakerBook.Models
         [Column("Longitude")]
         public double Longitude { get; set; }
 
-        [Column("ProfessionalId")]
-        [ForeignKey("ProfessionalId")]
-        public int? ProfessionalId { get; set; }
+        [Column("CustomerId")]
+        [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
 
         [Column("UserAt")]
         public string UserAt { get; set; }
@@ -47,5 +47,6 @@ namespace MakerBook.Models
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
 
+        public CustomerModel Customer { get; set; }
     }
 }

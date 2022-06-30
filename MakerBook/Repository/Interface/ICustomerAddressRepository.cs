@@ -2,34 +2,34 @@
 
 namespace MakerBook.Repository.Interface
 {
-    public interface IProfessionalAddressRepository
+    public interface ICustomerAddressRepository
     {
         /// <summary>
         /// Get
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        ProfessionalAddressModel Get(int id);
+        CustomerAddressModel Get(int id);
 
         /// <summary>
         /// GetAll
         /// </summary>
         /// <returns></returns>
-        List<ProfessionalAddressModel> GetAll();
+        List<CustomerAddressModel> GetAll();
 
         /// <summary>
         /// Create
         /// </summary>
         /// <param name="ProfessionalAddressModel"></param>
         /// <returns></returns>
-        ProfessionalAddressModel Create(ProfessionalAddressModel professionalAddressModel);
+        CustomerAddressModel Create(CustomerAddressModel professionalAddressModel);
 
         /// <summary>
         /// Update
         /// </summary>
         /// <param name="ProfessionalAddressModel"></param>
         /// <returns></returns>
-        ProfessionalAddressModel Update(ProfessionalAddressModel professionalAddressModel);
+        CustomerAddressModel Update(CustomerAddressModel professionalAddressModel);
 
         /// <summary>
         /// Delete

@@ -35,7 +35,7 @@ namespace MakerBook.Models
         public double Longitude { get; set; }
 
         [Column("ServiceId")]
-        [ForeignKey("ServiceId")]
+        [ForeignKey("Service")]
         public int? ServiceId { get; set; }
 
         [Column("UserAt")]
@@ -46,6 +46,8 @@ namespace MakerBook.Models
 
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; }
+
+        public ServiceModel Service { get; set; }
 
     }
 }

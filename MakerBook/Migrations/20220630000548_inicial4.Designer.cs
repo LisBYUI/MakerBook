@@ -4,6 +4,7 @@ using MakerBook.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MakerBook.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220630000548_inicial4")]
+    partial class inicial4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,77 +74,6 @@ namespace MakerBook.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("MakerBook.Models.CustomerAddressModel", b =>
-                {
-                    b.Property<int>("CustomerAddressId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("CustomerAddressId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerAddressId"), 1L, 1);
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("City");
-
-                    b.Property<string>("ComplementAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ComplementAddress");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Country");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedAt");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int")
-                        .HasColumnName("CustomerId");
-
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float")
-                        .HasColumnName("Latitude");
-
-                    b.Property<string>("LineAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("LineAddress");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float")
-                        .HasColumnName("Longitude");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("State");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedAt");
-
-                    b.Property<string>("UserAt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UserAt");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ZipCode");
-
-                    b.HasKey("CustomerAddressId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("CustomerAddress");
                 });
 
             modelBuilder.Entity("MakerBook.Models.CustomerModel", b =>
@@ -232,6 +163,77 @@ namespace MakerBook.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("MakerBook.Models.ProfessionalAddressModel", b =>
+                {
+                    b.Property<int>("ProfessionalAddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ProfessionalAddressId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfessionalAddressId"), 1L, 1);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("City");
+
+                    b.Property<string>("ComplementAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ComplementAddress");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Country");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float")
+                        .HasColumnName("Latitude");
+
+                    b.Property<string>("LineAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LineAddress");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float")
+                        .HasColumnName("Longitude");
+
+                    b.Property<int>("ProfessionalId")
+                        .HasColumnType("int")
+                        .HasColumnName("ProfessionalId");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("State");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UserAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UserAt");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ZipCode");
+
+                    b.HasKey("ProfessionalAddressId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.ToTable("ProfessionalAddress");
                 });
 
             modelBuilder.Entity("MakerBook.Models.ProfessionalModel", b =>
@@ -594,17 +596,6 @@ namespace MakerBook.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("MakerBook.Models.CustomerAddressModel", b =>
-                {
-                    b.HasOne("MakerBook.Models.CustomerModel", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("MakerBook.Models.OrderModel", b =>
                 {
                     b.HasOne("MakerBook.Models.CustomerModel", "Customer")
@@ -622,6 +613,17 @@ namespace MakerBook.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("MakerBook.Models.ProfessionalAddressModel", b =>
+                {
+                    b.HasOne("MakerBook.Models.ProfessionalModel", "Professional")
+                        .WithMany()
+                        .HasForeignKey("ProfessionalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Professional");
                 });
 
             modelBuilder.Entity("MakerBook.Models.ProfessionalProfileModel", b =>

@@ -18,7 +18,7 @@ builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-builder.Services.AddScoped<IProfessionalAddressRepository, ProfessionalAddressRepository>();
+builder.Services.AddScoped<ICustomerAddressRepository, CustomerAddressRepository>();
 builder.Services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
 builder.Services.AddScoped<IProfessionalProfileRepository, ProfessionalProfileRepository>();
 builder.Services.AddScoped<IProfessionalSocialMediaRepository, ProfessionalSocialMediaRepository>();
