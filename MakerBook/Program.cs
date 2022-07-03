@@ -25,6 +25,8 @@ builder.Services.AddScoped<IProfessionalSocialMediaRepository, ProfessionalSocia
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceAddressRepository, ServiceAddressRepository>();
 builder.Services.AddScoped<IServiceImageRepository, ServiceImageRepository>();
+builder.Services.AddScoped<ICustomerFavoriteServiceRepository, CustomerFavoriteServiceRepository>();
+
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 

@@ -12,6 +12,7 @@
                     <span class="section-heading-upper">Available professionals</span>
                     <span class="section-heading-lower">Connecting those who need it with those who know how to do it</span>
                 </h2>
+              
                 <p>
 
                     <table class="table">
@@ -28,7 +29,7 @@
                                     <td>
                                         <img src="data:image;base64,@System.Convert.ToBase64String(itemCategory.CategoryImage)" width="80" height="80" />
                                         @Html.DisplayFor(modelItem => itemCategory.CategoryName)
-
+                                        
                                         <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
                                             <div class="carousel-inner">
                                                 @{
@@ -47,6 +48,16 @@
                                                                 <h5 class="card-title">@item.ProfessionalName</h5>
                                                                 <p class="card-text">@item.ServiceTitle</p>
                                                                 <a class="btn btn-primary" asp-action="Professional" asp-controller="ProfessionalProfile" asp-route-id="@item.ProfessionalId">Details</a>
+                                                                <a asp-action="Favorite" asp-controller="Portfolio" asp-route-id="@item.ServiceId">
+                                                                    @if (item.CustomerFavoriteServiceId > 0)
+                                                                    {
+                                                                        <i class="fas fa-heart"></i>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <i class="far fa-heart"></i>
+                                                                    }
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>

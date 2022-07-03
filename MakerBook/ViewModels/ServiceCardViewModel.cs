@@ -14,7 +14,9 @@ namespace MakerBook.ViewModels
         public int CategoryId { get; set; }
         public int ProfessionalId { get; set; }
 
+
         public string ServiceTitle { get; set; }
+        public int? CustomerFavoriteServiceId { get; set; }
 
 
     }

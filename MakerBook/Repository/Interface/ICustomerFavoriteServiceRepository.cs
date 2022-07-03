@@ -2,34 +2,34 @@
 
 namespace MakerBook.Repository.Interface
 {
-    public interface ICustomerRepository
+    public interface ICustomerFavoriteServiceRepository
     {
         /// <summary>
         /// Get
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        CustomerModel Get(int id);
+        CustomerFavoriteServiceModel Get(int id);
 
         /// <summary>
         /// GetAll
         /// </summary>
         /// <returns></returns>
-        List<CustomerModel> GetAll();
+        List<CustomerFavoriteServiceModel> GetAll();
 
         /// <summary>
         /// Create
         /// </summary>
-        /// <param name="CustomerModel"></param>
+        /// <param name="CustomerFavoriteServiceModel"></param>
         /// <returns></returns>
-        CustomerModel Create(CustomerModel customerModel);
+        CustomerFavoriteServiceModel Create(CustomerFavoriteServiceModel customerFavoriteServiceModel);
 
         /// <summary>
         /// Update
         /// </summary>
-        /// <param name="CustomerModel"></param>
+        /// <param name="CustomerFavoriteServiceModel"></param>
         /// <returns></returns>
-        CustomerModel Update(CustomerModel customerModel);
+        CustomerFavoriteServiceModel Update(CustomerFavoriteServiceModel customerFavoriteServiceModel);
 
         /// <summary>
         /// Delete
@@ -39,10 +39,11 @@ namespace MakerBook.Repository.Interface
         bool Delete(int id);
 
         /// <summary>
-        /// GetByEmail
+        /// GetByCustomerService
         /// </summary>
-        /// <param name="email"></param>
+        /// <param name="customerId"></param>
+        /// <param name="serviceId"></param>
         /// <returns></returns>
-        CustomerModel GetByEmail(string email);
+        CustomerFavoriteServiceModel GetByCustomerService(int customerId, int serviceId);
     }
 }

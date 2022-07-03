@@ -24,12 +24,14 @@ namespace MakerBook.Controllers
         private readonly IProfessionalSocialMediaRepository _professionalSocialMediaRepository;
         private readonly IServiceRepository _serviceRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ICustomerFavoriteServiceRepository _customerFavoriteServiceRepository;
+        private readonly ICustomerRepository _customerRepository;
         private readonly IServiceImageRepository _serviceImageRepository;
         private readonly ISessionHelper _session;
 
 
         public PortfolioController(IProfessionalRepository professionalRepository, IProfessionalProfileRepository professionalProfileRepository, IProfessionalSocialMediaRepository professionalSocialMediaRepository, IServiceRepository serviceRepository,
-       IServiceImageRepository serviceImageRepository, ICategoryRepository categoryRepository, ISessionHelper session)
+       IServiceImageRepository serviceImageRepository, ICategoryRepository categoryRepository, ICustomerFavoriteServiceRepository customerFavoriteServiceRepository, ICustomerRepository customerRepository, ISessionHelper session)
         {
             _professionalRepository = professionalRepository;
             _professionalProfileRepository = professionalProfileRepository;
@@ -37,6 +39,8 @@ namespace MakerBook.Controllers
             _serviceRepository = serviceRepository;
             _serviceImageRepository = serviceImageRepository;
             _categoryRepository = categoryRepository;
+            _customerRepository = customerRepository;
+            _customerFavoriteServiceRepository = customerFavoriteServiceRepository;
             _session = session;
 
         }
@@ -79,6 +83,24 @@ namespace MakerBook.Controllers
 
             return View(professionalProfileView);
         }
+
+        public IActionResult Favorite(int Id)
+        {
+            var userSession = _session.GetUserSession();
+
+            if (userSession.Profile == Enum.ProfileEnum.Customer)
+            {
+                var customer = _customerRepository.GetByEmail(userSession.Email);
+
+                var customerFavoriteService = MapRegisterCustomerFavoriteService(customer.CustomerId, Id, userSession.Login);
+
+                _customerFavoriteServiceRepository.Create(customerFavoriteService);
+            }
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
 
         // POST: ProfessionalProfileViewModel/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -411,12 +433,22 @@ namespace MakerBook.Controllers
             var serviceList = _serviceRepository.GetByCategory(categoryId);
 
             List<ServiceCardViewModel> serviceCardViewList = new List<ServiceCardViewModel>();
+            var userSession = _session.GetUserSession();
+            int customerId = 0;
 
+
+            if (userSession.Profile == Enum.ProfileEnum.Customer)
+            {
+                var customer = _customerRepository.GetByEmail(userSession.Email);
+
+                customerId = customer.CustomerId;
+            }
 
             foreach (var item in serviceList)
             {
                 var professionalProfile = _professionalProfileRepository.GetByProfessional(item.ProfessionalId);
                 var professional = _professionalRepository.Get(item.ProfessionalId);
+                var favorite = _customerFavoriteServiceRepository.GetByCustomerService(customerId, item.ServiceId);
 
                 ServiceCardViewModel serviceCardView = new ServiceCardViewModel()
                 {
@@ -429,6 +461,8 @@ namespace MakerBook.Controllers
                     ProfessionalName = professional.Name
             ,
                     ServiceId = item.ServiceId
+                    ,
+                    CustomerFavoriteServiceId = favorite != null ? favorite.CustomerFavoriteServiceId : 0
             ,
                     ServiceTitle = item.Title
                 };
@@ -444,42 +478,69 @@ namespace MakerBook.Controllers
 
 
 
-            //            PortfolioCategoryViewModel portfolioCategoryViewModel = new PortfolioCategoryViewModel()
-            //            {
-            //                CategoryId = item.CategoryId
+        //            PortfolioCategoryViewModel portfolioCategoryViewModel = new PortfolioCategoryViewModel()
+        //            {
+        //                CategoryId = item.CategoryId
 
-            //;
-            //                    , CategoryName =item.Category.Name
+        //;
+        //                    , CategoryName =item.Category.Name
 
-            //                    , CategoryImage =item.Category.Image
+        //                    , CategoryImage =item.Category.Image
 
-            //                    , ServiceCardViewList
-            //                }
-            //            }
-            //            return portfolioCategoryViewModel;
-            //        }
-            private List<PortfolioViewModel> MapRegisterPortfolioView()
+        //                    , ServiceCardViewList
+        //                }
+        //            }
+        //            return portfolioCategoryViewModel;
+        //        }
+        private List<PortfolioViewModel> MapRegisterPortfolioView()
+        {
+            List<PortfolioViewModel> portfolioViewList = new List<PortfolioViewModel>();
+            var categoryList = _categoryRepository.GetAll();
+
+            foreach (var item in categoryList)
             {
-                List<PortfolioViewModel> portfolioViewList = new List<PortfolioViewModel>();
-                var categoryList = _categoryRepository.GetAll();
-
-                foreach (var item in categoryList)
+                PortfolioViewModel portfolioViewModel = new PortfolioViewModel()
                 {
-                    PortfolioViewModel portfolioViewModel = new PortfolioViewModel()
-                    {
-                        CategoryId = item.CategoryId
-                     ,
-                        CategoryName = item.Name
-                     ,
-                        CategoryImage = item.Image
-                     ,
-                        ServiceCardViewList = MapRegisterServiceCardView(item.CategoryId)
+                    CategoryId = item.CategoryId
+                 ,
+                    CategoryName = item.Name
+                 ,
+                    CategoryImage = item.Image
+                 ,
+                    ServiceCardViewList = MapRegisterServiceCardView(item.CategoryId)
 
-                    };
+                };
                 portfolioViewList.Add(portfolioViewModel);
-                }
-
-                return portfolioViewList;
             }
+
+            return portfolioViewList;
+        }
+
+        /// <summary>
+        /// MapRegisterCustomerFavoriteService
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="serviceId"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        private CustomerFavoriteServiceModel MapRegisterCustomerFavoriteService(int customerId, int serviceId, string login)
+        {
+            CustomerFavoriteServiceModel targetModel = new CustomerFavoriteServiceModel
+            {
+                CustomerFavoriteServiceId = 0
+            ,
+                CustomerId = customerId
+            ,
+                ServiceId = serviceId
+            ,
+                CreatedAt = DateTime.Now
+            ,
+                UpdatedAt = DateTime.Now
+            ,
+                UserAt = login
+            };
+
+            return targetModel;
         }
     }
+}

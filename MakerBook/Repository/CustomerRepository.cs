@@ -88,6 +88,12 @@ namespace MakerBook.Repository
             _context.SaveChanges();
 
             return true;
-        } 
+        }
+
+        public CustomerModel GetByEmail(string email)
+        {
+            return _context.Customer.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+
+        }
     }
 }

@@ -26,7 +26,7 @@
 
 
                     <div class="card">
-                        <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+                        <div class="rounded-top d-flex flex-row" height:200px;">
                             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
                                 <img src="data:image;base64,@System.Convert.ToBase64String(Model.ImageProfile)"
                                      alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
@@ -38,8 +38,8 @@
 
                             </div>
                         </div>
-                    </div>
-                    <div class="p-4 text-black" style="background-color: #f8f9fa;">
+                  
+                    <div class="p-4 text-black" >
                         <div class="d-flex justify-content-end text-center py-1">
                             <div>
                                 @foreach (var item in Model.professionalSocialMediaList)
@@ -157,6 +157,7 @@
 
                             </div>
                         </div>
+                    </div>
                     </div>
                     <div class="card-body p-4 text-black">
                         <div class="mb-5">

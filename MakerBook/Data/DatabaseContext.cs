@@ -20,7 +20,7 @@ namespace MakerBook.Data
         public DbSet<ServiceModel> Service { get; set; }
         public DbSet<ServiceAddressModel> ServiceAddress { get; set; }
         public DbSet<ServiceImageModel> ServiceImage { get; set; }
-
+        public DbSet<CustomerFavoriteServiceModel> CustomerFavoriteService { get; set; }
         public DbSet<UserModel> User { get; set; }
       
  
