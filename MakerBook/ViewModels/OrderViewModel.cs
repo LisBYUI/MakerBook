@@ -21,8 +21,19 @@ namespace MakerBook.ViewModels
 
         [Display(Name = "Payment")]
         public PaymentTypeEnum PaymentType { get; set; }
-    
 
-     
+
+        [Display(Name = "Service")]
+        public string ServiceTitle { get; set; }
+
+        [Display(Name = "Detail")]
+        public string ServiceDescription { get; set; }
+
+        [Display(Name = "Service Type")]
+        public ServiceTypeEnum ServiceType { get; set; }
+
+        [Display(Name = "Price")]
+        public double ServicePrice { get; set; }
+
     }
 }

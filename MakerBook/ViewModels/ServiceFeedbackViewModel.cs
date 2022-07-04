@@ -6,33 +6,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MakerBook.ViewModels
 {
 
-    public class ServiceViewModel
+    public class ServiceFeedbackViewModel
     {
 
         public int ServiceId { get; set; }
 
         [Display(Name = "Title")]
-        public string Title { get; set; }
-
-        [Display(Name = "Description")]
-        public string Description { get; set; }
+        public string ServiceTitle { get; set; }
 
         [Display(Name = "Service Type")]
         public ServiceTypeEnum ServiceType { get; set; }
 
-        [Display(Name = "Price")]
-        public double Price { get; set; }
-
-        [Display(Name = "Professional")]
-        public int ProfessionalId { get; set; }
+        public string ProfessionalName { get; set; }
 
         [Display(Name = "Category")]
-        public int CategoryId { get; set; }
-
-        public string LineAddress { get; set; }
-
-        [Display(Name = "Apartment, unit, suite, or floor")] 
-        public string ComplementAddress { get; set; }
+        public string Category { get; set; }
 
         [Display(Name = "City")]
         public string City { get; set; }
@@ -47,14 +35,9 @@ namespace MakerBook.ViewModels
         public double Latitude { get; set; }
         [Display(Name = "Longitude")]
         public double Longitude { get; set; }
-        public ProfessionalModel? Professional { get; set; }
-        public CategoryModel? Category { get; set; }
+        public List<CustomerFavoriteServiceViewModel> CustomerFavoriteServiceViewList { get; set; }
 
-        public List<SelectListItem>? CategoryList { get; set; }
-        public List<SelectListItem>? ProfessionalList { get; set; }
 
-        public List<IFormFile> ImageServiceList { get; set; }
 
-        public List<ServiceImageViewModel>? ServiceImageList { get; set; }
     }
 }

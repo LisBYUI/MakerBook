@@ -62,7 +62,7 @@ namespace MakerBook.Repository
                 throw new Exception("Record not Found");
             customerFavoriteServiceDb.Feedback = customerFavoriteServiceModel.Feedback;
             customerFavoriteServiceDb.Rate = customerFavoriteServiceModel.Rate;
-   
+
             customerFavoriteServiceDb.UpdatedAt = customerFavoriteServiceModel.UpdatedAt;
             customerFavoriteServiceDb.UserAt = customerFavoriteServiceModel.UserAt;
 
@@ -93,6 +93,11 @@ namespace MakerBook.Repository
         public CustomerFavoriteServiceModel GetByCustomerService(int customerId, int serviceId)
         {
             return _context.CustomerFavoriteService.FirstOrDefault(i => i.CustomerId == customerId && i.ServiceId == serviceId);
+        }
+
+        public List<CustomerFavoriteServiceModel> GetByService(int serviceId)
+        {
+            return _context.CustomerFavoriteService.Where(i => i.ServiceId == serviceId).ToList();
         }
     }
 }

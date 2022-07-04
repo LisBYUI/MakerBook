@@ -1,0 +1,54 @@
+﻿@using MakerBook.ViewModels
+@model ServiceFeedbackViewModel
+@{
+    ViewData["Title"] = "ServiceFeedback";
+}
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">FeedBack</span>
+                    <span class="section-heading-lower">Feedback received</span>
+                </h2>
+                <hr />
+                <h3>
+                    @Html.DisplayFor(model => model.ServiceTitle)
+                </h3>
+                <h4>
+                    @Html.DisplayFor(model => model.ProfessionalName)
+
+                </h4>
+                @foreach (var item in Model.CustomerFavoriteServiceViewList)
+                {
+                    <div class="bi-text-center">
+                        <p class="fw-bold">@item.CustomerName</p>
+                    </div>
+
+                    <div class="float-end">
+                        <p class="fst-italic">Posted since @item.CreatedAt</p>
+                    </div>
+                    <div class="bi-text-center">
+                        <p class="fst-italic">@item.Feedback</p>
+                    </div>
+                    <div>
+                        <input type="range" asp-for="@item.Rate" class="form-control form-range" min="0" max="5" step="1">
+                    </div>
+                    <div class="float-end">
+                        <p class="mt-2 text-right">@item.Rate/5</p>
+                    </div>
+                    <br />
+                    <hr />
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

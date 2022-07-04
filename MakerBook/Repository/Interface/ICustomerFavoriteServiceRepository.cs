@@ -45,5 +45,7 @@ namespace MakerBook.Repository.Interface
         /// <param name="serviceId"></param>
         /// <returns></returns>
         CustomerFavoriteServiceModel GetByCustomerService(int customerId, int serviceId);
+
+        List<CustomerFavoriteServiceModel> GetByService(int serviceId);
     }
 }
