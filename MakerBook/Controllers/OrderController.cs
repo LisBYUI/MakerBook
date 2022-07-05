@@ -17,14 +17,32 @@ namespace MakerBook.Controllers
     [PageForUserLogged]
     public class OrderController : Controller
     {
+        private readonly IProfessionalRepository _professionalRepository;
+        private readonly IProfessionalProfileRepository _professionalProfileRepository;
+        private readonly IProfessionalSocialMediaRepository _professionalSocialMediaRepository;
+        private readonly IServiceRepository _serviceRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICustomerFavoriteServiceRepository _customerFavoriteServiceRepository;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IServiceImageRepository _serviceImageRepository; 
         private readonly IOrderRepository _orderRepository;
         private readonly ISessionHelper _session;
 
 
-        public OrderController(IOrderRepository orderRepository, ISessionHelper session)
+        public OrderController(IProfessionalRepository professionalRepository, IProfessionalProfileRepository professionalProfileRepository, IProfessionalSocialMediaRepository professionalSocialMediaRepository, IServiceRepository serviceRepository,
+       IServiceImageRepository serviceImageRepository, ICategoryRepository categoryRepository, ICustomerFavoriteServiceRepository customerFavoriteServiceRepository, ICustomerRepository customerRepository, IOrderRepository orderRepository, ISessionHelper session)
         {
-            _orderRepository = orderRepository;
+            _professionalRepository = professionalRepository;
+            _professionalProfileRepository = professionalProfileRepository;
+            _professionalSocialMediaRepository = professionalSocialMediaRepository;
+            _serviceRepository = serviceRepository;
+            _serviceImageRepository = serviceImageRepository;
+            _categoryRepository = categoryRepository;
+            _customerRepository = customerRepository;
+            _customerFavoriteServiceRepository = customerFavoriteServiceRepository;
+            _orderRepository= orderRepository;
             _session = session;
+
         }
 
         // GET: OrderModel
@@ -57,10 +75,18 @@ namespace MakerBook.Controllers
         }
 
         // GET: OrderModel/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
             var OrderViewModel = new OrderViewModel();
-            return View(OrderViewModel);
+            var userSession = _session.GetUserSession();
+
+            if (userSession.Profile == Enum.ProfileEnum.Customer)
+            {
+                var customer = _customerRepository.GetByEmail(userSession.Email);
+
+            }
+
+                return View(OrderViewModel);
         }
 
         // POST: OrderModel/Create
