@@ -17,6 +17,7 @@ namespace MakerBook.ViewModels
         [Display(Name = "Service Type")]
         public ServiceTypeEnum ServiceType { get; set; }
 
+        public int ProfessionalId { get; set; }
         public string ProfessionalName { get; set; }
 
         [Display(Name = "Category")]

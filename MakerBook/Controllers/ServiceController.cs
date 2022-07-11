@@ -34,9 +34,20 @@ namespace MakerBook.Controllers
         // GET: Service
         public async Task<IActionResult> Index()
         {
-            List<ServiceModel> ServiceList = _serviceRepository.GetAll();
+            List<ServiceModel> serviceList = new List<ServiceModel>();
+            var userSession = _session.GetUserSession();
+            if (userSession.Profile == Enum.ProfileEnum.Professional)
+            {
+                var professional = _professionalRepository.GetByEmail(userSession.Email);
+                serviceList = _serviceRepository.GetByProfessional(professional.ProfessionalId);
+            }
+            else
+            {
+                serviceList = _serviceRepository.GetAll();
+            }
+
             List<ServiceViewModel> ServiceViewModel = new List<ServiceViewModel>();
-            foreach (ServiceModel service in ServiceList)
+            foreach (ServiceModel service in serviceList)
             {
                 ServiceViewModel.Add(MapRegisterServiceView(service));
             }

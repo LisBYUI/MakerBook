@@ -11,12 +11,12 @@ namespace MakerBook.Models
         public string? Feedback { get; set; }
         public int? Rate { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         public int ServiceId { get; set; }
 
         
         public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
+        public string? CustomerName { get; set; }
 
     }
 }

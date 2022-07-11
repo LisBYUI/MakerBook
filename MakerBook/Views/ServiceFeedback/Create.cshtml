@@ -1,0 +1,56 @@
+﻿@model MakerBook.Models.CustomerFavoriteServiceViewModel
+
+@{
+    ViewData["Title"] = "Create Feedback";
+}
+
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">New</span>
+                    <span class="section-heading-lower">Feedback</span>
+                </h2>
+                 <hr />
+                    <form asp-action="Create">
+                          <input type="hidden" asp-for="ServiceId" />
+                           <input type="hidden" asp-for="CustomerId" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Feedback" class="control-label"></label>
+                            <textarea class="form-control z-depth-1" asp-for="Feedback" rows="3" placeholder="Write something here..."></textarea>
+                            <span asp-validation-for="Feedback" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Rate" class="control-label"></label>
+                            <input type="range" asp-for="Rate" class="form-control form-range rangeFeedback" min="0" max="5" value="5" step="1" />
+                            <span asp-validation-for="Rate" class="text-danger"></span>
+                            <span class="slider_label"></span>/5
+                        </div>
+
+                         <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary btn-block" /> |
+                            <a class="btn btn-secondary btn-block" asp-action="ServiceFeedback" asp-controller="ServiceFeedback" asp-route-id="@Model.ServiceId">Back to Feedback Received</a>
+                        </div>
+
+                    </form>
+
+            </div>
+        </div>
+   </div>
+</div>
+@section Scripts {
+<script>
+var $range = document.querySelector('.rangeFeedback'),
+    $value = document.querySelector('.slider_label');
+
+$range.addEventListener('input', function() {
+  $value.textContent = this.value;
+});
+
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
