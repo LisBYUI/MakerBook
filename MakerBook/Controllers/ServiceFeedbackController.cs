@@ -76,7 +76,7 @@ namespace MakerBook.Controllers
                 _customerFavoriteServiceRepository.Create(customerFavoriteServiceModel);
 
                 TempData["SuccessMessage"] = "Success!!!";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ServiceFeedback", "ServiceFeedback", new {Id = customerFavoriteServiceViewModel .ServiceId});
 
             }
             catch (Exception ex)
