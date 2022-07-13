@@ -15,9 +15,9 @@
                     <span class="section-heading-lower">Registered Professionals</span>
                 </h2>
                 <hr />
-                <p>
+               @* <p>
                     <a asp-action="Create">Create New</a>
-                </p>
+                </p>*@
                 <table class="table">
                     <thead>
                         <tr>
@@ -55,9 +55,10 @@
                                 </td>
 
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.ProfessionalId">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.ProfessionalId">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.ProfessionalId">Delete</a>
+                                  @*  <a asp-action="Edit" asp-route-id="@item.ProfessionalId">Edit</a> |*@
+                                    <a asp-action="Details" asp-route-id="@item.ProfessionalId">Details</a> 
+                                   @* |
+                                    <a asp-action="Delete" asp-route-id="@item.ProfessionalId">Delete</a>*@
                                 </td>
                             </tr>
                         }
