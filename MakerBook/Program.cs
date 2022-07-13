@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=LAPTOP-SRQMUDUA;Initial Catalog=MakerBook;User ID=sa; Persist Security Info=True; Integrated Security=True;"));
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=tcp:doitlocal.database.windows.net,1433;Initial Catalog=doitlocal;Persist Security Info=False;User ID=doitlocal;Password=ByuIdaho@2022;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
