@@ -86,7 +86,9 @@ namespace MakerBook.Controllers
 
             }
 
-                return View(OrderViewModel);
+           // OrderViewModel.ProfessionalList = SelectListProfessional(model.ProfessionalId);
+            OrderViewModel.CategoryList = SelectListCategory();
+            return View(OrderViewModel);
         }
 
         // POST: OrderModel/Create
@@ -251,6 +253,47 @@ namespace MakerBook.Controllers
             };
 
             return targetModel;
+        }
+
+        private List<SelectListItem> SelectListCategory()
+        {
+            var categories = new List<SelectListItem>();
+
+            foreach (var item in _categoryRepository.GetAll())
+            {
+                var option = new SelectListItem() { Text = item.Name, Value = item.CategoryId.ToString() };
+                categories.Add(option);
+            }
+
+            return categories;
+        }
+
+        private List<SelectListItem> SelectListService(int categoryId)
+        {
+            var services = new List<SelectListItem>();
+
+            foreach (var item in _serviceRepository.GetByCategory(categoryId))
+            {
+                var option = new SelectListItem() { Text = item.Title, Value = item.ServiceId.ToString() };
+                services.Add(option);
+            }
+
+            return services;
+        }
+
+        private List<SelectListItem> SelectListProfessional(int professionalId)
+        {
+            var professionals = new List<SelectListItem>();
+            var professionalModel = professionalId == 0 ? _professionalRepository.GetAll() : _professionalRepository.GetAll();
+
+
+            foreach (var item in _professionalRepository.GetAll())
+            {
+                var option = new SelectListItem() { Text = item.Name, Value = item.ProfessionalId.ToString() };
+                professionals.Add(option);
+            }
+
+            return professionals;
         }
     }
 }

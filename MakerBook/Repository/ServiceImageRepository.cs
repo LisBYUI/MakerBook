@@ -94,5 +94,10 @@ namespace MakerBook.Repository
         {
             return _context.ServiceImage.Where(i => i.ServiceId == idService).ToList(); 
         }
+
+        public List<ServiceImageModel> GetByCategory(int idCategory)
+        {
+            return _context.ServiceImage.Where(i => i.ca == idService).ToList();
+        }
     }
 }

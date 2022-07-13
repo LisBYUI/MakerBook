@@ -1,4 +1,5 @@
 ﻿using MakerBook.Enum;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -34,6 +35,9 @@ namespace MakerBook.ViewModels
 
         [Display(Name = "Price")]
         public double ServicePrice { get; set; }
+
+        public List<SelectListItem>? CategoryList { get; set; }
+        public List<SelectListItem>? ProfessionalList { get; set; }
 
     }
 }
