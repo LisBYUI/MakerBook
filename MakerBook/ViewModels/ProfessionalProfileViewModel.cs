@@ -60,8 +60,8 @@ namespace MakerBook.ViewModels
 
         public ProfessionalModel? Professional { get; set; }
 
-        public List<ProfessionalSocialMediaModel> professionalSocialMediaList { get; set; }
+        public List<ProfessionalSocialMediaModel>? professionalSocialMediaList { get; set; }
 
-        public List<ProfessionalServiceCardViewModel> professionalServiceCardViewList { get; set; }
+        public List<ProfessionalServiceCardViewModel>? professionalServiceCardViewList { get; set; }
     }
 }
