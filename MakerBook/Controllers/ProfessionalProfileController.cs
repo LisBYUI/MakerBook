@@ -43,8 +43,6 @@ namespace MakerBook.Controllers
         {
             var userSession = _session.GetUserSession();
 
-
-
             var professional = _professionalRepository.GetByEmail(userSession.Email);
 
 
@@ -109,7 +107,11 @@ namespace MakerBook.Controllers
                 var professional = _professionalRepository.GetByEmail(userSession.Email);
 
                 professionalProfileView.ProfessionalId = professional.ProfessionalId;
+                var professionalProfileModel = _professionalProfileRepository.GetByProfessional(professional.ProfessionalId);
+                professionalProfileView = MapRegisterProfessionalProfileView(professionalProfileModel);
+                professionalProfileView = SelectSocialMediaDetails(professionalProfileView);
             }
+
 
             return View(professionalProfileView);
         }
@@ -123,23 +125,23 @@ namespace MakerBook.Controllers
         {
             try
             {
+                if (professionalProfileViewModel.ProfessionalProfileId > 0)
+                    if (ModelState.IsValid)
+                    {
+                        MemoryStream ms = new MemoryStream();
+                        professionalProfileViewModel.ImageProfileForm.OpenReadStream().CopyTo(ms);
 
-                if (ModelState.IsValid)
-                {
-                    MemoryStream ms = new MemoryStream();
-                    professionalProfileViewModel.ImageProfileForm.OpenReadStream().CopyTo(ms);
+                        var userSession = _session.GetUserSession();
 
-                    var userSession = _session.GetUserSession();
+                        var professionalProfileModel = MapRegisterProfessional(professionalProfileViewModel, userSession.Login, ms.ToArray());
 
-                    var professionalProfileModel = MapRegisterProfessional(professionalProfileViewModel, userSession.Login, ms.ToArray());
+                        var professionalProfile = _professionalProfileRepository.Create(professionalProfileModel);
 
-                    var professionalProfile = _professionalProfileRepository.Create(professionalProfileModel);
+                        SelectSocialMedia(professionalProfileViewModel, professionalProfile.ProfessionalProfileId, userSession.Login);
 
-                    SelectSocialMedia(professionalProfileViewModel, professionalProfile.ProfessionalProfileId, userSession.Login);
-
-                    TempData["SuccessMessage"] = "Success!!!";
-                    return RedirectToAction(nameof(Index));
-                }
+                        TempData["SuccessMessage"] = "Success!!!";
+                        return RedirectToAction(nameof(Index));
+                    }
                 return View(professionalProfileViewModel);
             }
             catch (Exception ex)
@@ -383,6 +385,84 @@ namespace MakerBook.Controllers
                 _professionalSocialMediaRepository.Create(professionalSocialMediaModel);
             }
 
+        }
+
+        private ProfessionalProfileViewModel SelectSocialMediaDetails(ProfessionalProfileViewModel professionalProfileViewModel)
+        {
+            foreach (var item in professionalProfileViewModel.professionalSocialMediaList)
+            {
+
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Facebook)
+                {
+                    professionalProfileViewModel.Facebook = item.SocialMedia;
+                }
+
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Twitter)
+                {
+                    professionalProfileViewModel.Twitter = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Google)
+                {
+
+                    professionalProfileViewModel.Google = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Instagram)
+                {
+
+                    professionalProfileViewModel.Instagram = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Linkedin)
+                {
+                    professionalProfileViewModel.Linkedin = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Pinterest)
+                {
+
+                    professionalProfileViewModel.Pinterest = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Youtube)
+                {
+
+                    professionalProfileViewModel.Youtube = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Slack)
+                {
+
+                    professionalProfileViewModel.Slack = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Github)
+                {
+
+                    professionalProfileViewModel.Github = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Reddit)
+                {
+
+                    professionalProfileViewModel.Reddit = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Whatsapp)
+                {
+
+                    professionalProfileViewModel.Whatsapp = item.SocialMedia;
+
+                }
+                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Skype)
+                {
+
+                    professionalProfileViewModel.Skype = item.SocialMedia;
+
+                }
+            }
+            return professionalProfileViewModel;
         }
 
         private ProfessionalSocialMediaModel MapRegisterProfessionalSocialMedia(int professionalSocialMediaId, int professionalProfileId, string login, ProfessionalProfileTypeEnum professionalProfileType, string socialMedia)

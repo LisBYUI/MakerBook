@@ -31,6 +31,7 @@
                 <form asp-action="ProfessionalProfile" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="ProfessionalId" />
+                     <input type="hidden" asp-for="ProfessionalProfileId" />
                     <div class="form-group">
                         <label asp-for="ImageProfileForm" class="control-label"></label>
                         <div class="custom-file">
@@ -109,7 +110,7 @@
                     </div>
                     <hr />
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary btn-block" /> |
+                        <input type="submit" value="Save" class="btn btn-primary btn-block" /> |
                         <a class="btn btn-secondary btn-block" asp-action="Profile" asp-controller="Professional" role="button">Back to List</a>
                     </div>
                 </form>
