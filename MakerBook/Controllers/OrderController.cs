@@ -12,6 +12,7 @@ using MakerBook.Filters;
 using MakerBook.Helper.Interface;
 using MakerBook.ViewModels;
 
+
 namespace MakerBook.Controllers
 {
     [PageForUserLogged]
@@ -24,7 +25,7 @@ namespace MakerBook.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICustomerFavoriteServiceRepository _customerFavoriteServiceRepository;
         private readonly ICustomerRepository _customerRepository;
-        private readonly IServiceImageRepository _serviceImageRepository; 
+        private readonly IServiceImageRepository _serviceImageRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly ISessionHelper _session;
 
@@ -40,7 +41,7 @@ namespace MakerBook.Controllers
             _categoryRepository = categoryRepository;
             _customerRepository = customerRepository;
             _customerFavoriteServiceRepository = customerFavoriteServiceRepository;
-            _orderRepository= orderRepository;
+            _orderRepository = orderRepository;
             _session = session;
 
         }
@@ -55,6 +56,7 @@ namespace MakerBook.Controllers
             {
                 orderViewList.Add(MapRegisterOrderView(item));
             }
+
 
             return View(orderViewList);
         }
@@ -86,8 +88,10 @@ namespace MakerBook.Controllers
 
             }
 
-           // OrderViewModel.ProfessionalList = SelectListProfessional(model.ProfessionalId);
+            OrderViewModel.ProfessionalList = SelectListProfessional(0);
             OrderViewModel.CategoryList = SelectListCategory();
+            OrderViewModel.ServiceList = SelectListService(0);
+
             return View(OrderViewModel);
         }
 
@@ -102,7 +106,7 @@ namespace MakerBook.Controllers
             {
                 var userSession = _session.GetUserSession();
 
-               
+
                 var OrderModel = MapRegisterOrder(OrderViewModel, userSession.Login);
 
                 _orderRepository.Create(OrderModel);
@@ -149,7 +153,7 @@ namespace MakerBook.Controllers
                     var filename = string.Empty;
                     var extension = string.Empty;
 
-                   
+
                     var OrderModel = MapRegisterOrder(OrderViewModel, userSession.Login);
 
                     OrderModel Order = _orderRepository.Update(OrderModel);
@@ -211,7 +215,7 @@ namespace MakerBook.Controllers
         /// <returns></returns>
         private OrderViewModel MapRegisterOrderView(OrderModel sourceModel)
         {
-            
+
             OrderViewModel targetModel = new OrderViewModel
             {
                 OrderId = sourceModel.OrderId
@@ -219,7 +223,13 @@ namespace MakerBook.Controllers
                 Date = sourceModel.Date
             ,
                 PaymentType = sourceModel.PaymentType
-            
+            ,
+                CategoryList = SelectListCategory()
+            ,
+                ServiceList = SelectListService(0)
+                ,
+                ProfessionalList = SelectListProfessional(0)
+
             };
 
             return targetModel;
@@ -268,11 +278,14 @@ namespace MakerBook.Controllers
             return categories;
         }
 
-        private List<SelectListItem> SelectListService(int categoryId)
+        private List<SelectListItem> SelectListService(int categoryId = 0)
         {
             var services = new List<SelectListItem>();
 
-            foreach (var item in _serviceRepository.GetByCategory(categoryId))
+           // var serviceList = categoryId != 0 ? _serviceRepository.GetByCategory(categoryId) : _serviceRepository.GetAll();
+            var serviceList =  _serviceRepository.GetByCategory(categoryId) ;
+
+            foreach (var item in serviceList)
             {
                 var option = new SelectListItem() { Text = item.Title, Value = item.ServiceId.ToString() };
                 services.Add(option);
@@ -284,16 +297,39 @@ namespace MakerBook.Controllers
         private List<SelectListItem> SelectListProfessional(int professionalId)
         {
             var professionals = new List<SelectListItem>();
-            var professionalModel = professionalId == 0 ? _professionalRepository.GetAll() : _professionalRepository.GetAll();
+            var professionalList = professionalId == 0 ? _professionalRepository.GetAll() : _professionalRepository.GetAll();
 
 
-            foreach (var item in _professionalRepository.GetAll())
+            foreach (var item in professionalList)
             {
                 var option = new SelectListItem() { Text = item.Name, Value = item.ProfessionalId.ToString() };
                 professionals.Add(option);
             }
 
             return professionals;
+        }
+
+        [HttpPost]
+        public JsonResult GetServicelist(int idCategory)
+        {
+            List<SelectListItem> services = new List<SelectListItem>();
+            if (idCategory != 0)
+            {
+
+                var serviceList = _serviceRepository.GetByCategory(idCategory);
+
+
+                foreach (var item in serviceList)
+                {
+                    var option = new SelectListItem() { Text = item.Title, Value = item.ServiceId.ToString() };
+                    services.Add(option);
+                }
+            }
+            else
+            {
+                services.Add(new SelectListItem() { Text = "Select", Value = "0" });
+            }
+            return Json(services, System.Web.Mvc.JsonRequestBehavior.AllowGet);
         }
     }
 }

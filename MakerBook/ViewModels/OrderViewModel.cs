@@ -20,6 +20,9 @@ namespace MakerBook.ViewModels
         [Display(Name = "Service")]
         public int ServiceId { get; set; }
 
+        public int ProfessionalId { get; set; }
+        public int CategoryId { get; set; }
+
         [Display(Name = "Payment")]
         public PaymentTypeEnum PaymentType { get; set; }
 
@@ -38,6 +41,7 @@ namespace MakerBook.ViewModels
 
         public List<SelectListItem>? CategoryList { get; set; }
         public List<SelectListItem>? ProfessionalList { get; set; }
+        public List<SelectListItem>? ServiceList { get; set; }
 
     }
 }
