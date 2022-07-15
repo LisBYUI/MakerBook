@@ -329,7 +329,7 @@ namespace MakerBook.Controllers
             {
                 services.Add(new SelectListItem() { Text = "Select", Value = "0" });
             }
-            return Json(services, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+            return Json(services);
         }
     }
 }

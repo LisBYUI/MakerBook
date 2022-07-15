@@ -112,15 +112,20 @@
                 traditional: true,  
                 success: function (data) {  
                     console.log(data);
-                    var district = "<select id='ServiceId'>";  
-                    district = district + '<option value="">--Select--</option>';  
-                    for (var i = 0; i < data.length; i++)  
-                    {  
-                        alert(data[i].Value);
-                        district = district + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';  
-                    }  
-                    district = district + '</select>';  
-                    $('#ServiceId').html(district);  
+                      if (data.length > 0) {
+                          alert(data.length);
+                                $('#ServiceId').empty();
+                                $('#ServiceId').append($("<option></option>").val("0").html("--Select--"));
+                                $.each(data, function () {
+                                   $('#ServiceId').append($("<option></option>").val(this.value).html(this.text));
+                                });
+                            //    $('#ServiceId').prop("disabled", false);;
+                            //    break;
+                            } else {
+                                $('#ServiceId').empty();
+                                $('#ServiceId').append($("<option></option>").val("0").html("--Select--"));
+                            //    $('#ServiceId').attr("disabled", "disabled");
+                            }  
                 } ,
                 error: function (ex) {  
                      console.log(ex);
