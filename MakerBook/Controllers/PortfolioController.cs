@@ -466,7 +466,8 @@ namespace MakerBook.Controllers
             ,
                     ServiceTitle = item.Title
                 };
-                serviceCardViewList.Add(serviceCardView);
+                if(professionalProfile != null)
+                    serviceCardViewList.Add(serviceCardView);
             }
             return serviceCardViewList;
         }
@@ -510,7 +511,11 @@ namespace MakerBook.Controllers
                     ServiceCardViewList = MapRegisterServiceCardView(item.CategoryId)
 
                 };
-                portfolioViewList.Add(portfolioViewModel);
+                if (portfolioViewModel.ServiceCardViewList.Any())
+                {
+
+                    portfolioViewList.Add(portfolioViewModel);
+                }
             }
 
             return portfolioViewList;

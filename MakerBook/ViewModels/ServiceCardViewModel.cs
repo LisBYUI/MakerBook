@@ -8,7 +8,7 @@ namespace MakerBook.ViewModels
     {
 
         public string ProfessionalName { get; set; }
-        public byte[]? ProfessionalImage { get; set; }
+        public byte[] ProfessionalImage { get; set; }
 
         public int ServiceId { get; set; }
         public int CategoryId { get; set; }
