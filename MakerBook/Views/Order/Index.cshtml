@@ -4,6 +4,20 @@
     ViewData["Title"] = "Index";
 }
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"].
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
 <div class="about-heading-content">
     <div class="row">
         <div class="col-xl-9 col-lg-10 mx-auto">
@@ -19,19 +33,7 @@
                         <a asp-action="Create">Create New</a>
                     </p>
                 }
-                @if (TempData["ErrorMessage"] != null)
-                {
-                    <div class="alert alert-danger" role="alert">
-                        @TempData["ErrorMessage"]
-                    </div>
-                }
-
-                @if (TempData["SuccessMessage"] != null)
-                {
-                    <div class="alert alert-success" role="alert">
-                        @TempData["SuccessMessage"]
-                    </div>
-                }
+              
                 <table class="table">
                     <thead>
                         <tr>

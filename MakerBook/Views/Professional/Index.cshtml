@@ -5,6 +5,19 @@
     Layout = "_Layout";
     ViewData["Title"] = "Registered Professionals";
 }
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"].
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
 <div class="about-heading-content">
     <div class="row">
