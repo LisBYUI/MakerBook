@@ -5,74 +5,75 @@
     ViewData["Title"] = "Create";
 }
 
-
 <div class="about-heading-content">
     <div class="row">
         <div class="col-xl-9 col-lg-10 mx-auto">
             <div class="bg-faded rounded p-5">
                 <h2 class="section-heading mb-4">
-                    <span class="section-heading-upper">New</span>
-                    <span class="section-heading-lower">Order</span>
+                    <span class="section-heading-upper">Register Order</span>
+                    <span class="section-heading-lower">New Order</span>
                 </h2>
                 <hr />
+                <div class="row">
 
-                <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="CustomerId" />
-                    <input type="hidden" asp-for="Date" />
-                    <input type="hidden" asp-for="ProfessionalId" id="professionalId" />
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="CustomerId" />
+                        <input type="hidden" asp-for="Date" />
+                        <input type="hidden" asp-for="ProfessionalId" id="professionalId" />
 
-                    <div class="form-group">
-                        <label asp-for="CategoryId" class="control-label"></label>
-                        @Html.DropDownListFor(model=>model.CategoryId, Model.CategoryList, "--Select", new{@class="form-control", @id="CategoryId"})
-                        <span asp-validation-for="CategoryId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ServiceId" class="control-label"></label>
-                        @Html.DropDownListFor(model=>model.ServiceId, Model.ServiceList, "--Select", new{@class="form-control", @id="ServiceId"})
-                        <span asp-validation-for="ServiceId" class="text-danger"></span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label asp-for="ServiceTitle" class="control-label"></label>
-                        <input asp-for="ServiceTitle" class="form-control" id="serviceTitle" readonly="readonly" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ServicePrice" class="control-label"></label>
-                        <input asp-for="ServicePrice" class="form-control" id="servicePrice" readonly="readonly" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ProfessionalName" class="control-label"></label>
-                        <input asp-for="ProfessionalName" class="form-control" id="professionalName" readonly="readonly" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ProfessionalEmail" class="control-label"></label>
-                        <input asp-for="ProfessionalEmail" class="form-control" id="professionalEmail" readonly="readonly" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Address" class="control-label"></label>
-                        <input asp-for="Address" class="form-control" id="address" readonly="readonly" />
-                    </div>
-                    <div class="form-group">
-                        <div id="macDiv" style="height: 200px;" class="form-control d-inline-block w-100"></div>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PaymentType" class="control-label"></label>
+                        <div class="form-group">
+                            <label asp-for="CategoryId" class="control-label"></label>
+                            @Html.DropDownListFor(model=>model.CategoryId, Model.CategoryList, "--Select", new{@class="form-control", @id="CategoryId"})
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ServiceId" class="control-label"></label>
+                            @Html.DropDownListFor(model=>model.ServiceId, Model.ServiceList, "--Select", new{@class="form-control", @id="ServiceId"})
+                            <span asp-validation-for="ServiceId" class="text-danger"></span>
+                        </div>
 
-                        <select asp-for="PaymentType" class="form-control">
-                            <option value="0">--Select</option>
-                            <option value="@PaymentTypeEnum.Cash">Cash</option>
-                            <option value="@PaymentTypeEnum.Debit">Debit</option>
-                            <option value="@PaymentTypeEnum.Credit">Credit</option>
-                        </select>
-                        <span asp-validation-for="PaymentType" class="text-danger"></span>
-                    </div>
-                     <hr />
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" /> |
-                        <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label asp-for="ServiceTitle" class="control-label"></label>
+                            <input asp-for="ServiceTitle" class="form-control" id="serviceTitle" readonly="readonly" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ServicePrice" class="control-label"></label>
+                            <input asp-for="ServicePrice" class="form-control" id="servicePrice" readonly="readonly" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProfessionalName" class="control-label"></label>
+                            <input asp-for="ProfessionalName" class="form-control" id="professionalName" readonly="readonly" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProfessionalEmail" class="control-label"></label>
+                            <input asp-for="ProfessionalEmail" class="form-control" id="professionalEmail" readonly="readonly" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address" class="control-label"></label>
+                            <input asp-for="Address" class="form-control" id="address" readonly="readonly" />
+                        </div>
+                        <div class="form-group">
+                            <div id="macDiv" style="height: 200px;" class="form-control d-inline-block w-100"></div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PaymentType" class="control-label"></label>
+
+                            <select asp-for="PaymentType" class="form-control">
+                                <option value="0">--Select</option>
+                                <option value="@PaymentTypeEnum.Cash">Cash</option>
+                                <option value="@PaymentTypeEnum.Debit">Debit</option>
+                                <option value="@PaymentTypeEnum.Credit">Credit</option>
+                            </select>
+                            <span asp-validation-for="PaymentType" class="text-danger"></span>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" /> |
+                            <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

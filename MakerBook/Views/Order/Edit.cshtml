@@ -1,40 +1,71 @@
-﻿@model MakerBook.ViewModels.OrderViewModel
+﻿@using MakerBook.Enum
+@model MakerBook.ViewModels.OrderViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Order";
 }
 
-<h1>Edit</h1>
+<div class="about-heading-content">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-upper">Register Order</span>
+                    <span class="section-heading-lower">Edit</span>
+                </h2>
+                <hr />
+                <div class="row">
 
-<h4>ContactModel</h4>
-<hr />
-<div class="row">
-   
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="OrderId" />
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="OrderId" />
+                        <div class="form-group">
+                            <label asp-for="ServiceTitle" class="control-label"></label>
+                            <input asp-for="ServiceTitle" class="form-control" readonly="readonly" />
+                            
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CustomerName" class="control-label"></label>
+                            <input asp-for="CustomerName" class="form-control" readonly="readonly" />
+                            
+                        </div>
+                         <div class="form-group">
+                            <label asp-for="Date" class="control-label"></label>
+                            <input asp-for="Date" class="form-control" readonly="readonly" />
+                            
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PaymentType" class="control-label"></label>
+                            <input asp-for="PaymentType" class="form-control" readonly/>
+                            <span asp-validation-for="PaymentType" class="text-danger"></span>
+                        </div>
+
+                            <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+
+                            <select asp-for="Status" class="form-control">
+                                <option value="0">--Select</option>
+                                <option value="@StatusOrderEnum.Processing">Processing</option>
+                                <option value="@StatusOrderEnum.Completed">Completed</option>
+                                <option value="@StatusOrderEnum.Canceled">Canceled</option>
+                            </select>
+                            <span asp-validation-for="PaymentType" class="text-danger"></span>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            |
+                            <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PaymentType" class="control-label"></label>
-                <input asp-for="PaymentType" class="form-control" />
-                <span asp-validation-for="PaymentType" class="text-danger"></span>
-            </div>
-           
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
