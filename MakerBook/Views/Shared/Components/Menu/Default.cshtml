@@ -19,6 +19,9 @@
          <li class="nav-item px-lg-4">
             <a class="nav-link text-uppercase" asp-area="" asp-controller="ProfessionalProfile" asp-action="Index">Profile view</a>
         </li>
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
+        </li> 
     }
 
     @if (Model.Profile == MakerBook.Enum.ProfileEnum.Customer)
@@ -36,6 +39,12 @@
         <li class="nav-item px-lg-4">
             <a class="nav-link text-uppercase" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
         </li>
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
+        </li> 
+         <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Portfolio" asp-action="Index">Portfolio</a>
+        </li>  
          <li class="nav-item px-lg-4">
             <a class="nav-link text-uppercase" asp-area="" asp-controller="Customer" asp-action="Index">Customer</a>
         </li>

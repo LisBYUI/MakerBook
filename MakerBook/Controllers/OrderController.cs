@@ -21,6 +21,7 @@ namespace MakerBook.Controllers
         private readonly IProfessionalRepository _professionalRepository;
         private readonly IProfessionalProfileRepository _professionalProfileRepository;
         private readonly IProfessionalSocialMediaRepository _professionalSocialMediaRepository;
+        private readonly IServiceAddressRepository _serviceAddressRepository;
         private readonly IServiceRepository _serviceRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICustomerFavoriteServiceRepository _customerFavoriteServiceRepository;
@@ -31,13 +32,14 @@ namespace MakerBook.Controllers
 
 
         public OrderController(IProfessionalRepository professionalRepository, IProfessionalProfileRepository professionalProfileRepository, IProfessionalSocialMediaRepository professionalSocialMediaRepository, IServiceRepository serviceRepository,
-       IServiceImageRepository serviceImageRepository, ICategoryRepository categoryRepository, ICustomerFavoriteServiceRepository customerFavoriteServiceRepository, ICustomerRepository customerRepository, IOrderRepository orderRepository, ISessionHelper session)
+       IServiceImageRepository serviceImageRepository, ICategoryRepository categoryRepository, ICustomerFavoriteServiceRepository customerFavoriteServiceRepository, IServiceAddressRepository serviceAddressRepository, ICustomerRepository customerRepository, IOrderRepository orderRepository, ISessionHelper session)
         {
             _professionalRepository = professionalRepository;
             _professionalProfileRepository = professionalProfileRepository;
             _professionalSocialMediaRepository = professionalSocialMediaRepository;
             _serviceRepository = serviceRepository;
             _serviceImageRepository = serviceImageRepository;
+            _serviceAddressRepository = serviceAddressRepository;
             _categoryRepository = categoryRepository;
             _customerRepository = customerRepository;
             _customerFavoriteServiceRepository = customerFavoriteServiceRepository;
@@ -49,12 +51,15 @@ namespace MakerBook.Controllers
         // GET: OrderModel
         public IActionResult Index()
         {
+            var userSession = _session.GetUserSession();
+
+
             List<OrderModel> OrderList = _orderRepository.GetAll();
             List<OrderViewModel> orderViewList = new List<OrderViewModel>();
 
             foreach (var item in OrderList)
             {
-                orderViewList.Add(MapRegisterOrderView(item));
+                orderViewList.Add(MapRegisterOrderView(item, userSession.Profile));
             }
 
 
@@ -64,6 +69,7 @@ namespace MakerBook.Controllers
         // GET: OrderModel/Details/5
         public IActionResult Details(int? id)
         {
+            var userSession = _session.GetUserSession();
             var OrderModel = _orderRepository.Get(id ?? 0);
 
             if (OrderModel == null)
@@ -71,7 +77,7 @@ namespace MakerBook.Controllers
                 return NotFound();
             }
 
-            var OrderViewModel = MapRegisterOrderView(OrderModel);
+            var OrderViewModel = MapRegisterOrderView(OrderModel, userSession.Profile);
 
             return View(OrderViewModel);
         }
@@ -79,20 +85,21 @@ namespace MakerBook.Controllers
         // GET: OrderModel/Create
         public IActionResult Create(int id)
         {
-            var OrderViewModel = new OrderViewModel();
+            var orderViewModel = new OrderViewModel();
             var userSession = _session.GetUserSession();
 
             if (userSession.Profile == Enum.ProfileEnum.Customer)
             {
                 var customer = _customerRepository.GetByEmail(userSession.Email);
-
+                orderViewModel.CustomerId = customer.CustomerId;
             }
+            orderViewModel.Date = DateTime.Today;
+            orderViewModel.Status = Enum.StatusOrderEnum.Pending;
+            orderViewModel.ProfessionalList = SelectListProfessional(0);
+            orderViewModel.CategoryList = SelectListCategory();
+            orderViewModel.ServiceList = SelectListService(0);
 
-            OrderViewModel.ProfessionalList = SelectListProfessional(0);
-            OrderViewModel.CategoryList = SelectListCategory();
-            OrderViewModel.ServiceList = SelectListService(0);
-
-            return View(OrderViewModel);
+            return View(orderViewModel);
         }
 
         // POST: OrderModel/Create
@@ -125,13 +132,14 @@ namespace MakerBook.Controllers
         // GET: OrderModel/Edit/5
         public IActionResult Edit(int? id)
         {
+            var userSession = _session.GetUserSession();
             var OrderModel = _orderRepository.Get(id ?? 0);
             if (OrderModel == null)
             {
                 return NotFound();
             }
 
-            var OrderViewModel = MapRegisterOrderView(OrderModel);
+            var OrderViewModel = MapRegisterOrderView(OrderModel, userSession.Profile);
 
             return View(OrderViewModel);
         }
@@ -174,13 +182,14 @@ namespace MakerBook.Controllers
         // GET: OrderModel/Delete/5
         public IActionResult Delete(int? id)
         {
+            var userSession = _session.GetUserSession();
             var OrderModel = _orderRepository.Get(id ?? 0);
             if (OrderModel == null)
             {
                 return NotFound();
             }
 
-            var OrderViewModel = MapRegisterOrderView(OrderModel);
+            var OrderViewModel = MapRegisterOrderView(OrderModel, userSession.Profile);
 
             return View(OrderViewModel);
         }
@@ -213,7 +222,7 @@ namespace MakerBook.Controllers
         /// </summary>
         /// <param name="sourceModel"></param>
         /// <returns></returns>
-        private OrderViewModel MapRegisterOrderView(OrderModel sourceModel)
+        private OrderViewModel MapRegisterOrderView(OrderModel sourceModel, Enum.ProfileEnum profile)
         {
 
             OrderViewModel targetModel = new OrderViewModel
@@ -222,14 +231,22 @@ namespace MakerBook.Controllers
             ,
                 Date = sourceModel.Date
             ,
+                ServiceTitle = _serviceRepository.Get(sourceModel.ServiceId).Title
+            ,
+                CustomerName = _professionalRepository.Get(sourceModel.CustomerId).Name
+            ,
                 PaymentType = sourceModel.PaymentType
+            ,
+                Status = sourceModel.Status
             ,
                 CategoryList = SelectListCategory()
             ,
                 ServiceList = SelectListService(0)
-                ,
+            ,
                 ProfessionalList = SelectListProfessional(0)
+                ,
 
+                Profile = profile
             };
 
             return targetModel;
@@ -282,8 +299,8 @@ namespace MakerBook.Controllers
         {
             var services = new List<SelectListItem>();
 
-           // var serviceList = categoryId != 0 ? _serviceRepository.GetByCategory(categoryId) : _serviceRepository.GetAll();
-            var serviceList =  _serviceRepository.GetByCategory(categoryId) ;
+            // var serviceList = categoryId != 0 ? _serviceRepository.GetByCategory(categoryId) : _serviceRepository.GetAll();
+            var serviceList = _serviceRepository.GetByCategory(categoryId);
 
             foreach (var item in serviceList)
             {
@@ -312,12 +329,13 @@ namespace MakerBook.Controllers
         [HttpPost]
         public JsonResult GetServicelist(int idCategory)
         {
+
+
             List<SelectListItem> services = new List<SelectListItem>();
             if (idCategory != 0)
             {
 
                 var serviceList = _serviceRepository.GetByCategory(idCategory);
-
 
                 foreach (var item in serviceList)
                 {
@@ -330,6 +348,69 @@ namespace MakerBook.Controllers
                 services.Add(new SelectListItem() { Text = "Select", Value = "0" });
             }
             return Json(services);
+        }
+
+
+        [HttpPost]
+        public JsonResult GetProfessionallist(int idService)
+        {
+            var serviceViewModel = new ServiceOrderViewModel();
+
+            if (idService != 0)
+            {
+
+                var service = _serviceRepository.Get(idService);
+                var serviceAddress = _serviceAddressRepository.GetByAddress(idService);
+                serviceViewModel = MapRegisterServiceOrderView(service, serviceAddress);
+
+
+            }
+            return Json(serviceViewModel);
+        }
+
+        private ServiceOrderViewModel MapRegisterServiceOrderView(ServiceModel sourceModel, ServiceAddressModel serviceAddress)
+        {
+            var professional = _professionalRepository.Get(sourceModel.ProfessionalId);
+            ServiceOrderViewModel targetModel = new ServiceOrderViewModel
+            {
+                ServiceId = sourceModel.ServiceId
+                ,
+                ServiceTitle = sourceModel.Title
+            ,
+                ServiceDescription = sourceModel.Description
+                ,
+                ServiceType = MakerBook.Helper.UtilHelper.GetDescription(sourceModel.ServiceType)
+            ,
+                Price = sourceModel.Price
+            ,
+                CategoryId = sourceModel.CategoryId
+              ,
+                LineAddress = serviceAddress.LineAddress
+                ,
+                ComplementAddress = serviceAddress.ComplementAddress
+                ,
+                City = serviceAddress.City
+                ,
+                State = serviceAddress.State
+                ,
+                Country = serviceAddress.Country
+                ,
+                ZipCode = serviceAddress.ZipCode
+                ,
+                Latitude = serviceAddress.Latitude
+                ,
+                Longitude = serviceAddress.Longitude
+            ,
+                ProfessionalId = sourceModel.ProfessionalId
+                ,
+                ProfessionalName = professional.Name
+                ,
+                ProfessionalEmail = professional.Email
+
+            };
+
+
+            return targetModel;
         }
     }
 }

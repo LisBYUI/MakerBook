@@ -5,10 +5,12 @@
 }
 
 <h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (Model.First().Profile == MakerBook.Enum.ProfileEnum.Customer)
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger" role="alert">
@@ -26,12 +28,20 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.ServiceTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PaymentType)
             </th>
-           
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -40,16 +50,25 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.ServiceTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PaymentType)
                 </td>
-              
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @* <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |*@
+                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
+                    @*  |
+                        <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>*@
                 </td>
             </tr>
         }

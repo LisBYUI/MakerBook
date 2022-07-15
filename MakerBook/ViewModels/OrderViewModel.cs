@@ -11,6 +11,7 @@ namespace MakerBook.ViewModels
         [Display(Name = "Order")]
         public int OrderId { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         [Display(Name = "Date")]
         public DateTime Date { get; set; }
 
@@ -20,7 +21,11 @@ namespace MakerBook.ViewModels
         [Display(Name = "Service")]
         public int ServiceId { get; set; }
 
+
+        [Display(Name = "Professional")]
         public int ProfessionalId { get; set; }
+
+        [Display(Name = "Category Service")]
         public int CategoryId { get; set; }
 
         [Display(Name = "Payment")]
@@ -31,17 +36,26 @@ namespace MakerBook.ViewModels
         public string ServiceTitle { get; set; }
 
         [Display(Name = "Detail")]
-        public string ServiceDescription { get; set; }
+        public string? ServiceDescription { get; set; }
 
         [Display(Name = "Service Type")]
-        public ServiceTypeEnum ServiceType { get; set; }
+        public string ServiceType { get; set; }
+
+        public Enum.StatusOrderEnum Status { get; set; }
 
         [Display(Name = "Price")]
-        public double ServicePrice { get; set; }
-
+        public string? ServicePrice { get; set; }
+        public string? Address { get; set; }
         public List<SelectListItem>? CategoryList { get; set; }
         public List<SelectListItem>? ProfessionalList { get; set; }
         public List<SelectListItem>? ServiceList { get; set; }
+        [Display(Name = "Professional")]
+        public string? ProfessionalName { get; set; }
+        [Display(Name = "E-mail")]
+        public string? ProfessionalEmail { get; set; }
+        [Display(Name = "Customer")]
+        public string? CustomerName { get; set; }
 
+        public ProfileEnum Profile { get; set; }
     }
 }

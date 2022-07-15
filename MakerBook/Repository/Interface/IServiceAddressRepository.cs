@@ -38,5 +38,6 @@ namespace MakerBook.Repository.Interface
         /// <returns></returns>
         bool Delete(int id);
 
+        ServiceAddressModel GetByAddress(int idService);
     }
 }

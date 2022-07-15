@@ -27,6 +27,9 @@ namespace MakerBook.Models
         [Column("PaymentType")]
         public PaymentTypeEnum PaymentType { get; set; }
 
+        [Column("Status")]
+        public StatusOrderEnum Status { get; set; }
+
         [Column("UserAt")]
         public string UserAt { get; set; }
 

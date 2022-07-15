@@ -456,7 +456,7 @@ namespace MakerBook.Controllers
             ,
                     ProfessionalId = item.ProfessionalId
             ,
-                    ProfessionalImage = professionalProfile.ImageProfile
+                    ProfessionalImage = professionalProfile != null ? professionalProfile.ImageProfile : null
             ,
                     ProfessionalName = professional.Name
             ,

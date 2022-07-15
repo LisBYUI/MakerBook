@@ -95,6 +95,10 @@ namespace MakerBook.Repository
             return true;
         }
 
+        public ServiceAddressModel GetByAddress(int idService)
+        {
+            return _context.ServiceAddress.FirstOrDefault(i => i.ServiceId == idService);
+        }
 
     }
 }

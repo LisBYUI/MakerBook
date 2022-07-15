@@ -1,10 +1,15 @@
-﻿namespace MakerBook.Enum
+﻿using System.ComponentModel;
+
+namespace MakerBook.Enum
 {
     public enum ServiceTypeEnum
     {
-        OnlineOrLocal = 0
-        , Online = 1
-        , Local = 2
+        [Description("Online / Local")]
+        OnlineOrLocal = 0,
+        [Description("Online")]
+        Online = 1,
+        [Description("Local")]
+        Local = 2
 
     }
 }

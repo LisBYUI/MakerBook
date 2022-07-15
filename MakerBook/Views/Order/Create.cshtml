@@ -18,6 +18,10 @@
 
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="CustomerId" />
+                    <input type="hidden" asp-for="Date" />
+                    <input type="hidden" asp-for="ProfessionalId" id="professionalId" />
+
                     <div class="form-group">
                         <label asp-for="CategoryId" class="control-label"></label>
                         @Html.DropDownListFor(model=>model.CategoryId, Model.CategoryList, "--Select", new{@class="form-control", @id="CategoryId"})
@@ -28,32 +32,42 @@
                         @Html.DropDownListFor(model=>model.ServiceId, Model.ServiceList, "--Select", new{@class="form-control", @id="ServiceId"})
                         <span asp-validation-for="ServiceId" class="text-danger"></span>
                     </div>
+                    
                     <div class="form-group">
-                        <label asp-for="ProfessionalId" class="control-label"></label>
-                        @Html.DropDownListFor(model=>model.ProfessionalId, Model.ProfessionalList, "--Select", new{@class="form-control", @id="ProfessionalId"})
-
-                        <input type="hidden" asp-for="ProfessionalId" />
-                        <span asp-validation-for="ProfessionalId" class="text-danger"></span>
+                        <label asp-for="ServiceTitle" class="control-label"></label>
+                        <input asp-for="ServiceTitle" class="form-control" id="serviceTitle" readonly="readonly" />
                     </div>
-
-
-
                     <div class="form-group">
-                        <label asp-for="Date" class="control-label"></label>
-                        <input asp-for="Date" class="form-control" />
-                        <span asp-validation-for="Date" class="text-danger"></span>
+                        <label asp-for="ServicePrice" class="control-label"></label>
+                        <input asp-for="ServicePrice" class="form-control" id="servicePrice" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProfessionalName" class="control-label"></label>
+                        <input asp-for="ProfessionalName" class="form-control" id="professionalName" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProfessionalEmail" class="control-label"></label>
+                        <input asp-for="ProfessionalEmail" class="form-control" id="professionalEmail" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" id="address" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <div id="macDiv" style="height: 200px;" class="form-control d-inline-block w-100"></div>
                     </div>
                     <div class="form-group">
                         <label asp-for="PaymentType" class="control-label"></label>
 
                         <select asp-for="PaymentType" class="form-control">
+                            <option value="0">--Select</option>
                             <option value="@PaymentTypeEnum.Cash">Cash</option>
                             <option value="@PaymentTypeEnum.Debit">Debit</option>
                             <option value="@PaymentTypeEnum.Credit">Credit</option>
                         </select>
                         <span asp-validation-for="PaymentType" class="text-danger"></span>
                     </div>
-
+                     <hr />
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" /> |
                         <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
@@ -65,52 +79,18 @@
 </div>
 @section Scripts {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-@*<script type="text/javascript">  
-    $(document).ready(function () { 
-        alert("entrou");
-        //Dropdownlist Selectedchange event  
-        //$("#CategoryId").change(function () {  
-           
-        //    $("#ServiceId").empty();  
-        //    $.ajax({  
-        //        type: 'POST',  
-        //        url: '@Url.Action("GetServicelist")', // we are calling json method  
-   
-        //        dataType: 'json',  
-   
-        //        data: { idCategory: $("#CategoryId").val() },   
-             
-   
-        //        success: function (states) {  
-        //            // states contains the JSON formatted list  
-        //            // of states passed from the controller  
-   
-        //            $.each(states, function (i, state) {  
-        //            $("ServiceId").append('<option value="' + state.Value + '">' +    
-        //                 state.Text + '</option>');                                                                                                  
-        //            // here we are adding option for States  
-   
-        //            });  
-        //        },  
-        //        error: function (ex) {  
-        //            alert('Failed to retrieve states.' + ex);  
-        //        }  
-        //    });  
-        //    return false;  
-        //})  
-    });  
 
-</script>*@  
-<script type="text/javascript">  
-    $(document).ready(function () {  
-        $('#CategoryId').change(function () {  
-            $.ajax({  
-                type: "post",  
-                url: "/Order/GetServicelist",  
-                data: { idCategory: $('#CategoryId').val() },  
-                datatype: "json",  
-                traditional: true,  
-                success: function (data) {  
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#CategoryId').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Order/GetServicelist",
+                data: { idCategory: $('#CategoryId').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
                     console.log(data);
                       if (data.length > 0) {
                           alert(data.length);
@@ -119,26 +99,88 @@
                                 $.each(data, function () {
                                    $('#ServiceId').append($("<option></option>").val(this.value).html(this.text));
                                 });
-                            //    $('#ServiceId').prop("disabled", false);;
-                            //    break;
                             } else {
                                 $('#ServiceId').empty();
                                 $('#ServiceId').append($("<option></option>").val("0").html("--Select--"));
-                            //    $('#ServiceId').attr("disabled", "disabled");
-                            }  
+
+                            }
                 } ,
-                error: function (ex) {  
+                error: function (ex) {
                      console.log(ex);
-                    alert('Failed to retrieve states1.' + ex);  
-                } 
+                    alert('Failed to retrieve states1.' + ex);
+                }
                 ,failure: function (response) {
                         alert(response.responseText);
                     },
 
-            });  
-        });  
-    });  
-</script> 
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#ServiceId').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Order/GetProfessionallist",
+                data: { idService: $('#ServiceId').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    console.log(data);
+
+                     document.querySelector("#professionalId").value = '$'+data.professionalId;
+                    document.querySelector("#serviceTitle").value = data.serviceTitle + '(' + data.serviceType + ')';
+                    document.querySelector("#servicePrice").value = '$'+data.price;
+                    document.querySelector("#professionalName").value = data.professionalName;
+                    document.querySelector("#professionalEmail").value = data.professionalEmail;
+                    document.querySelector("#address").value = data.lineAddress + ' ' +data.complementAddress + ' ' + data.city + ' ' +  data.state + '  '+ data.zipCode;
+
+                     ShowGoogleMaps(data.latitude, data.longitude);
+                } ,
+                error: function (ex) {
+                     console.log(ex);
+                    alert('Failed to retrieve states1.' + ex);
+                }
+                ,failure: function (response) {
+                        alert(response.responseText);
+                    },
+
+            });
+        });
+    });
+</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-gQhKTgF350KG7HuhIIAJ1Js99-3ic2M&libraries=places"></script>
+
+<script type="text/javascript">
+
+    function ShowGoogleMaps(latitude, longitude) {
+
+        //Define a latitude e Longitude do Mapa
+        var myAddress = new google.maps.LatLng(latitude, longitude);
+
+        //Cria opções ou um conjunto de recursos no Google Map
+        var mapOptions = {
+            center: myAddress,
+            zoom: 15,
+            minZoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        //Exibe o Google map em uma div com as opções definidas
+        var map = new google.maps.Map(document.getElementById("macDiv"), mapOptions);
+
+        //Define o marcador no mapa
+        var marcador = new google.maps.Marker({
+            position: myAddress,
+            animation: google.maps.Animation.BOUNCE,
+        });
+
+        marcador.setMap(map);
+       }
+</script>
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
