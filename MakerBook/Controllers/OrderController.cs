@@ -52,16 +52,38 @@ namespace MakerBook.Controllers
         public IActionResult Index()
         {
             var userSession = _session.GetUserSession();
+            List<OrderModel> orderList = new List<OrderModel>();
 
-
-            List<OrderModel> OrderList = _orderRepository.GetAll();
+            if (userSession.Profile == Enum.ProfileEnum.Professional)
+            {
+                var professional = _professionalRepository.GetByEmail(userSession.Email);
+           
+                orderList = _orderRepository.GetByProfessional(professional.ProfessionalId);
+                
+            }
+            
+            if (userSession.Profile == Enum.ProfileEnum.Customer)
+            {
+                var customer = _customerRepository.GetByEmail(userSession.Email);
+                orderList = _orderRepository.GetByCustomer(customer.CustomerId);
+            }
+            if (userSession.Profile == Enum.ProfileEnum.Administrator)
+            {
+                orderList = _orderRepository.GetAll();
+            }
             List<OrderViewModel> orderViewList = new List<OrderViewModel>();
 
-            foreach (var item in OrderList)
+            if (orderList != null && orderList.Any())
             {
-                orderViewList.Add(MapRegisterOrderView(item, userSession.Profile));
+                foreach (var item in orderList)
+                {
+                    orderViewList.Add(MapRegisterOrderView(item, userSession.Profile));
+                }
             }
-
+            else
+            {
+                orderViewList.Add(new OrderViewModel { Profile=userSession.Profile });
+            }
 
             return View(orderViewList);
         }

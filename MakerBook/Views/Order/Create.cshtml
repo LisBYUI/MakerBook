@@ -92,9 +92,9 @@
                 datatype: "json",
                 traditional: true,
                 success: function (data) {
-                    console.log(data);
+                    
                       if (data.length > 0) {
-                          alert(data.length);
+                         
                                 $('#ServiceId').empty();
                                 $('#ServiceId').append($("<option></option>").val("0").html("--Select--"));
                                 $.each(data, function () {

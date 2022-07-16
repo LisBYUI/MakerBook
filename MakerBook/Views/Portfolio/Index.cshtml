@@ -26,63 +26,63 @@
                             {
                                 <tr>
                                     <td>
-                                        
-                                            <p class="text-center">
-                                                <img src="data:image;base64,@System.Convert.ToBase64String(itemCategory.CategoryImage)" width="80" height="100" />
-                                                @Html.DisplayFor(modelItem => itemCategory.CategoryName)
-                                            </p>
+
+                                        <p class="text-center">
+                                            <img src="data:image;base64,@System.Convert.ToBase64String(itemCategory.CategoryImage)" width="80" height="100" />
+                                            @Html.DisplayFor(modelItem => itemCategory.CategoryName)
+                                        </p>
 
 
-                                            <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
-                                                <div class="carousel-inner">
-                                                    @{
-                                                        int i = 0;
-                                                    }
-                                                    @foreach (var item in itemCategory.ServiceCardViewList)
-                                                    {
-                                                        i++;
-                                                        var active = i == 1 ? "active" : "";
-                                                        <div class="carousel-item @active">
-                                                            <div class="card">
-                                                                <div class="img-wrapper">
-                                                                    @if (item.ProfessionalImage != null)
+                                        <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                @{
+                                                    int i = 0;
+                                                }
+                                                @foreach (var item in itemCategory.ServiceCardViewList)
+                                                {
+                                                    i++;
+                                                    var active = i == 1 ? "active" : "";
+                                                    <div class="carousel-item @active">
+                                                        <div class="card">
+                                                            <div class="img-wrapper">
+                                                                @if (item.ProfessionalImage != null)
+                                                                {
+                                                                    <img src="data:image;base64,@System.Convert.ToBase64String(item.ProfessionalImage)" class="d-block w-100" alt="">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img src="~/img~/img/No-Image-Placeholder.svg.png" class="d-block w-100" alt="">
+                                                                }
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">@item.ProfessionalName</h5>
+                                                                <p class="card-text">@item.ServiceTitle</p>
+                                                                <a class="btn btn-primary" asp-action="Professional" asp-controller="ProfessionalProfile" asp-route-id="@item.ProfessionalId">Details</a>
+                                                                <a asp-action="Favorite" asp-controller="Portfolio" asp-route-id="@item.ServiceId">
+                                                                    @if (item.CustomerFavoriteServiceId > 0)
                                                                     {
-                                                                        <img src="data:image;base64,@System.Convert.ToBase64String(item.ProfessionalImage)" class="d-block w-100" alt="">
+                                                                        <i class="fas fa-heart"></i>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <img src="~/img~/img/No-Image-Placeholder.svg.png" class="d-block w-100" alt="">
+                                                                        <i class="far fa-heart"></i>
                                                                     }
-                                                                </div>
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">@item.ProfessionalName</h5>
-                                                                    <p class="card-text">@item.ServiceTitle</p>
-                                                                    <a class="btn btn-primary" asp-action="Professional" asp-controller="ProfessionalProfile" asp-route-id="@item.ProfessionalId">Details</a>
-                                                                    <a asp-action="Favorite" asp-controller="Portfolio" asp-route-id="@item.ServiceId">
-                                                                        @if (item.CustomerFavoriteServiceId > 0)
-                                                                        {
-                                                                            <i class="fas fa-heart"></i>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <i class="far fa-heart"></i>
-                                                                        }
-                                                                    </a>
-                                                                </div>
+                                                                </a>
                                                             </div>
                                                         </div>
-                                                    }
+                                                    </div>
+                                                }
 
-                                                </div>
-                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Previous</span>
-                                                </button>
-                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Next</span>
-                                                </button>
-                                            
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+
                                         </div>
                                     </td>
                                 </tr>

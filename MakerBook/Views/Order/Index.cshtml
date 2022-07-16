@@ -27,13 +27,13 @@
                     <span class="section-heading-lower">Registered Orders</span>
                 </h2>
                 <hr />
-                @if (Model.First().Profile == MakerBook.Enum.ProfileEnum.Customer)
+                @if (Model.Any() && Model.First().Profile == MakerBook.Enum.ProfileEnum.Customer)
                 {
                     <p>
                         <a asp-action="Create">Create New</a>
                     </p>
                 }
-              
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -56,34 +56,44 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @if (Model != null && Model.Any() && Model.FirstOrDefault().OrderId > 0)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ServiceTitle)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CustomerName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Date)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PaymentType)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Status)
-                                </td>
-                                <td>
-                                    @if (Model.First().Profile == MakerBook.Enum.ProfileEnum.Professional)
-                                    {
-                                        <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a>
-                                        <span>|</span>
-                                    }
-                                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
-                                    @*  |
-                                        <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>*@
-                                </td>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ServiceTitle)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustomerName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PaymentType)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @if (Model.Any() && Model.First().Profile == MakerBook.Enum.ProfileEnum.Professional)
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a>
+                                            <span>|</span>
+                                        }
+                                        <a asp-action="Details" asp-route-id="@item.OrderId">Details</a>
+                                        @*  |
+                                            <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr class="">
+                                <td valign="top" colspan="4"> No existing records!</td>
+
                             </tr>
                         }
                     </tbody>

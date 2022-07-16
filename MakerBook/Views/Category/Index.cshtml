@@ -50,24 +50,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @if (Model != null && Model.Any())
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </td>
-                                    <td>
-                                        <img src="data:image;base64,@System.Convert.ToBase64String(item.Image)" width="80" height="80" />
-                                    </td>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+                                        <td>
+                                            <img src="data:image;base64,@System.Convert.ToBase64String(item.Image)" width="80" height="80" />
+                                        </td>
 
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
-                                    </td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
+                                            <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
+                                            <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr class="">
+                                    <td valign="top" colspan="4"> No existing records!</td>
+
                                 </tr>
                             }
                         </tbody>

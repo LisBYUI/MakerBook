@@ -37,5 +37,19 @@ namespace MakerBook.Repository.Interface
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
+
+        /// <summary>
+        /// GetByProfessional
+        /// </summary>
+        /// <param name="professionalId"></param>
+        /// <returns></returns>
+        List<OrderModel> GetByProfessional(int professionalId);
+
+        /// <summary>
+        /// GetByCustomer
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        List<OrderModel> GetByCustomer(int customerId);
     }
 }

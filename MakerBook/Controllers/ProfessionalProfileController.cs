@@ -48,7 +48,10 @@ namespace MakerBook.Controllers
 
             var professionalProfileModel = _professionalProfileRepository.GetByProfessional(professional.ProfessionalId);
 
-            ProfessionalProfileViewModel professionalProfileView = MapRegisterProfessionalProfileView(professionalProfileModel);
+            ProfessionalProfileViewModel professionalProfileView = new ProfessionalProfileViewModel();
+
+            if(professionalProfileModel!=null)
+                professionalProfileView  = MapRegisterProfessionalProfileView(professionalProfileModel);
 
 
             return View(professionalProfileView);
@@ -56,7 +59,7 @@ namespace MakerBook.Controllers
 
         public IActionResult Professional(int id = 0)
         {
-            ProfessionalProfileViewModel professionalProfileView;
+            ProfessionalProfileViewModel professionalProfileView = new ProfessionalProfileViewModel();
 
             var userSession = _session.GetUserSession();
 
@@ -75,7 +78,9 @@ namespace MakerBook.Controllers
 
             var professionalProfileModel = _professionalProfileRepository.GetByProfessional(professionalId);
 
-            professionalProfileView = MapRegisterProfessionalProfileView(professionalProfileModel);
+           
+            if (professionalProfileModel != null)
+                professionalProfileView = MapRegisterProfessionalProfileView(professionalProfileModel);
 
 
             return View(professionalProfileView);
@@ -108,7 +113,12 @@ namespace MakerBook.Controllers
 
                 professionalProfileView.ProfessionalId = professional.ProfessionalId;
                 var professionalProfileModel = _professionalProfileRepository.GetByProfessional(professional.ProfessionalId);
-                professionalProfileView = MapRegisterProfessionalProfileView(professionalProfileModel);
+
+           
+                if (professionalProfileModel != null)
+                    professionalProfileView = MapRegisterProfessionalProfileView(professionalProfileModel);
+
+
                 professionalProfileView = SelectSocialMediaDetails(professionalProfileView);
             }
 
@@ -125,7 +135,7 @@ namespace MakerBook.Controllers
         {
             try
             {
-                if (professionalProfileViewModel.ProfessionalProfileId > 0)
+               
                     if (ModelState.IsValid)
                     {
                         MemoryStream ms = new MemoryStream();
@@ -389,77 +399,80 @@ namespace MakerBook.Controllers
 
         private ProfessionalProfileViewModel SelectSocialMediaDetails(ProfessionalProfileViewModel professionalProfileViewModel)
         {
-            foreach (var item in professionalProfileViewModel.professionalSocialMediaList)
+            if (professionalProfileViewModel.professionalSocialMediaList != null)
             {
-
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Facebook)
-                {
-                    professionalProfileViewModel.Facebook = item.SocialMedia;
-                }
-
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Twitter)
-                {
-                    professionalProfileViewModel.Twitter = item.SocialMedia;
-
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Google)
+                foreach (var item in professionalProfileViewModel.professionalSocialMediaList)
                 {
 
-                    professionalProfileViewModel.Google = item.SocialMedia;
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Facebook)
+                    {
+                        professionalProfileViewModel.Facebook = item.SocialMedia;
+                    }
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Instagram)
-                {
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Twitter)
+                    {
+                        professionalProfileViewModel.Twitter = item.SocialMedia;
 
-                    professionalProfileViewModel.Instagram = item.SocialMedia;
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Google)
+                    {
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Linkedin)
-                {
-                    professionalProfileViewModel.Linkedin = item.SocialMedia;
+                        professionalProfileViewModel.Google = item.SocialMedia;
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Pinterest)
-                {
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Instagram)
+                    {
 
-                    professionalProfileViewModel.Pinterest = item.SocialMedia;
+                        professionalProfileViewModel.Instagram = item.SocialMedia;
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Youtube)
-                {
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Linkedin)
+                    {
+                        professionalProfileViewModel.Linkedin = item.SocialMedia;
 
-                    professionalProfileViewModel.Youtube = item.SocialMedia;
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Pinterest)
+                    {
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Slack)
-                {
+                        professionalProfileViewModel.Pinterest = item.SocialMedia;
 
-                    professionalProfileViewModel.Slack = item.SocialMedia;
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Youtube)
+                    {
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Github)
-                {
+                        professionalProfileViewModel.Youtube = item.SocialMedia;
 
-                    professionalProfileViewModel.Github = item.SocialMedia;
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Slack)
+                    {
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Reddit)
-                {
+                        professionalProfileViewModel.Slack = item.SocialMedia;
 
-                    professionalProfileViewModel.Reddit = item.SocialMedia;
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Github)
+                    {
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Whatsapp)
-                {
+                        professionalProfileViewModel.Github = item.SocialMedia;
 
-                    professionalProfileViewModel.Whatsapp = item.SocialMedia;
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Reddit)
+                    {
 
-                }
-                if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Skype)
-                {
+                        professionalProfileViewModel.Reddit = item.SocialMedia;
 
-                    professionalProfileViewModel.Skype = item.SocialMedia;
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Whatsapp)
+                    {
 
+                        professionalProfileViewModel.Whatsapp = item.SocialMedia;
+
+                    }
+                    if (item.ProfessionalProfileType == ProfessionalProfileTypeEnum.Skype)
+                    {
+
+                        professionalProfileViewModel.Skype = item.SocialMedia;
+
+                    }
                 }
             }
             return professionalProfileViewModel;

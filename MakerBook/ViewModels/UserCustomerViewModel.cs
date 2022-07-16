@@ -27,7 +27,7 @@ namespace MakerBook.ViewModels
         [Phone(ErrorMessage = "The phonenumber provided is not valid!")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Login")]
+        [Display(Name = "Username")]
         [Required(ErrorMessage = "Login required")]
         public string Login { get; set; }
 

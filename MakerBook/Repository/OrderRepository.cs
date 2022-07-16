@@ -4,7 +4,7 @@ using MakerBook.Repository.Interface;
 
 namespace MakerBook.Repository
 {
-    public class OrderRepository: IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly DatabaseContext _context;
 
@@ -85,6 +85,16 @@ namespace MakerBook.Repository
             _context.SaveChanges();
 
             return true;
-        } 
+        }
+
+        public List<OrderModel> GetByProfessional(int professionalId)
+        {
+            return _context.Order.Where(w => w.Service!=null && w.Service.ProfessionalId == professionalId).ToList();
+        }
+
+        public List<OrderModel> GetByCustomer(int customerId)
+        {
+            return _context.Order.Where(w=>w.CustomerId==customerId).ToList();
+        }
     }
 }

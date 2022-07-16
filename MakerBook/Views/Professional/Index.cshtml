@@ -28,9 +28,9 @@
                     <span class="section-heading-lower">Registered Professionals</span>
                 </h2>
                 <hr />
-               @* <p>
+                @* <p>
                     <a asp-action="Create">Create New</a>
-                </p>*@
+                    </p>*@
                 <table class="table">
                     <thead>
                         <tr>
@@ -51,28 +51,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @if (Model != null && Model.Any())
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.WebPage)
-                                </td>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WebPage)
+                                    </td>
 
-                                <td>
-                                  @*  <a asp-action="Edit" asp-route-id="@item.ProfessionalId">Edit</a> |*@
-                                    <a asp-action="Details" asp-route-id="@item.ProfessionalId">Details</a> 
-                                   @* |
-                                    <a asp-action="Delete" asp-route-id="@item.ProfessionalId">Delete</a>*@
-                                </td>
+                                    <td>
+                                        @*  <a asp-action="Edit" asp-route-id="@item.ProfessionalId">Edit</a> |*@
+                                        <a asp-action="Details" asp-route-id="@item.ProfessionalId">Details</a>
+                                        @* |
+                                            <a asp-action="Delete" asp-route-id="@item.ProfessionalId">Delete</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr class="">
+                                <td valign="top" colspan="4"> No existing records!</td>
+
                             </tr>
                         }
                     </tbody>
