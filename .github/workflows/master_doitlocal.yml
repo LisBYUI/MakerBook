@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'doitlocal'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_293D2AC32197431DB1695D1550001ECA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5AA0212DC766446D812308DB55EB0FF2 }}
           package: .
